@@ -124,6 +124,16 @@ Aplicacao local padrao: `http://localhost:5173`
 3. `npm run preview`: preview da build.
 4. `npm run lint`: analise estatica.
 
+### Deploy automatico no GitHub Pages
+
+O projeto possui workflow em `.github/workflows/deploy-pages.yml` para publicar automaticamente no GitHub Pages a cada push na branch `main`.
+
+Configuracao necessaria (uma unica vez no GitHub):
+
+1. Acesse **Settings > Pages** no repositorio.
+2. Em **Build and deployment**, defina **Source = GitHub Actions**.
+3. Faça um push na `main` e acompanhe o job em **Actions**.
+
 ## Reutilizacao e credito
 
 Os snippets de HTML e CSS exibidos no projeto incluem assinatura autoral.
