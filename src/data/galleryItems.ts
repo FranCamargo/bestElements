@@ -17,18 +17,14 @@ export type GalleryItem = {
 export const galleryItems: GalleryItem[] = [
   {
     slug: 'dashboard-curadoria',
-    title: 'Dashboard de Curadoria',
-    subtitle: 'Visão geral do fluxo de curadoria com filtros, gráficos e tabela.',
+    title: 'Dashboard Graph',
+    subtitle: 'Visão geral com filtros, gráficos e tabela.',
     category: 'Dashboard',
     gradientClass: 'thumb-curadoria-dashboard',
     route: '/elementos/dashboard-curadoria',
     description:
-      'Painel principal da curadoria com período, ativo, modelo, visualizações de temas e lista de feedbacks com exportação.',
-    highlights: [
-      'Filtros por período, ativo e modelo',
-      'Gráfico de temas e heatmap tema x ativo',
-      'Tabela com detalhe e ações por feedback',
-    ],
+      'Painel principal de dashboard com período, ativo, modelo, visualizações de temas e lista de feedbacks com exportação.',
+    highlights: [],
     kpi: {
       label: 'Cobertura da Curadoria',
       value: '96%',
@@ -43,7 +39,7 @@ export const galleryItems: GalleryItem[] = [
     gradientClass: 'thumb-curadoria-button',
     route: '/elementos/curadoria-button',
     description:
-      'Botão CTA único, com visual roxo premium e efeito de brilho direcional no hover para destacar a ação principal.',
+      'Botão CTA único, com visual roxo e efeito de brilho direcional no hover para destacar a ação principal.',
     highlights: [
       'Visual roxo com contraste alto',
       'Brilho afiado e sofisticado no hover',
@@ -56,23 +52,63 @@ export const galleryItems: GalleryItem[] = [
     },
   },
   {
+    slug: 'curadoria-neomorphic-button',
+    title: 'Neomorphic Button',
+    subtitle: 'Botão neomórfico com três estados de clique.',
+    category: 'Componente',
+    gradientClass: 'thumb-curadoria-neomorphic-button',
+    route: '/elementos/curadoria-neomorphic-button',
+    description:
+      'Botão circular em estilo neomórfico claro, com variações de sombra para simular relevo externo, côncavo interno e anel externo de foco visual.',
+    highlights: [
+      'Estado parado com sombra externa suave',
+      'Estado de clique com cavidade e profundidade interna',
+      'Estado de clique duplo com anel externo e camada central',
+    ],
+    kpi: {
+      label: 'Leitura de Estado do Botão',
+      value: '92%',
+      trend: '+14% em testes de percepção visual',
+    },
+  },
+  {
     slug: 'curadoria-toggle',
-    title: 'Toggle',
-    subtitle: 'Controle para alternar entre dados mockados e dados reais.',
+    title: 'Celestial Toggle',
+    subtitle: 'Alternador Sol/Lua com brilho cinematográfico e estética cósmica.',
     category: 'Componente',
     gradientClass: 'thumb-curadoria-toggle',
     route: '/elementos/curadoria-toggle',
     description:
-      'Toggle de ambiente para alternar origem de dados com feedback visual claro, ideal para demonstração e validação rápida.',
+      'Toggle temático Sol/Lua com animação refinada, pensado para troca de modos de interface com foco em identidade visual e presença premium.',
     highlights: [
-      'Alternância instantânea entre contextos',
-      'Persistência da preferência em armazenamento local',
-      'Controle acessível com rótulo semântico',
+      'Núcleo lunar elegante com transição suave',
+      'Estado solar com corona e raios animados',
+      'Interação compacta sem ruído visual no preview',
     ],
     kpi: {
-      label: 'Tempo Médio de Troca de Contexto',
-      value: '1.3s',
-      trend: '-40% com alternância direta na tela',
+      label: 'Adoção do Toggle Temático',
+      value: '87%',
+      trend: '+19% em preferência por alternadores visuais',
+    },
+  },
+  {
+    slug: 'curadoria-realistic-toggle',
+    title: 'Concave RGB Toggle',
+    subtitle: 'Toggle realista côncavo com linha RGB fina na borda.',
+    category: 'Componente',
+    gradientClass: 'thumb-curadoria-realistic-toggle',
+    route: '/elementos/curadoria-realistic-toggle',
+    description:
+      'Alternador realista inspirado em hardware, com base côncava, sombras neutras e linha RGB discreta seguindo todo o contorno do botão.',
+    highlights: [
+      'Canal interno com leitura de profundidade côncava',
+      'Linha RGB fina no contorno externo sem brilho exagerado',
+      'Preview limpo sem superfície extra além do próprio botão',
+    ],
+    kpi: {
+      label: 'Percepção de Realismo do Componente',
+      value: '93%',
+      trend: '+19% vs. versão sem contorno RGB',
     },
   },
   {
@@ -296,6 +332,26 @@ export const galleryItems: GalleryItem[] = [
     },
   },
   {
+    slug: 'curadoria-realistic-progress-loader',
+    title: 'Realistic Progress Loader',
+    subtitle: 'Barra de progresso realista com bolha de percentual e base profunda.',
+    category: 'Loader',
+    gradientClass: 'thumb-curadoria-realistic-progress-loader',
+    route: '/elementos/curadoria-realistic-progress-loader',
+    description:
+      'Loader de progresso inspirado em interfaces realistas, com trilho cavo, preenchimento suave e etiqueta flutuante para o percentual atual.',
+    highlights: [
+      'Base com sombras internas para efeito de profundidade',
+      'Preenchimento verde com volume e brilho controlado',
+      'Bolha superior com ponteiro para leitura imediata',
+    ],
+    kpi: {
+      label: 'Percepcao de Progresso Durante Espera',
+      value: '95%',
+      trend: '+18% em testes com barra realista',
+    },
+  },
+  {
     slug: 'curadoria-starfield-pattern',
     title: 'Starfield Pattern',
     subtitle: 'Padrão de estrelas com deslocamento contínuo e brilho suave.',
@@ -398,7 +454,7 @@ export const galleryItems: GalleryItem[] = [
   {
     slug: 'aurora-weather-card',
     title: 'Aurora Weather Card',
-    subtitle: 'Card meteorológico elegante com gradiente atmosférico e dados essenciais.',
+    subtitle: 'Card meteo elegante com gradiente atmosférico e dados essenciais.',
     category: 'Weather Card',
     gradientClass: 'thumb-aurora-weather-card',
     route: '/elementos/aurora-weather-card',
@@ -423,7 +479,7 @@ export const galleryItems: GalleryItem[] = [
     gradientClass: 'thumb-pixel-forecast-card',
     route: '/elementos/pixel-forecast-card',
     description:
-      'Componente meteorológico nostálgico para projetos divertidos, com visual pixelado e paleta vibrante.',
+      'Componente meteo nostálgico para projetos divertidos, com visual pixelado e paleta vibrante.',
     highlights: [
       'Estética 8-bit autoral',
       'Micro previsão por período',
@@ -433,6 +489,26 @@ export const galleryItems: GalleryItem[] = [
       label: 'Memorização de UI',
       value: '89%',
       trend: '+19% em testes de recall',
+    },
+  },
+  {
+    slug: 'lilac-weather-glass-card',
+    title: 'Lilac Weather Glass Card',
+    subtitle: 'Weather card translúcido com timeline horária e wallpaper lilás.',
+    category: 'Weather Card',
+    gradientClass: 'thumb-lilac-weather-glass-card',
+    route: '/elementos/lilac-weather-glass-card',
+    description:
+      'Card de clima inspirado em interfaces elegantes, com leitura rápida de temperatura atual, abas de contexto e previsão por hora.',
+    highlights: [
+      'Wallpaper wpplilac preenchendo todo o fundo do card',
+      'Composição glassmorphism com tipografia leve e premium',
+      'Timeline horária com foco na variação de temperatura',
+    ],
+    kpi: {
+      label: 'Tempo para Leitura de Previsao',
+      value: '1.4s',
+      trend: '-28% com hierarquia visual por blocos',
     },
   },
   {
@@ -512,7 +588,7 @@ export const galleryItems: GalleryItem[] = [
     kpi: {
       label: 'Satisfação em Esperas Curtas',
       value: '94%',
-      trend: '+10 p.p. em interfaces meteorológicas',
+      trend: '+10 p.p. em interfaces meteo',
     },
   },
   {
@@ -536,6 +612,226 @@ export const galleryItems: GalleryItem[] = [
     },
   },
   {
+    slug: 'retro-music-player-card',
+    title: 'Vinyl Music Player',
+    subtitle: 'Player com disco de vinil girando, capa do álbum e atmosfera neon.',
+    category: 'Music Player',
+    gradientClass: 'thumb-retro-music-player-card',
+    route: '/elementos/retro-music-player-card',
+    description:
+      'Card musical com estética minimalista azul bebê, simulando toca-discos com rotação contínua e capa central do álbum.',
+    highlights: [
+      'Disco de vinil com ranhuras e animação de rotação suave',
+      'Capa do álbum no centro com identidade visual do artista',
+      'Controles de play/pause e barra de progresso sincronizada',
+    ],
+    kpi: {
+      label: 'Tempo Médio de Interação no Card',
+      value: '42s',
+      trend: '+24% em testes de engajamento visual',
+    },
+  },
+  {
+    slug: 'lilac-gradient-music-player-card',
+    title: 'Lilac Vinyl Music Player',
+    subtitle: 'Versão em degradês lilás, roxo e branco com visual soft premium.',
+    category: 'Music Player',
+    gradientClass: 'thumb-lilac-gradient-music-player-card',
+    route: '/elementos/lilac-gradient-music-player-card',
+    description:
+      'Variação do player musical com identidade clara em tons de roxo e lilás, mantendo o disco em rotação e controles centrais.',
+    highlights: [
+      'Paleta suave com degradês lilás e branco',
+      'Disco girando com capa do álbum em destaque',
+      'Controles circulares e timeline com acabamento glass',
+    ],
+    kpi: {
+      label: 'Preferência por Tema Claro',
+      value: '73%',
+      trend: '+18% em testes A/B com variação lilás',
+    },
+  },
+  {
+    slug: 'starlight-nocturne-music-player-card',
+    title: 'Starlight Nocturne Player',
+    subtitle: 'Versão escura com estrelas vagando em movimento contínuo.',
+    category: 'Music Player',
+    gradientClass: 'thumb-starlight-nocturne-music-player-card',
+    route: '/elementos/starlight-nocturne-music-player-card',
+    description:
+      'Player musical com atmosfera noturna, céu profundo em degradê e estrelas que se movem aleatoriamente ao redor do card.',
+    highlights: [
+      'Tema dark com profundidade e brilho sutil',
+      'Campo estelar com animações assíncronas de deriva',
+      'Mesma base interativa de reprodução e timeline',
+    ],
+    kpi: {
+      label: 'Engajamento em Tema Noturno',
+      value: '81%',
+      trend: '+22% em sessões noturnas de navegação',
+    },
+  },
+  {
+    slug: 'forest-leaf-music-player-card',
+    title: 'Forest Leaf Music Player',
+    subtitle: 'Versão botânica com padrão de folhas e degradê verde profundo.',
+    category: 'Music Player',
+    gradientClass: 'thumb-forest-leaf-music-player-card',
+    route: '/elementos/forest-leaf-music-player-card',
+    description:
+      'Player com atmosfera natural, padrão de folhas em movimento suave e base cromática em degradê verde inspirado na cor #1C472D.',
+    highlights: [
+      'Padrão orgânico de folhas com animação sutil',
+      'Degradê verde escuro elegante com profundidade',
+      'Controles e timeline no mesmo padrão interativo das outras versões',
+    ],
+    kpi: {
+      label: 'Aprovação do Tema Orgânico',
+      value: '84%',
+      trend: '+20% em comparativos com temas sólidos',
+    },
+  },
+  {
+    slug: 'music-player-top-icon-button',
+    title: 'Midnight Top Icon Button',
+    subtitle: 'Botão de topo em azul-noturno para menu e navegação no player.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-top-icon-button',
+    route: '/elementos/music-player-top-icon-button',
+    description:
+      'Botão superior em linguagem dark com gradiente azul profundo, pensado para headers de players com estética noturna.',
+    highlights: [
+      'Gradiente midnight com relevo suave',
+      'Formato circular compacto de navegação',
+      'Leitura forte em fundos escuros',
+    ],
+    kpi: {
+      label: 'Precisão de Clique no Header',
+      value: '98%',
+      trend: '+9 p.p. em telas touch',
+    },
+  },
+  {
+    slug: 'music-player-top-icon-button-forest',
+    title: 'Forest Top Icon Button',
+    subtitle: 'Versão verde escura com atmosfera orgânica e elegante.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-top-icon-button-forest',
+    route: '/elementos/music-player-top-icon-button-forest',
+    description:
+      'Botão de topo em gradientes verdes profundos, alinhado ao estilo forest para navegação em players botânicos.',
+    highlights: [
+      'Identidade verde intensa e sofisticada',
+      'Contraste otimizado para fundos naturais',
+      'Coerência visual com temas orgânicos',
+    ],
+    kpi: {
+      label: 'Consistência de Tema Forest',
+      value: '93%',
+      trend: '+10% em percepção de coesão visual',
+    },
+  },
+  {
+    slug: 'music-player-play-button',
+    title: 'Midnight Play Button',
+    subtitle: 'Botão principal em azul-noturno para play e pause.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-play-button',
+    route: '/elementos/music-player-play-button',
+    description:
+      'Botão central de reprodução com estilo dark e brilho controlado para destacar a ação principal do player.',
+    highlights: [
+      'Hierarquia visual forte para ação primária',
+      'Toggle play/pause imediato',
+      'Acabamento midnight com presença premium',
+    ],
+    kpi: {
+      label: 'Taxa de Acionamento Primário',
+      value: '92%',
+      trend: '+14% com hierarquia visual reforçada',
+    },
+  },
+  {
+    slug: 'music-player-play-button-forest',
+    title: 'Forest Play Button',
+    subtitle: 'Botão de reprodução em verde para temas naturais.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-play-button-forest',
+    route: '/elementos/music-player-play-button-forest',
+    description:
+      'Play button em degradê verde com tom orgânico e contraste forte para interfaces inspiradas em natureza.',
+    highlights: [
+      'Cor de ação em verde vibrante',
+      'Botão principal com presença marcante',
+      'Compatível com paletas forest e eco',
+    ],
+    kpi: {
+      label: 'Ação Primária em Tema Verde',
+      value: '91%',
+      trend: '+12% de acionamento em layouts botânicos',
+    },
+  },
+  {
+    slug: 'music-player-share-button',
+    title: 'Midnight Share Button',
+    subtitle: 'Botão de share em azul-noturno com feedback de estado.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-share-button',
+    route: '/elementos/music-player-share-button',
+    description:
+      'Ação secundária de compartilhamento em estilo dark, com retorno visual ao usuário após clique.',
+    highlights: [
+      'Ícone share com leitura imediata',
+      'Mudança visual de estado compartilhado',
+      'Acabamento midnight elegante',
+    ],
+    kpi: {
+      label: 'Taxa de Compartilhamento',
+      value: '37%',
+      trend: '+11% com feedback de confirmação',
+    },
+  },
+  {
+    slug: 'music-player-share-button-forest',
+    title: 'Forest Share Button',
+    subtitle: 'Botão de compartilhamento verde para temas naturais.',
+    category: 'Button',
+    gradientClass: 'thumb-music-player-share-button-forest',
+    route: '/elementos/music-player-share-button-forest',
+    description:
+      'Botão de share em paleta verde, ideal para players orgânicos e experiências visuais inspiradas na natureza.',
+    highlights: [
+      'Gradientes verdes com leitura consistente',
+      'Feedback visual de compartilhamento',
+      'Coesão com temas forest e ecológicos',
+    ],
+    kpi: {
+      label: 'Compartilhamento em Tema Forest',
+      value: '41%',
+      trend: '+12% em cenários naturais',
+    },
+  },
+  {
+    slug: 'soft-depth-search-bar',
+    title: 'Soft Depth Search Bar',
+    subtitle: 'Search bar neon com glow suave e profundidade em camadas.',
+    category: 'Input',
+    gradientClass: 'thumb-soft-depth-search-bar',
+    route: '/elementos/soft-depth-search-bar',
+    description:
+      'Campo de busca inspirado em interfaces neon, com bordas macias, brilho em dois tons e botão de lupa em relevo.',
+    highlights: [
+      'Visual soft com profundidade e sombra difusa',
+      'Glow equilibrado entre azul e magenta',
+      'Feedback de foco para reforcar interacao',
+    ],
+    kpi: {
+      label: 'Conversao em Busca Inicial',
+      value: '68%',
+      trend: '+16% em testes de descoberta de conteudo',
+    },
+  },
+  {
     slug: 'sketch-profile-card',
     title: 'Sketch Profile Card',
     subtitle: 'Card ilustrado com linhas desenhadas e bloco de bio criativo.',
@@ -553,6 +849,26 @@ export const galleryItems: GalleryItem[] = [
       label: 'Conexão com a Marca Pessoal',
       value: '91%',
       trend: '+12 p.p. em páginas de perfil',
+    },
+  },
+  {
+    slug: 'neon-glass-login-card',
+    title: 'Lilac Glass Login',
+    subtitle: 'Login em glassmorphism com wallpaper lilás e foco em estética premium.',
+    category: 'Login',
+    gradientClass: 'thumb-neon-glass-login-card',
+    route: '/elementos/neon-glass-login-card',
+    description:
+      'Tela de login inspirada em estética lilás premium, combinando wallpaper artístico, superfície translúcida e hierarquia clara para autenticação.',
+    highlights: [
+      'Wallpaper lilás ocupando toda a área de preview',
+      'Avatar superior com ícone de pessoa para reforçar contexto de acesso',
+      'Botão de submit com gradiente lilás integrado ao fundo',
+    ],
+    kpi: {
+      label: 'Taxa de Inicio de Sessao',
+      value: '79%',
+      trend: '+13% com hierarquia visual e contraste tematico',
     },
   },
 ]

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
-import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound } from 'lucide-react'
+import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2 } from 'lucide-react'
 import { ItemPageShell } from './ItemPageShell.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
+import haimCover from '../assets/haim.png'
 
 type CuradoriaElementPageProps = {
   item: GalleryItem
@@ -70,6 +71,36 @@ const chatbotQuickActions: ChatQuickAction[] = [
   { label: 'Gerar status executivo', prompt: 'Monte um status executivo curto para lideranca.' },
 ]
 
+const starlightPlayerStars = [
+  { top: '10%', left: '12%', size: 2.2, driftX: '11px', driftY: '-7px', duration: '8.5s', delay: '-1.2s', twinkle: '2.8s' },
+  { top: '17%', left: '72%', size: 1.8, driftX: '-9px', driftY: '8px', duration: '7.1s', delay: '-3.4s', twinkle: '2.3s' },
+  { top: '22%', left: '39%', size: 1.6, driftX: '13px', driftY: '-6px', duration: '9.3s', delay: '-2.1s', twinkle: '3.0s' },
+  { top: '30%', left: '84%', size: 2.6, driftX: '-12px', driftY: '9px', duration: '10.2s', delay: '-4.7s', twinkle: '2.6s' },
+  { top: '35%', left: '16%', size: 1.7, driftX: '10px', driftY: '7px', duration: '7.8s', delay: '-0.8s', twinkle: '2.1s' },
+  { top: '44%', left: '56%', size: 2.1, driftX: '-10px', driftY: '-8px', duration: '8.9s', delay: '-5.2s', twinkle: '2.5s' },
+  { top: '51%', left: '26%', size: 1.5, driftX: '8px', driftY: '-6px', duration: '9.8s', delay: '-1.7s', twinkle: '2.9s' },
+  { top: '63%', left: '78%', size: 2.4, driftX: '-11px', driftY: '10px', duration: '8.1s', delay: '-3.8s', twinkle: '2.2s' },
+  { top: '70%', left: '41%', size: 1.9, driftX: '12px', driftY: '7px', duration: '10.8s', delay: '-4.5s', twinkle: '2.7s' },
+  { top: '78%', left: '9%', size: 2.3, driftX: '9px', driftY: '-9px', duration: '9.5s', delay: '-2.9s', twinkle: '2.4s' },
+  { top: '83%', left: '66%', size: 1.6, driftX: '-8px', driftY: '6px', duration: '7.4s', delay: '-1.4s', twinkle: '3.1s' },
+  { top: '8%', left: '48%', size: 1.4, driftX: '7px', driftY: '-8px', duration: '7.6s', delay: '-3.1s', twinkle: '2.4s' },
+  { top: '12%', left: '90%', size: 1.2, driftX: '-6px', driftY: '7px', duration: '8.3s', delay: '-0.9s', twinkle: '2.2s' },
+  { top: '15%', left: '26%', size: 1.9, driftX: '9px', driftY: '-4px', duration: '9.1s', delay: '-2.6s', twinkle: '3.0s' },
+  { top: '24%', left: '62%', size: 1.3, driftX: '-7px', driftY: '5px', duration: '8.8s', delay: '-4.4s', twinkle: '2.5s' },
+  { top: '28%', left: '7%', size: 2.0, driftX: '10px', driftY: '-6px', duration: '10.1s', delay: '-1.1s', twinkle: '2.9s' },
+  { top: '33%', left: '70%', size: 1.1, driftX: '-5px', driftY: '6px', duration: '7.9s', delay: '-3.6s', twinkle: '2.0s' },
+  { top: '39%', left: '31%', size: 2.5, driftX: '8px', driftY: '-7px', duration: '9.4s', delay: '-5.0s', twinkle: '2.8s' },
+  { top: '47%', left: '88%', size: 1.4, driftX: '-9px', driftY: '8px', duration: '8.2s', delay: '-2.8s', twinkle: '2.3s' },
+  { top: '54%', left: '12%', size: 2.0, driftX: '11px', driftY: '-5px', duration: '9.9s', delay: '-1.9s', twinkle: '2.6s' },
+  { top: '58%', left: '52%', size: 1.2, driftX: '-7px', driftY: '7px', duration: '7.2s', delay: '-4.2s', twinkle: '2.1s' },
+  { top: '66%', left: '68%', size: 1.7, driftX: '9px', driftY: '-8px', duration: '10.4s', delay: '-2.5s', twinkle: '3.2s' },
+  { top: '72%', left: '22%', size: 1.3, driftX: '-8px', driftY: '6px', duration: '8.6s', delay: '-0.7s', twinkle: '2.4s' },
+  { top: '76%', left: '54%', size: 2.1, driftX: '8px', driftY: '-6px', duration: '9.0s', delay: '-3.3s', twinkle: '2.7s' },
+  { top: '82%', left: '36%', size: 1.4, driftX: '-9px', driftY: '8px', duration: '7.7s', delay: '-1.5s', twinkle: '2.2s' },
+  { top: '86%', left: '81%', size: 2.2, driftX: '7px', driftY: '-7px', duration: '10.6s', delay: '-4.1s', twinkle: '3.0s' },
+  { top: '90%', left: '18%', size: 1.1, driftX: '-6px', driftY: '5px', duration: '8.4s', delay: '-2.3s', twinkle: '2.1s' },
+]
+
 const snippetAttributionMessage = 'Created by Franciely Camargo. Credit is required for use.'
 
 const appendSnippetAttribution = (snippet: string, snippetType: 'html' | 'css') => {
@@ -91,8 +122,14 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <DashboardInteractive />
     case 'curadoria-button':
       return <ButtonInteractive />
+    case 'curadoria-neomorphic-button':
+      return <NeomorphicButtonInteractive />
+    case 'soft-depth-search-bar':
+      return <SoftDepthSearchBarInteractive />
     case 'curadoria-toggle':
       return <ToggleInteractive />
+    case 'curadoria-realistic-toggle':
+      return <RealisticToggleInteractive />
     case 'curadoria-line-graph':
       return <LineGraphInteractive />
     case 'curadoria-progress-bar':
@@ -115,6 +152,8 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <CandyRingLoaderInteractive />
     case 'curadoria-wave-bars-loader':
       return <WaveBarsLoaderInteractive />
+    case 'curadoria-realistic-progress-loader':
+      return <RealisticProgressLoaderInteractive />
     case 'curadoria-starfield-pattern':
       return <StarfieldPatternInteractive />
     case 'curadoria-gradient-river-pattern':
@@ -133,6 +172,8 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <AuroraWeatherCardInteractive />
     case 'pixel-forecast-card':
       return <PixelForecastCardInteractive />
+    case 'lilac-weather-glass-card':
+      return <LilacWeatherGlassCardInteractive />
     case 'glass-alert-modal':
       return <GlassAlertModalInteractive />
     case 'comic-quick-modal':
@@ -151,12 +192,32 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <TeamStatusCardInteractive />
     case 'retro-music-player-card':
       return <RetroMusicPlayerCardInteractive />
+    case 'lilac-gradient-music-player-card':
+      return <LilacGradientMusicPlayerCardInteractive />
+    case 'starlight-nocturne-music-player-card':
+      return <StarlightNocturneMusicPlayerCardInteractive />
+    case 'forest-leaf-music-player-card':
+      return <ForestLeafMusicPlayerCardInteractive />
+    case 'music-player-top-icon-button':
+      return <MusicPlayerTopIconButtonInteractive />
+    case 'music-player-top-icon-button-forest':
+      return <MusicPlayerTopIconButtonForestInteractive />
+    case 'music-player-play-button':
+      return <MusicPlayerPlayButtonInteractive />
+    case 'music-player-play-button-forest':
+      return <MusicPlayerPlayButtonForestInteractive />
+    case 'music-player-share-button':
+      return <MusicPlayerShareButtonInteractive />
+    case 'music-player-share-button-forest':
+      return <MusicPlayerShareButtonForestInteractive />
     case 'arcade-score-pill':
       return <ArcadeScorePillInteractive />
     case 'sketch-profile-card':
       return <SketchProfileCardInteractive />
     case 'morphing-action-fab':
       return <MorphingActionFabInteractive />
+    case 'neon-glass-login-card':
+      return <NeonGlassLoginCardInteractive />
     default:
       return <div className="component-mock"><p>Preview indisponivel para este item.</p></div>
   }
@@ -235,23 +296,97 @@ function ButtonInteractive() {
   )
 }
 
-function ToggleInteractive() {
-  const [useMockData, setUseMockData] = useState(true)
-  const [showOnlyCritical, setShowOnlyCritical] = useState(false)
+function NeomorphicButtonInteractive() {
+  const [state, setState] = useState<'drop' | 'inner' | 'outter'>('drop')
+  const clickTimerRef = useRef<number | null>(null)
+
+  const setSingleClickState = () => {
+    if (clickTimerRef.current !== null) {
+      window.clearTimeout(clickTimerRef.current)
+    }
+
+    clickTimerRef.current = window.setTimeout(() => {
+      setState('inner')
+      clickTimerRef.current = null
+    }, 220)
+  }
+
+  const setDoubleClickState = () => {
+    if (clickTimerRef.current !== null) {
+      window.clearTimeout(clickTimerRef.current)
+      clickTimerRef.current = null
+    }
+
+    setState('outter')
+  }
+
+  useEffect(() => {
+    return () => {
+      if (clickTimerRef.current !== null) {
+        window.clearTimeout(clickTimerRef.current)
+      }
+    }
+  }, [])
+
+  const interactionLabel =
+    state === 'drop'
+      ? 'Parado'
+      : state === 'inner'
+        ? 'Clique'
+        : 'Clique duplo'
+
+  const stateLabel = state === 'drop' ? 'parado' : state === 'inner' ? 'clique' : 'clique duplo'
 
   return (
-    <div className="component-mock mock-toggle-wrap">
-      <button type="button" className="mock-toggle-row" onClick={() => setUseMockData((v) => !v)}>
-        <span>Dados mockados</span>
-        <span className={`mock-toggle ${useMockData ? 'is-active' : ''}`} />
+    <div className="component-mock mock-neomorphic-button-stage">
+      <button
+        type="button"
+        className={`mock-neomorphic-button is-${state}`}
+        aria-label={`Botao neomorfico em estado ${stateLabel}`}
+        onClick={setSingleClickState}
+        onDoubleClick={setDoubleClickState}
+      >
+        <span className="mock-neomorphic-core" aria-hidden="true" />
       </button>
-      <button type="button" className="mock-toggle-row" onClick={() => setShowOnlyCritical((v) => !v)}>
-        <span>Somente criticos</span>
-        <span className={`mock-toggle ${showOnlyCritical ? 'is-active' : ''}`} />
+      <p className="interactive-note mock-neomorphic-label">{interactionLabel}</p>
+    </div>
+  )
+}
+
+function ToggleInteractive() {
+  const [isSunMode, setIsSunMode] = useState(true)
+
+  return (
+    <div className="component-mock mock-toggle-solo-wrap mock-toggle-clean-stage">
+      <button
+        type="button"
+        className={`mock-celestial-toggle ${isSunMode ? 'is-sun' : ''}`}
+        aria-pressed={isSunMode}
+        aria-label={isSunMode ? 'Alternar para lua' : 'Alternar para sol'}
+        onClick={() => setIsSunMode((current) => !current)}
+      >
+        <span className="mock-celestial-track" aria-hidden="true">
+          <i className="mock-celestial-core" />
+        </span>
       </button>
-      <p className="interactive-note">
-        Fonte: {useMockData ? 'Mockado' : 'Real'} • Filtro: {showOnlyCritical ? 'Criticos' : 'Todos'}
-      </p>
+    </div>
+  )
+}
+
+function RealisticToggleInteractive() {
+  const [isOn, setIsOn] = useState(false)
+
+  return (
+    <div className="component-mock mock-realistic-toggle-wrap">
+      <button
+        type="button"
+        className={`mock-realistic-toggle ${isOn ? 'is-on' : ''}`}
+        aria-pressed={isOn}
+        aria-label={isOn ? 'Desativar Concave RGB Toggle' : 'Ativar Concave RGB Toggle'}
+        onClick={() => setIsOn((current) => !current)}
+      >
+        <span className="mock-realistic-toggle-knob" aria-hidden="true" />
+      </button>
     </div>
   )
 }
@@ -1090,6 +1225,35 @@ function WaveBarsLoaderInteractive() {
   )
 }
 
+function RealisticProgressLoaderInteractive() {
+  const [progress, setProgress] = useState(50)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setProgress((current) => (current >= 88 ? 18 : current + 1))
+    }, 120)
+
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [])
+
+  const safeProgress = Math.max(8, Math.min(92, progress))
+
+  return (
+    <div className="component-mock mock-loader-realistic-progress" aria-label="Loader realista com barra de progresso">
+      <div className="realistic-progress-track">
+        <div className="realistic-progress-fill" style={{ width: `${progress}%` }} />
+        <div className="realistic-progress-badge" style={{ left: `${safeProgress}%` }}>
+          {progress}%
+        </div>
+      </div>
+      <h3>Loading</h3>
+      <p>Please Wait...</p>
+    </div>
+  )
+}
+
 function StarfieldPatternInteractive() {
   return (
     <div className="component-mock mock-pattern-starfield" aria-label="Padrao de estrelas em movimento">
@@ -1409,6 +1573,72 @@ function PixelForecastCardInteractive() {
   )
 }
 
+function LilacWeatherGlassCardInteractive() {
+  const [activeTab, setActiveTab] = useState<'hourly' | 'daily' | 'details' | 'precipitation'>('hourly')
+  const [selectedHour, setSelectedHour] = useState(4)
+
+  const hourlyForecast = [
+    { label: 'NOW', temp: 72 },
+    { label: '11AM', temp: 73 },
+    { label: '12PM', temp: 75 },
+    { label: '1PM', temp: 77 },
+    { label: '2PM', temp: 81 },
+    { label: '3PM', temp: 79 },
+  ]
+
+  const selected = hourlyForecast[selectedHour]
+
+  return (
+    <div className="component-mock mock-centered-demo mock-lilac-weather-glass">
+      <article className="lilac-weather-glass-card" aria-label="Weather card glass lilac">
+        <header className="lilac-weather-header">
+          <div className="lilac-weather-place">
+            <strong>San Francisco</strong>
+            <span>September 25, 2015</span>
+          </div>
+
+          <div className="lilac-weather-temperature">
+            <p>{selected.temp}°</p>
+            <small>81° / 57°</small>
+          </div>
+        </header>
+
+        <section className="lilac-weather-condition">
+          <div className="lilac-cloud-icon" aria-hidden="true">
+            <span className="cloud-sun" />
+            <span className="cloud-main" />
+            <span className="cloud-side" />
+          </div>
+          <strong>Cloudy</strong>
+        </section>
+
+        <nav className="lilac-weather-tabs" aria-label="Weather sections">
+          <button type="button" className={activeTab === 'hourly' ? 'is-active' : ''} onClick={() => setActiveTab('hourly')}>Hourly</button>
+          <button type="button" className={activeTab === 'daily' ? 'is-active' : ''} onClick={() => setActiveTab('daily')}>Daily</button>
+          <button type="button" className={activeTab === 'details' ? 'is-active' : ''} onClick={() => setActiveTab('details')}>Details</button>
+          <button type="button" className={activeTab === 'precipitation' ? 'is-active' : ''} onClick={() => setActiveTab('precipitation')}>Precipitation</button>
+        </nav>
+
+        <div className="lilac-weather-hours" role="list" aria-label="Hourly forecast">
+          {hourlyForecast.map((hour, index) => (
+            <button
+              key={hour.label}
+              type="button"
+              role="listitem"
+              className={`lilac-hour-item ${selectedHour === index ? 'is-active' : ''}`}
+              onClick={() => setSelectedHour(index)}
+            >
+              <span>{hour.label}</span>
+              <i className="mini-cloud" aria-hidden="true" />
+              <strong>{hour.temp}°</strong>
+            </button>
+          ))}
+        </div>
+      </article>
+    </div>
+  )
+}
+
 function GlassAlertModalInteractive() {
   const [isOpen, setIsOpen] = useState(true)
 
@@ -1520,15 +1750,466 @@ function TeamStatusCardInteractive() {
 }
 
 function RetroMusicPlayerCardInteractive() {
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [progress, setProgress] = useState(28)
+
+  useEffect(() => {
+    if (!isPlaying) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      setProgress((current) => (current >= 100 ? 0 : current + 0.45))
+    }, 120)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
+  const formatTime = (seconds: number) => {
+    const safeSeconds = Math.max(0, Math.floor(seconds))
+    const minutes = Math.floor(safeSeconds / 60)
+    const remainingSeconds = safeSeconds % 60
+    return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`
+  }
+
+  const totalDuration = 247
+  const currentTime = (progress / 100) * totalDuration
+
+  return (
+    <div className="component-mock mock-centered-demo mock-retro-player mock-retro-player-classic" aria-label="Music player com vinil em rotacao">
+      <div className="retro-top-actions" aria-label="Acoes do player">
+        <button type="button" className="retro-icon-btn" aria-label="Voltar">←</button>
+        <button type="button" className="retro-icon-btn" aria-label="Abrir menu">≡</button>
+      </div>
+
+      <div className="retro-cover-stage">
+        <div className={`retro-disc ${isPlaying ? 'is-playing' : ''}`}>
+          <div className="retro-album-art" role="img" aria-label="Capa do album Days Are Gone da banda Haim">
+            <img
+              src={haimCover}
+              alt="Capa do album Days Are Gone da banda Haim"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section className="retro-wave-panel" aria-label="Informacoes da musica">
+        <div className="retro-track-info">
+          <strong>Haim - The Wire</strong>
+          <p>HAIM</p>
+        </div>
+
+        <div className="retro-progress-block" aria-label="Progresso da musica">
+          <div className="retro-time">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(totalDuration)}</span>
+          </div>
+          <div className="retro-progress">
+            <i style={{ width: `${progress}%` }} />
+            <span className="retro-progress-knob" style={{ left: `${progress}%` }} />
+          </div>
+        </div>
+
+        <div className="retro-player-controls" aria-label="Controles de reproducao">
+          <button type="button" className="retro-control" aria-label="Parar musica">■</button>
+          <button
+            type="button"
+            className="retro-control retro-play"
+            onClick={() => setIsPlaying((current) => !current)}
+            aria-pressed={isPlaying}
+            aria-label={isPlaying ? 'Pausar musica' : 'Tocar musica'}
+          >
+            {isPlaying ? '❚❚' : '▶'}
+          </button>
+          <button type="button" className="retro-control" aria-label="Pausar faixa">❙❙</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function LilacGradientMusicPlayerCardInteractive() {
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [progress, setProgress] = useState(36)
+
+  useEffect(() => {
+    if (!isPlaying) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      setProgress((current) => (current >= 100 ? 0 : current + 0.4))
+    }, 120)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
+  const formatTime = (seconds: number) => {
+    const safeSeconds = Math.max(0, Math.floor(seconds))
+    const minutes = Math.floor(safeSeconds / 60)
+    const remainingSeconds = safeSeconds % 60
+    return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`
+  }
+
+  const totalDuration = 247
+  const currentTime = (progress / 100) * totalDuration
+
+  return (
+    <div className="component-mock mock-centered-demo mock-retro-player mock-retro-player-lilac" aria-label="Music player lilas com gradiente">
+      <div className="retro-top-actions" aria-label="Acoes do player">
+        <button type="button" className="retro-icon-btn" aria-label="Voltar">←</button>
+        <button type="button" className="retro-icon-btn" aria-label="Abrir menu">≡</button>
+      </div>
+
+      <div className="retro-cover-stage">
+        <div className={`retro-disc ${isPlaying ? 'is-playing' : ''}`}>
+          <div className="retro-album-art" role="img" aria-label="Capa do album Days Are Gone da banda Haim">
+            <img
+              src={haimCover}
+              alt="Capa do album Days Are Gone da banda Haim"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section className="retro-wave-panel" aria-label="Informacoes da musica">
+        <div className="retro-track-info">
+          <strong>Haim - The Wire</strong>
+          <p>Lavender Edition</p>
+        </div>
+
+        <div className="retro-progress-block" aria-label="Progresso da musica">
+          <div className="retro-time">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(totalDuration)}</span>
+          </div>
+          <div className="retro-progress">
+            <i style={{ width: `${progress}%` }} />
+            <span className="retro-progress-knob" style={{ left: `${progress}%` }} />
+          </div>
+        </div>
+
+        <div className="retro-player-controls" aria-label="Controles de reproducao">
+          <button type="button" className="retro-control" aria-label="Parar musica">■</button>
+          <button
+            type="button"
+            className="retro-control retro-play"
+            onClick={() => setIsPlaying((current) => !current)}
+            aria-pressed={isPlaying}
+            aria-label={isPlaying ? 'Pausar musica' : 'Tocar musica'}
+          >
+            {isPlaying ? '❚❚' : '▶'}
+          </button>
+          <button type="button" className="retro-control" aria-label="Pausar faixa">❙❙</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function StarlightNocturneMusicPlayerCardInteractive() {
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [progress, setProgress] = useState(42)
+
+  useEffect(() => {
+    if (!isPlaying) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      setProgress((current) => (current >= 100 ? 0 : current + 0.34))
+    }, 120)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
+  const formatTime = (seconds: number) => {
+    const safeSeconds = Math.max(0, Math.floor(seconds))
+    const minutes = Math.floor(safeSeconds / 60)
+    const remainingSeconds = safeSeconds % 60
+    return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`
+  }
+
+  const totalDuration = 247
+  const currentTime = (progress / 100) * totalDuration
+
+  return (
+    <div className="component-mock mock-centered-demo mock-retro-player mock-retro-player-starlight" aria-label="Music player escuro com estrelas vagando">
+      <div className="retro-stars" aria-hidden="true">
+        {starlightPlayerStars.map((star, index) => (
+          <i
+            key={`star-${index}`}
+            className="retro-star"
+            style={{
+              top: star.top,
+              left: star.left,
+              '--star-size': `${star.size}px`,
+              '--drift-x': star.driftX,
+              '--drift-y': star.driftY,
+              '--drift-duration': star.duration,
+              '--drift-delay': star.delay,
+              '--twinkle-duration': star.twinkle,
+            } as CSSProperties}
+          />
+        ))}
+      </div>
+
+      <div className="retro-top-actions" aria-label="Acoes do player">
+        <button type="button" className="retro-icon-btn" aria-label="Voltar">←</button>
+        <button type="button" className="retro-icon-btn" aria-label="Abrir menu">≡</button>
+      </div>
+
+      <div className="retro-cover-stage">
+        <div className={`retro-disc ${isPlaying ? 'is-playing' : ''}`}>
+          <div className="retro-album-art" role="img" aria-label="Capa do album Days Are Gone da banda Haim">
+            <img
+              src={haimCover}
+              alt="Capa do album Days Are Gone da banda Haim"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section className="retro-wave-panel" aria-label="Informacoes da musica">
+        <button type="button" className="retro-share-btn" aria-label="Compartilhar faixa">
+          <Share2 size={14} />
+        </button>
+
+        <div className="retro-track-info">
+          <strong>Haim - The Wire</strong>
+          <p>Starlight Nocturne</p>
+        </div>
+
+        <div className="retro-progress-block" aria-label="Progresso da musica">
+          <div className="retro-time">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(totalDuration)}</span>
+          </div>
+          <div className="retro-progress">
+            <i style={{ width: `${progress}%` }} />
+            <span className="retro-progress-knob" style={{ left: `${progress}%` }} />
+          </div>
+        </div>
+
+        <div className="retro-player-controls" aria-label="Controles de reproducao">
+          <button type="button" className="retro-control" aria-label="Parar musica">■</button>
+          <button
+            type="button"
+            className="retro-control retro-play"
+            onClick={() => setIsPlaying((current) => !current)}
+            aria-pressed={isPlaying}
+            aria-label={isPlaying ? 'Pausar musica' : 'Tocar musica'}
+          >
+            {isPlaying ? '❚❚' : '▶'}
+          </button>
+          <button type="button" className="retro-control" aria-label="Pausar faixa">❙❙</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function ForestLeafMusicPlayerCardInteractive() {
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [progress, setProgress] = useState(46)
+
+  useEffect(() => {
+    if (!isPlaying) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      setProgress((current) => (current >= 100 ? 0 : current + 0.32))
+    }, 120)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
+  const formatTime = (seconds: number) => {
+    const safeSeconds = Math.max(0, Math.floor(seconds))
+    const minutes = Math.floor(safeSeconds / 60)
+    const remainingSeconds = safeSeconds % 60
+    return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`
+  }
+
+  const totalDuration = 247
+  const currentTime = (progress / 100) * totalDuration
+
+  return (
+    <div className="component-mock mock-centered-demo mock-retro-player mock-retro-player-forest" aria-label="Music player com padrao de folhas em tema verde escuro">
+      <div className="retro-top-actions" aria-label="Acoes do player">
+        <button type="button" className="retro-icon-btn" aria-label="Voltar">←</button>
+        <button type="button" className="retro-icon-btn" aria-label="Abrir menu">≡</button>
+      </div>
+
+      <div className="retro-cover-stage">
+        <div className={`retro-disc ${isPlaying ? 'is-playing' : ''}`}>
+          <div className="retro-album-art" role="img" aria-label="Capa do album Days Are Gone da banda Haim">
+            <img
+              src={haimCover}
+              alt="Capa do album Days Are Gone da banda Haim"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section className="retro-wave-panel" aria-label="Informacoes da musica">
+        <button type="button" className="retro-share-btn" aria-label="Compartilhar faixa">
+          <Share2 size={14} />
+        </button>
+
+        <div className="retro-track-info">
+          <strong>Haim - The Wire</strong>
+          <p>Forest Canopy Mix</p>
+        </div>
+
+        <div className="retro-progress-block" aria-label="Progresso da musica">
+          <div className="retro-time">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(totalDuration)}</span>
+          </div>
+          <div className="retro-progress">
+            <i style={{ width: `${progress}%` }} />
+            <span className="retro-progress-knob" style={{ left: `${progress}%` }} />
+          </div>
+        </div>
+
+        <div className="retro-player-controls" aria-label="Controles de reproducao">
+          <button type="button" className="retro-control" aria-label="Parar musica">■</button>
+          <button
+            type="button"
+            className="retro-control retro-play"
+            onClick={() => setIsPlaying((current) => !current)}
+            aria-pressed={isPlaying}
+            aria-label={isPlaying ? 'Pausar musica' : 'Tocar musica'}
+          >
+            {isPlaying ? '❚❚' : '▶'}
+          </button>
+          <button type="button" className="retro-control" aria-label="Pausar faixa">❙❙</button>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function MusicPlayerTopIconButtonInteractive() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Top icon button do music player">
+      <button
+        type="button"
+        className="mp-icon-button mp-theme-night"
+        aria-pressed={isMenuOpen}
+        aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+        onClick={() => setIsMenuOpen((current) => !current)}
+      >
+        {isMenuOpen ? '×' : '≡'}
+      </button>
+      <p className="interactive-note">{isMenuOpen ? 'Midnight menu aberto' : 'Midnight menu fechado'}</p>
+    </div>
+  )
+}
+
+function MusicPlayerTopIconButtonForestInteractive() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Top icon button verde do music player">
+      <button
+        type="button"
+        className="mp-icon-button mp-theme-forest"
+        aria-pressed={isMenuOpen}
+        aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+        onClick={() => setIsMenuOpen((current) => !current)}
+      >
+        {isMenuOpen ? '×' : '≡'}
+      </button>
+      <p className="interactive-note">{isMenuOpen ? 'Forest menu aberto' : 'Forest menu fechado'}</p>
+    </div>
+  )
+}
+
+function MusicPlayerPlayButtonInteractive() {
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
-    <div className="component-mock mock-centered-demo mock-retro-player">
-      <strong>Neon Night Drive</strong>
-      <div className="retro-progress"><i style={{ width: isPlaying ? '62%' : '24%' }} /></div>
-      <button type="button" className="retro-play" onClick={() => setIsPlaying((current) => !current)}>
-        {isPlaying ? 'Pause' : 'Play'}
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Play button do music player">
+      <button
+        type="button"
+        className="mp-play-button mp-theme-night"
+        aria-pressed={isPlaying}
+        aria-label={isPlaying ? 'Pausar' : 'Tocar'}
+        onClick={() => setIsPlaying((current) => !current)}
+      >
+        {isPlaying ? '❚❚' : '▶'}
       </button>
+      <p className="interactive-note">{isPlaying ? 'Midnight em reprodução' : 'Midnight pronto para tocar'}</p>
+    </div>
+  )
+}
+
+function MusicPlayerPlayButtonForestInteractive() {
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Play button verde do music player">
+      <button
+        type="button"
+        className="mp-play-button mp-theme-forest"
+        aria-pressed={isPlaying}
+        aria-label={isPlaying ? 'Pausar' : 'Tocar'}
+        onClick={() => setIsPlaying((current) => !current)}
+      >
+        {isPlaying ? '❚❚' : '▶'}
+      </button>
+      <p className="interactive-note">{isPlaying ? 'Forest em reprodução' : 'Forest pronto para tocar'}</p>
+    </div>
+  )
+}
+
+function MusicPlayerShareButtonInteractive() {
+  const [shared, setShared] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Share button do music player">
+      <button
+        type="button"
+        className={`mp-share-button mp-theme-night ${shared ? 'is-shared' : ''}`}
+        aria-pressed={shared}
+        aria-label={shared ? 'Link compartilhado' : 'Compartilhar faixa'}
+        onClick={() => setShared((current) => !current)}
+      >
+        <Share2 size={18} />
+      </button>
+      <p className="interactive-note">{shared ? 'Midnight compartilhado' : 'Clique para compartilhar'}</p>
+    </div>
+  )
+}
+
+function MusicPlayerShareButtonForestInteractive() {
+  const [shared, setShared] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo mock-mp-button-stage" aria-label="Share button verde do music player">
+      <button
+        type="button"
+        className={`mp-share-button mp-theme-forest ${shared ? 'is-shared' : ''}`}
+        aria-pressed={shared}
+        aria-label={shared ? 'Link compartilhado' : 'Compartilhar faixa'}
+        onClick={() => setShared((current) => !current)}
+      >
+        <Share2 size={18} />
+      </button>
+      <p className="interactive-note">{shared ? 'Forest compartilhado' : 'Clique para compartilhar'}</p>
     </div>
   )
 }
@@ -1578,6 +2259,107 @@ function MorphingActionFabInteractive() {
         <button type="button">Save</button>
         <button type="button">Edit</button>
       </div>
+    </div>
+  )
+}
+
+function SoftDepthSearchBarInteractive() {
+  const [query, setQuery] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+
+  return (
+    <div className="component-mock mock-centered-demo">
+      <div className={`mock-soft-search-bar ${isFocused ? 'is-focused' : ''}`}>
+        <input
+          type="search"
+          value={query}
+          placeholder="Search...."
+          aria-label="Pesquisar"
+          onChange={(event) => setQuery(event.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        />
+        <button type="button" aria-label="Buscar" title="Buscar">
+          <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+            <path d="M10.5 3.5a7 7 0 1 0 4.45 12.4l4.33 4.33a1 1 0 0 0 1.42-1.42l-4.33-4.33A7 7 0 0 0 10.5 3.5Zm0 2a5 5 0 1 1 0 10a5 5 0 0 1 0-10Z" />
+          </svg>
+        </button>
+      </div>
+      <p className="interactive-note mock-soft-search-note">
+        {query.trim() ? `Consulta pronta: ${query}` : 'Campo com glow suave e profundidade premium'}
+      </p>
+    </div>
+  )
+}
+
+function NeonGlassLoginCardInteractive() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const canSubmit = email.trim() !== '' && password.trim() !== ''
+
+  return (
+    <div className="component-mock mock-login-scene">
+      <div className="mock-login-lights" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+
+      <form
+        className="mock-login-card"
+        onSubmit={(event) => {
+          event.preventDefault()
+          setIsSubmitted(true)
+        }}
+      >
+        <div className="mock-login-avatar" aria-hidden="true">
+          <UserRound size={21} strokeWidth={2.2} />
+        </div>
+
+        <div className="mock-login-headline">
+          <h4>Welcome</h4>
+          <p>Log in to your account</p>
+        </div>
+
+        <div className="mock-login-meta">
+          <span>Email</span>
+          <button type="button" className="mock-login-link">Forgot password?</button>
+        </div>
+
+        <label className="mock-login-field">
+          <span className="mock-login-icon" aria-hidden="true">@</span>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </label>
+
+        <div className="mock-login-meta is-password">
+          <span>Password</span>
+        </div>
+
+        <label className="mock-login-field">
+          <span className="mock-login-icon" aria-hidden="true">*</span>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+
+        <button type="submit" className="mock-login-submit" disabled={!canSubmit}>
+          Log In
+        </button>
+
+        <small className="mock-login-footer" aria-live="polite">
+          {isSubmitted ? 'Login simulated with lilac theme.' : 'Not registered yet? Sign up >'}
+        </small>
+      </form>
     </div>
   )
 }
@@ -1717,59 +2499,635 @@ ctaBtn.addEventListener('click', () => {
     : 'Passe o mouse para ver o brilho afiado'
 })`,
     },
-    'curadoria-toggle': {
-      html: `<div class="demo-toggle">\n  <button id="toggle-source" class="toggle-row">\n    <span>Dados mockados</span><span class="switch is-active"></span>\n  </button>\n  <button id="toggle-critical" class="toggle-row">\n    <span>Somente críticos</span><span class="switch"></span>\n  </button>\n  <p id="toggle-feedback">Fonte: Mockado • Filtro: Todos</p>\n</div>`,
-      css: `.demo-toggle {
+    'curadoria-neomorphic-button': {
+      html: `<section class="demo-neomorphic-stage">\n  <button id="neomorphic-button" class="demo-neomorphic-button is-drop" type="button" aria-label="Botao neomorfico">\n    <span class="demo-neomorphic-core"></span>\n  </button>\n  <p id="neomorphic-label">Parado</p>\n</section>`,
+      css: `.demo-neomorphic-stage {
+  width: min(100%, 320px);
+  min-height: 260px;
   display: grid;
-  gap: 0.55rem;
-  font-family: Arial, sans-serif;
+  place-items: center;
+  gap: 0.7rem;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
 }
 
-.toggle-row {
+.demo-neomorphic-button {
+  position: relative;
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  border: 0;
+  background: #dfe3e9;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.demo-neomorphic-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.demo-neomorphic-button.is-drop {
+  box-shadow:
+    -18px -16px 24px rgba(255, 255, 255, 0.95),
+    14px 16px 20px rgba(174, 183, 196, 0.45);
+}
+
+.demo-neomorphic-button.is-inner {
+  box-shadow:
+    inset -10px -10px 16px rgba(255, 255, 255, 0.82),
+    inset 10px 10px 16px rgba(180, 188, 201, 0.52),
+    -10px -10px 18px rgba(255, 255, 255, 0.82),
+    10px 10px 16px rgba(175, 184, 196, 0.34);
+}
+
+.demo-neomorphic-button.is-outter {
+  box-shadow:
+    -18px -16px 24px rgba(255, 255, 255, 0.95),
+    14px 16px 20px rgba(174, 183, 196, 0.45),
+    inset 0 0 0 14px rgba(225, 230, 237, 0.95);
+}
+
+.demo-neomorphic-button.is-outter .demo-neomorphic-core {
+  inset: 30px;
+  background: #d1d8e2;
+  box-shadow:
+    inset -8px -8px 14px rgba(255, 255, 255, 0.74),
+    inset 8px 8px 12px rgba(175, 184, 196, 0.42);
+}
+
+#neomorphic-label {
+  margin: 0;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: #6b7788;
+}`,
+      ts: `const button = document.getElementById('neomorphic-button') as HTMLButtonElement
+const label = document.getElementById('neomorphic-label') as HTMLParagraphElement
+
+let clickTimer: number | null = null
+
+function render() {
+  const state = button.dataset.state ?? 'drop'
+  button.classList.remove('is-drop', 'is-inner', 'is-outter')
+  button.classList.add('is-' + state)
+  if (state === 'drop') {
+    label.textContent = 'Parado'
+    return
+  }
+
+  if (state === 'inner') {
+    label.textContent = 'Clique'
+    return
+  }
+
+  label.textContent = 'Clique duplo'
+}
+
+button.addEventListener('click', () => {
+  if (clickTimer !== null) {
+    window.clearTimeout(clickTimer)
+  }
+
+  clickTimer = window.setTimeout(() => {
+    button.dataset.state = 'inner'
+    render()
+    clickTimer = null
+  }, 220)
+})
+
+button.addEventListener('dblclick', () => {
+  if (clickTimer !== null) {
+    window.clearTimeout(clickTimer)
+    clickTimer = null
+  }
+
+  button.dataset.state = 'outter'
+  render()
+})
+
+button.dataset.state = 'drop'
+render()`,
+    },
+    'soft-depth-search-bar': {
+      html: `<div class="soft-search-bar" id="soft-search-bar">\n  <input id="soft-search-input" type="search" placeholder="Search...." aria-label="Pesquisar" />\n  <button type="button" aria-label="Buscar">\n    <svg viewBox="0 0 24 24" role="presentation" focusable="false">\n      <path d="M10.5 3.5a7 7 0 1 0 4.45 12.4l4.33 4.33a1 1 0 0 0 1.42-1.42l-4.33-4.33A7 7 0 0 0 10.5 3.5Zm0 2a5 5 0 1 1 0 10a5 5 0 0 1 0-10Z" />\n    </svg>\n  </button>\n</div>\n<p id="soft-search-feedback">Campo com glow suave e profundidade premium</p>`,
+      css: `.soft-search-bar {
+  width: min(100%, 560px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 64px;
+  border-radius: 16px;
+  border: 1px solid rgba(163, 179, 255, 0.35);
+  padding: 0.4rem 0.4rem 0.4rem 1rem;
+  background: linear-gradient(165deg, rgba(2, 8, 30, 0.95), rgba(2, 8, 26, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(138, 161, 255, 0.2),
+    0 18px 30px rgba(2, 6, 20, 0.7),
+    0 0 26px rgba(76, 99, 255, 0.32),
+    0 0 24px rgba(222, 77, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.soft-search-bar input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f2f6ff;
+  font-family: 'Plus Jakarta Sans', 'Outfit', 'Segoe UI', sans-serif;
+  font-size: 1.28rem;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: 0.015em;
+}
+
+.soft-search-bar input::placeholder {
+  color: rgba(224, 233, 255, 0.78);
+}
+
+.soft-search-bar button {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  border: 1px solid rgba(144, 170, 255, 0.62);
+  background:
+    radial-gradient(circle at 30% 24%, rgba(196, 218, 255, 0.28), transparent 55%),
+    linear-gradient(168deg, #1f2b74 0%, #101a4f 62%, #0a1239 100%);
+  color: #b9d6ff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow:
+    0 12px 20px rgba(6, 11, 35, 0.7),
+    0 0 14px rgba(105, 144, 255, 0.34),
+    inset 0 1px 0 rgba(214, 228, 255, 0.42),
+    inset 0 -6px 10px rgba(8, 14, 40, 0.45);
+}
+
+.soft-search-bar button:hover,
+.soft-search-bar button:focus-visible {
+  border-color: rgba(184, 206, 255, 0.8);
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 24px rgba(6, 11, 35, 0.75),
+    0 0 18px rgba(119, 163, 255, 0.46),
+    inset 0 1px 0 rgba(226, 237, 255, 0.5),
+    inset 0 -7px 11px rgba(8, 14, 40, 0.5);
+}
+
+.soft-search-bar button:active {
+  transform: translateY(0);
+}
+
+.soft-search-bar button svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+#soft-search-feedback {
+  margin: 0.55rem 0 0;
+  color: rgba(220, 232, 255, 0.78);
+  font-family: 'Plus Jakarta Sans', 'Outfit', 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: 0.012em;
+}
+
+.soft-search-bar.is-focused {
+  border-color: rgba(187, 201, 255, 0.68);
+  box-shadow:
+    0 0 0 1px rgba(194, 209, 255, 0.32),
+    0 20px 36px rgba(2, 8, 24, 0.74),
+    0 0 30px rgba(101, 130, 255, 0.42),
+    0 0 30px rgba(222, 93, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}`,
+      ts: `const searchInput = document.getElementById('soft-search-input') as HTMLInputElement
+const searchBar = document.getElementById('soft-search-bar') as HTMLDivElement
+const feedback = document.getElementById('soft-search-feedback') as HTMLElement
+
+searchInput.addEventListener('focus', () => {
+  searchBar.classList.add('is-focused')
+})
+
+searchInput.addEventListener('blur', () => {
+  searchBar.classList.remove('is-focused')
+})
+
+searchInput.addEventListener('input', () => {
+  const normalized = searchInput.value.trim()
+  feedback.textContent = normalized
+    ? 'Consulta pronta: ' + normalized
+    : 'Campo com glow suave e profundidade premium'
+})`,
+    },
+    'neon-glass-login-card': {
+      html: `<section class="login-scene">
+  <form id="login-form" class="login-card" autocomplete="off">
+    <div class="login-avatar" aria-hidden="true"><span class="login-avatar-icon">👤</span></div>
+    <p class="login-caption">Sign in to your lilac account</p>
+
+    <div class="login-meta">
+      <span>Email</span>
+      <button type="button" class="link-like">Forgot password?</button>
+    </div>
+    <label class="login-field">
+      <span aria-hidden="true">@</span>
+      <input id="login-email" type="email" placeholder="Enter your email" />
+    </label>
+
+    <div class="login-meta"><span>Password</span></div>
+    <label class="login-field">
+      <span aria-hidden="true">*</span>
+      <input id="login-password" type="password" placeholder="Enter your password" />
+    </label>
+
+    <button id="login-submit" class="login-submit" type="submit" disabled>Log In</button>
+    <small id="login-feedback">Not registered yet? Sign up ></small>
+  </form>
+</section>`,
+      css: `.login-scene {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    linear-gradient(150deg, rgba(18, 7, 38, 0.42), rgba(43, 14, 70, 0.34)),
+    url('wpplilac.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.login-card {
+  width: min(100%, 322px);
+  border-radius: 34px;
+  padding: 1.2rem 1.15rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(18px);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+  box-shadow: 0 24px 50px rgba(16, 4, 40, 0.45);
+}
+
+.login-avatar {
+  width: 70px;
+  aspect-ratio: 1;
+  margin: 0 auto 0.75rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.login-avatar-icon {
+  font-size: 1.45rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(20, 5, 42, 0.35));
+}
+
+.login-caption {
+  margin: 0 0 0.6rem;
+  text-align: center;
+  color: #f4ebff;
+  font-weight: 600;
+}
+
+.login-meta {
   display: flex;
   justify-content: space-between;
+  color: rgba(247, 234, 255, 0.95);
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.login-field {
+  display: flex;
   align-items: center;
-  border: 1px solid #cddbe5;
-  border-radius: 0.72rem;
-  background: #fff;
-  padding: 0.45rem 0.62rem;
-  cursor: pointer;
-}
-
-.switch {
-  width: 46px;
-  height: 26px;
+  gap: 0.48rem;
+  min-height: 50px;
   border-radius: 999px;
-  background: #a5bac7;
-  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(52, 10, 74, 0.45);
+  padding: 0 0.9rem;
+  margin-bottom: 0.7rem;
 }
 
-.switch::after {
+.login-field input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+}
+
+.login-field input::placeholder {
+  color: rgba(241, 223, 255, 0.7);
+}
+
+.login-submit {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: 999px;
+  color: #fef5ff;
+  font-weight: 800;
+  background: linear-gradient(90deg, #8f63ff 0%, #d291ff 52%, #f1a8ff 100%);
+}
+
+.login-submit:disabled {
+  opacity: 0.58;
+}
+
+#login-feedback {
+  margin-top: 0.65rem;
+  display: block;
+  text-align: center;
+  color: rgba(247, 228, 255, 0.88);
+}`,
+      ts: `const form = document.getElementById('login-form') as HTMLFormElement
+const emailInput = document.getElementById('login-email') as HTMLInputElement
+const passwordInput = document.getElementById('login-password') as HTMLInputElement
+const submitButton = document.getElementById('login-submit') as HTMLButtonElement
+const feedback = document.getElementById('login-feedback') as HTMLElement
+
+const updateState = () => {
+  const canSubmit = emailInput.value.trim() !== '' && passwordInput.value.trim() !== ''
+  submitButton.disabled = !canSubmit
+}
+
+emailInput.addEventListener('input', updateState)
+passwordInput.addEventListener('input', updateState)
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  feedback.textContent = 'Login simulated with lilac theme.'
+})
+
+updateState()`,
+    },
+    'curadoria-toggle': {
+      html: `<div class="demo-toggle-solo">\n  <button id="sun-moon-toggle" class="celestial-toggle is-sun" type="button" aria-pressed="true" aria-label="Alternar para lua">\n    <span class="celestial-track"><i class="celestial-core"></i></span>\n  </button>\n</div>`,
+      css: `.demo-toggle-solo {
+  display: grid;
+  place-items: center;
+  min-height: 140px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.celestial-toggle {
+  --track-start: #0b1124;
+  --track-end: #1d2b57;
+  --core-a: #e6f0ff;
+  --core-b: #9cb4d8;
+  width: fit-content;
+  border: 1px solid rgba(162, 190, 255, 0.58);
+  border-radius: 999px;
+  padding: 0.26rem;
+  background: radial-gradient(circle at 12% 38%, rgba(184, 210, 255, 0.14), transparent 40%), linear-gradient(135deg, var(--track-start), var(--track-end));
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px rgba(164, 190, 255, 0.24),
+    0 0 20px rgba(90, 129, 236, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.celestial-track {
+  width: 84px;
+  height: 42px;
+  border-radius: 999px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(120deg, rgba(14, 19, 42, 0.98), rgba(5, 9, 24, 0.9));
+}
+
+.celestial-core {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, var(--core-a) 36%, var(--core-b) 100%);
+  box-shadow:
+    inset -6px -4px 0 rgba(120, 144, 182, 0.35),
+    0 0 14px rgba(153, 185, 255, 0.58);
+  transition: transform 0.26s ease;
+}
+
+.celestial-core::before {
   content: '';
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
+  inset: -10px;
   border-radius: 50%;
-  background: #fff;
-  transition: left 0.16s ease;
+  opacity: 0;
+  transform: scale(0.76);
+  transition: opacity 0.26s ease, transform 0.26s ease;
 }
 
-.switch.is-active {
-  background: #14a49a;
+.celestial-core::after {
+  content: '';
+  position: absolute;
+  inset: -11px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.78);
+  transition: opacity 0.26s ease, transform 0.26s ease;
 }
 
-.switch.is-active::after {
-  left: 23px;
+.celestial-toggle.is-sun {
+  --track-start: #291203;
+  --track-end: #6e2c08;
+  --core-a: #fff5b0;
+  --core-b: #ff9d2f;
+  border-color: rgba(255, 201, 117, 0.66);
+  box-shadow:
+    0 0 0 1px rgba(255, 209, 129, 0.36),
+    0 0 24px rgba(255, 169, 72, 0.44),
+    0 0 34px rgba(255, 128, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
-#toggle-feedback {
-  margin: 0;
-  color: #556572;
-  font-size: 0.82rem;
+.celestial-toggle.is-sun .celestial-core {
+  transform: translateX(40px);
+  background: radial-gradient(circle at 34% 30%, #fffef2 0%, #ffe486 34%, #ffb33f 72%, #ff8d21 100%);
+  box-shadow:
+    0 0 0 4px rgba(255, 185, 74, 0.16),
+    0 0 16px rgba(255, 186, 65, 0.92),
+    0 0 34px rgba(255, 132, 18, 0.62);
+}
+
+.celestial-toggle.is-sun .celestial-core::before {
+  opacity: 1;
+  transform: scale(1);
+  background: radial-gradient(circle, rgba(255, 214, 116, 0.46) 0%, rgba(255, 178, 68, 0.24) 48%, rgba(255, 136, 35, 0) 78%);
+  animation: sun-corona-pulse 2.2s ease-in-out infinite;
+}
+
+.celestial-toggle.is-sun .celestial-core::after {
+  opacity: 1;
+  transform: scale(1);
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 219, 120, 0.9) 0deg 8deg,
+    transparent 8deg 24deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 62%, #000 65% 74%, transparent 77% 100%);
+  mask: radial-gradient(circle, transparent 0 62%, #000 65% 74%, transparent 77% 100%);
+  animation: sun-rays-spin 10s linear infinite;
+}
+
+.celestial-toggle:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+@keyframes sun-rays-spin {
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes sun-corona-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
 }`,
-      ts: `const sourceBtn = document.getElementById('toggle-source') as HTMLButtonElement\nconst criticalBtn = document.getElementById('toggle-critical') as HTMLButtonElement\nconst sourceSwitch = sourceBtn.querySelector('.switch') as HTMLElement\nconst criticalSwitch = criticalBtn.querySelector('.switch') as HTMLElement\nconst feedback = document.getElementById('toggle-feedback') as HTMLElement\n\nlet useMockData = true\nlet onlyCritical = false\n\nfunction refresh() {\n  sourceSwitch.classList.toggle('is-active', useMockData)\n  criticalSwitch.classList.toggle('is-active', onlyCritical)\n  feedback.textContent = 'Fonte: ' + (useMockData ? 'Mockado' : 'Real') + ' • Filtro: ' + (onlyCritical ? 'Críticos' : 'Todos')\n}\n\nsourceBtn.addEventListener('click', () => {\n  useMockData = !useMockData\n  refresh()\n})\n\ncriticalBtn.addEventListener('click', () => {\n  onlyCritical = !onlyCritical\n  refresh()\n})\n\nrefresh()`,
+      ts: `const toggleBtn = document.getElementById('sun-moon-toggle') as HTMLButtonElement
+let isSunMode = true
+
+function refresh() {
+  toggleBtn.classList.toggle('is-sun', isSunMode)
+  toggleBtn.setAttribute('aria-pressed', String(isSunMode))
+  toggleBtn.setAttribute('aria-label', isSunMode ? 'Alternar para lua' : 'Alternar para sol')
+}
+
+toggleBtn.addEventListener('click', () => {
+  isSunMode = !isSunMode
+  refresh()
+})
+
+refresh()`,
+    },
+    'curadoria-realistic-toggle': {
+      html: `<div class="demo-realistic-toggle-wrap">\n  <button id="concave-rgb-toggle" class="realistic-toggle" type="button" aria-pressed="false" aria-label="Ativar Concave RGB Toggle">\n    <span class="realistic-toggle-knob"></span>\n  </button>\n</div>`,
+      css: `.demo-realistic-toggle-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 140px;
+}
+
+.realistic-toggle {
+  width: 220px;
+  height: 92px;
+  border: 1px solid rgba(154, 161, 179, 0.55);
+  border-radius: 999px;
+  padding: 8px;
+  position: relative;
+  background: linear-gradient(160deg, #e5e7ed 0%, #cfd3dc 52%, #c4c8d3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 0.7),
+    inset 0 -8px 12px rgba(93, 99, 118, 0.38),
+    inset 10px 0 12px rgba(255, 255, 255, 0.22),
+    inset -10px 0 12px rgba(102, 110, 130, 0.28),
+    0 10px 22px rgba(77, 83, 101, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.realistic-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 11px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(180deg, #bcc1cd 0%, #d6d9e2 45%, #b8beca 100%) padding-box,
+    linear-gradient(
+      120deg,
+      rgb(255, 96, 145) 0%,
+      rgb(255, 166, 74) 22%,
+      rgb(250, 235, 101) 42%,
+      rgb(84, 220, 142) 62%,
+      rgb(88, 164, 255) 82%,
+      rgb(196, 126, 255) 100%
+    ) border-box;
+  background-size: 100% 100%, 220% 220%;
+  background-position: 0 0, 0% 50%;
+  animation: rgb-border-flow 14s ease-in-out infinite;
+  box-shadow:
+    inset 0 8px 10px rgba(95, 102, 122, 0.42),
+    inset 0 -4px 6px rgba(255, 255, 255, 0.45);
+}
+
+@keyframes rgb-border-flow {
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+  50% {
+    background-position: 0 0, 100% 50%;
+  }
+  100% {
+    background-position: 0 0, 0% 50%;
+  }
+}
+
+.realistic-toggle-knob {
+  position: relative;
+  z-index: 1;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 33% 28%, #ffffff 0%, #dee1e8 54%, #b5bac8 100%);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.88),
+    inset 0 -8px 10px rgba(130, 136, 156, 0.4),
+    0 12px 14px rgba(86, 92, 113, 0.3),
+    0 2px 2px rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s cubic-bezier(0.3, 0.9, 0.2, 1);
+}
+
+.realistic-toggle.is-on {
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 0.68),
+    inset 0 -8px 12px rgba(93, 99, 118, 0.4),
+    inset 10px 0 12px rgba(255, 255, 255, 0.2),
+    inset -10px 0 12px rgba(102, 110, 130, 0.3),
+    0 10px 22px rgba(77, 83, 101, 0.25);
+}
+
+.realistic-toggle.is-on .realistic-toggle-knob {
+  transform: translateX(128px);
+}`,
+      ts: `const realisticToggle = document.getElementById('concave-rgb-toggle') as HTMLButtonElement
+let isOn = false
+
+function updateToggleState() {
+  realisticToggle.classList.toggle('is-on', isOn)
+  realisticToggle.setAttribute('aria-pressed', String(isOn))
+  realisticToggle.setAttribute('aria-label', isOn ? 'Desativar Concave RGB Toggle' : 'Ativar Concave RGB Toggle')
+}
+
+realisticToggle.addEventListener('click', () => {
+  isOn = !isOn
+  updateToggleState()
+})
+
+updateToggleState()`,
     },
     'curadoria-line-graph': {
       html: `<section class="demo-line">\n  <div class="demo-controls">\n    <button type="button" data-period="7">7 dias</button>\n    <button type="button" data-period="15">15 dias</button>\n    <button type="button" data-period="30">30 dias</button>\n  </div>\n  <svg id="line-chart" viewBox="0 0 360 170" aria-label="Grafico de tendencia">\n    <polyline id="line-up" class="up" points="" />\n    <polyline id="line-down" class="down" points="" />\n  </svg>\n  <p id="line-feedback">Passe o mouse nos pontos para ver os valores.</p>\n</section>`,
@@ -2549,6 +3907,95 @@ ctaBtn.addEventListener('click', () => {
 }`,
       ts: `// Loader automatico: barras em cascata formando onda.`,
     },
+    'curadoria-realistic-progress-loader': {
+      html: `<section class="demo-realistic-progress">\n  <div class="progress-track" id="progress-track">\n    <div class="progress-fill" id="progress-fill"></div>\n    <div class="progress-badge" id="progress-badge">50%</div>\n  </div>\n  <h3>Loading</h3>\n  <p>Please Wait...</p>\n</section>`,
+      css: `.demo-realistic-progress {
+  width: min(100%, 460px);
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+}
+
+.progress-track {
+  width: 100%;
+  height: 26px;
+  position: relative;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e8e8e8, #d2d2d2);
+  box-shadow:
+    inset 0 5px 8px rgba(112, 112, 112, 0.36),
+    inset 0 -3px 5px rgba(255, 255, 255, 0.88),
+    0 10px 14px rgba(88, 88, 88, 0.24);
+}
+
+.progress-fill {
+  height: 100%;
+  width: 50%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #d8f0c7 0%, #b7dda0 52%, #a4d08f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px rgba(120, 156, 100, 0.45),
+    0 8px 12px rgba(93, 130, 74, 0.38);
+}
+
+.progress-badge {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 56px;
+  text-align: center;
+  border-radius: 7px;
+  padding: 4px 8px;
+  border: 1px solid #d8d8d8;
+  background: linear-gradient(180deg, #fcfcfc, #ececec);
+  box-shadow: 0 5px 10px rgba(72, 72, 72, 0.2);
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.progress-badge::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(180deg, #f4f4f4, #e5e5e5);
+  border-right: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.demo-realistic-progress h3 {
+  margin: 0.4rem 0 0;
+  font-size: 2.1rem;
+  line-height: 1;
+  color: #636363;
+  font-weight: 700;
+}
+
+.demo-realistic-progress p {
+  margin: 0;
+  color: #7a7a7a;
+  font-size: 1.15rem;
+  font-weight: 500;
+}`,
+      ts: `const fill = document.getElementById('progress-fill') as HTMLDivElement
+const badge = document.getElementById('progress-badge') as HTMLDivElement
+
+let progress = 50
+
+window.setInterval(() => {
+  progress = progress >= 88 ? 18 : progress + 1
+  fill.style.width = progress + '%'
+  badge.style.left = Math.max(8, Math.min(92, progress)) + '%'
+  badge.textContent = progress + '%'
+}, 120)`,
+    },
     'curadoria-starfield-pattern': {
       html: `<div class="demo-starfield">\n  <div class="layer back"></div>\n  <div class="layer mid"></div>\n  <div class="layer front"></div>\n</div>`,
       css: `.demo-starfield {
@@ -3022,6 +4469,157 @@ applyScenario('rain')`,
       ts: `const forecast = ['22', '27', '20']
 console.log('Forecast pixel:', forecast.join(' / '))`,
     },
+    'lilac-weather-glass-card': {
+      html: `<section class="lilac-weather-preview">
+  <article class="lilac-weather-card">
+    <header>
+      <div>
+        <strong>San Francisco</strong>
+        <span>September 25, 2015</span>
+      </div>
+      <div class="temperature">
+        <p id="current-temp">72°</p>
+        <small>81° / 57°</small>
+      </div>
+    </header>
+
+    <section class="condition">
+      <div class="cloud-icon"><i class="sun"></i><i class="cloud"></i></div>
+      <strong>Cloudy</strong>
+    </section>
+
+    <nav class="tabs">
+      <button class="is-active" data-tab="hourly">Hourly</button>
+      <button data-tab="daily">Daily</button>
+      <button data-tab="details">Details</button>
+      <button data-tab="precipitation">Precipitation</button>
+    </nav>
+
+    <div class="hours" id="hours"></div>
+  </article>
+</section>`,
+      css: `.lilac-weather-preview {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    linear-gradient(150deg, rgba(16, 12, 51, 0.34), rgba(34, 23, 76, 0.3)),
+    url('wpplilac.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+}
+
+.lilac-weather-card {
+  width: min(100%, 760px);
+  min-height: 290px;
+  border-radius: 16px;
+  padding: 1.1rem 1.2rem 1rem;
+  color: rgba(245, 246, 255, 0.96);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09));
+  border: 1px solid rgba(238, 230, 255, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+.lilac-weather-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.lilac-weather-card header strong {
+  font-size: 1.75rem;
+  line-height: 1.05;
+}
+
+.lilac-weather-card .temperature {
+  text-align: right;
+}
+
+.lilac-weather-card .temperature p {
+  margin: 0;
+  font-size: 3.5rem;
+  line-height: 0.9;
+  font-weight: 300;
+}
+
+.condition {
+  margin-top: 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tabs {
+  margin-top: 0.62rem;
+  display: flex;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(240, 234, 255, 0.28);
+  padding-bottom: 0.44rem;
+}
+
+.tabs button {
+  border: 0;
+  background: transparent;
+  color: rgba(243, 238, 255, 0.7);
+}
+
+.tabs button.is-active {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.hours {
+  margin-top: 0.72rem;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.hours button {
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(251, 249, 255, 0.92);
+  min-height: 78px;
+  padding: 0.5rem 0.3rem;
+}`,
+      ts: `const temperatures = [72, 73, 75, 77, 81, 79]
+const labels = ['NOW', '11AM', '12PM', '1PM', '2PM', '3PM']
+
+const tempEl = document.getElementById('current-temp') as HTMLElement
+const hoursEl = document.getElementById('hours') as HTMLDivElement
+const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-tab]'))
+
+let selectedIndex = 4
+
+const render = () => {
+  tempEl.textContent = temperatures[selectedIndex] + '°'
+  hoursEl.innerHTML = ''
+
+  labels.forEach((label, index) => {
+    const button = document.createElement('button')
+    button.textContent = label + ' ' + temperatures[index] + '°'
+    if (selectedIndex === index) {
+      button.style.background = 'rgba(240, 232, 255, 0.28)'
+    }
+    button.addEventListener('click', () => {
+      selectedIndex = index
+      render()
+    })
+    hoursEl.appendChild(button)
+  })
+}
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    tabs.forEach((item) => item.classList.remove('is-active'))
+    tab.classList.add('is-active')
+  })
+})
+
+render()`,
+    },
     'glass-alert-modal': {
       html: `<article class="glass-alert-modal"><h4>Confirmar exclusao?</h4></article>`,
       css: `.glass-alert-modal {
@@ -3118,16 +4716,471 @@ console.log('Meta mensal:', progress + '%')`,
 console.log('Capacidade por squad:', squads)`,
     },
     'retro-music-player-card': {
-      html: `<article class="retro-player"><strong>Neon Night Drive</strong></article>`,
-      css: `.retro-player {
-  border-radius: 16px;
-  padding: 16px;
-  background: linear-gradient(165deg, #2e1b59, #5f3cc8);
-  color: #f5e8ff;
+      html: `<article class="soft-player">
+  <div class="top-actions">
+    <button type="button" aria-label="Voltar">←</button>
+    <button type="button" aria-label="Menu">≡</button>
+  </div>
+
+  <div id="disc" class="disc is-playing">
+    <div class="album-art">
+      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+    </div>
+  </div>
+
+  <section class="wave-panel">
+    <strong>Haim - The Wire</strong>
+    <p>HAIM</p>
+    <div class="progress"><i id="progress-fill" style="width: 28%"></i></div>
+    <button id="retro-play" type="button">❚❚</button>
+  </section>
+</article>`,
+      css: `.soft-player {
+  width: min(100%, 320px);
+  border-radius: 30px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #e6edf6 0%, #ccd9e9 52%, #f3f8ff 100%);
+  box-shadow: 12px 12px 22px #b7c5d6, -12px -12px 22px #f8fbff;
+}
+
+.top-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-actions button {
+  width: 42px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #4f7fb0;
+  background: linear-gradient(145deg, #f5f9ff, #cad8e8);
+  box-shadow: 8px 8px 14px #b0bfd0, -8px -8px 14px #f9fcff;
+}
+
+.disc {
+  width: 170px;
+  aspect-ratio: 1;
+  margin: 1.3rem auto 1.5rem;
+  border-radius: 50%;
+  padding: 12px;
+  background: linear-gradient(145deg, #f4f9ff, #c5d4e5);
+}
+
+.disc.is-playing {
+  animation: disc-spin 3.8s linear infinite;
+}
+
+.album-art {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 26%, rgba(232, 248, 255, 0.9) 0 18%, transparent 20%),
+    radial-gradient(circle at 68% 38%, rgba(160, 203, 236, 0.9) 0 21%, transparent 23%),
+    linear-gradient(140deg, #e6f2ff 0%, #a7cdf0 55%, #8ab7e2 100%);
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wave-panel {
+  position: relative;
+  margin: 0 -1rem -0.9rem;
+  border-radius: 28px;
+  padding: 3.2rem 1.2rem 1.25rem;
+  background: linear-gradient(180deg, #bfd7ed 0%, #d5e6f5 58%, #eef6ff 100%);
+  text-align: center;
+}
+
+.wave-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -26px;
+  height: 44px;
+  background:
+    radial-gradient(20px 16px at 14px 22px, #bfd7ed 98%, transparent 100%),
+    radial-gradient(34px 26px at 60px 22px, #bfd7ed 98%, transparent 100%),
+    radial-gradient(20px 16px at 120px 22px, #bfd7ed 98%, transparent 100%),
+    radial-gradient(34px 26px at calc(100% - 62px) 22px, #bfd7ed 98%, transparent 100%),
+    radial-gradient(20px 16px at calc(100% - 16px) 22px, #bfd7ed 98%, transparent 100%);
+}
+
+.progress {
+  margin: 0.9rem auto 1rem;
+  width: 92%;
+  height: 8px;
+  border-radius: 999px;
+  background: #dde8f3;
+  overflow: hidden;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #3f7fb6 0%, #62a6dc 100%);
+}
+
+@keyframes disc-spin {
+  to { transform: rotate(360deg); }
 }`,
-      ts: `const playButton = document.getElementById('retro-play')
-playButton?.addEventListener('click', () => {
-  // Alternar play/pause
+      ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
+const disc = document.getElementById('disc') as HTMLDivElement
+const progress = document.getElementById('progress-fill') as HTMLSpanElement
+
+let isPlaying = true
+let current = 28
+
+const interval = window.setInterval(() => {
+  if (!isPlaying) return
+  current = current >= 100 ? 0 : current + 0.4
+  progress.style.width = current + '%'
+}, 120)
+
+playButton.addEventListener('click', () => {
+  isPlaying = !isPlaying
+  disc.classList.toggle('is-playing', isPlaying)
+  playButton.textContent = isPlaying ? '❚❚' : '▶'
+})
+
+window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
+    },
+    'lilac-gradient-music-player-card': {
+      html: `<article class="lilac-player">
+  <div class="top-actions">
+    <button type="button" aria-label="Voltar">←</button>
+    <button type="button" aria-label="Menu">≡</button>
+  </div>
+
+  <div id="disc" class="disc is-playing">
+    <div class="album-art">
+      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+    </div>
+  </div>
+
+  <section class="wave-panel">
+    <strong>Haim - The Wire</strong>
+    <p>Lavender Edition</p>
+    <div class="progress"><i id="progress-fill" style="width: 36%"></i></div>
+    <button id="retro-play" type="button">❚❚</button>
+  </section>
+</article>`,
+      css: `.lilac-player {
+  width: min(100%, 320px);
+  border-radius: 32px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #f6eeff 0%, #dcc8ff 52%, #fbf7ff 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.disc {
+  width: 170px;
+  aspect-ratio: 1;
+  margin: 1.3rem auto 1.5rem;
+  border-radius: 50%;
+  padding: 12px;
+  background: linear-gradient(145deg, #fff8ff, #d9bdff);
+}
+
+.disc.is-playing {
+  animation: disc-spin 3.8s linear infinite;
+}
+
+.wave-panel {
+  border-radius: 28px;
+  padding: 3.2rem 1.2rem 1.25rem;
+  background: linear-gradient(180deg, #d8bcff 0%, #e7d2ff 58%, #fdf9ff 100%);
+  text-align: center;
+}`,
+      ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
+const disc = document.getElementById('disc') as HTMLDivElement
+const progress = document.getElementById('progress-fill') as HTMLSpanElement
+
+let isPlaying = true
+let current = 36
+
+const interval = window.setInterval(() => {
+  if (!isPlaying) return
+  current = current >= 100 ? 0 : current + 0.4
+  progress.style.width = current + '%'
+}, 120)
+
+playButton.addEventListener('click', () => {
+  isPlaying = !isPlaying
+  disc.classList.toggle('is-playing', isPlaying)
+  playButton.textContent = isPlaying ? '❚❚' : '▶'
+})
+
+window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
+    },
+    'starlight-nocturne-music-player-card': {
+      html: `<article class="starlight-player">
+  <div class="stars"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="top-actions">
+    <button type="button" aria-label="Voltar">←</button>
+    <button type="button" aria-label="Menu">≡</button>
+  </div>
+
+  <div id="disc" class="disc is-playing">
+    <div class="album-art">
+      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+    </div>
+  </div>
+
+  <section class="wave-panel dark">
+    <button type="button" class="share-btn" aria-label="Compartilhar faixa">↗</button>
+    <strong>Haim - The Wire</strong>
+    <p>Starlight Nocturne</p>
+    <div class="progress"><i id="progress-fill" style="width: 42%"></i></div>
+    <button id="retro-play" type="button">❚❚</button>
+  </section>
+</article>`,
+      css: `.starlight-player {
+  position: relative;
+  width: min(100%, 320px);
+  border-radius: 32px;
+  padding: 1rem;
+  overflow: hidden;
+  background: linear-gradient(160deg, #070914 0%, #111830 52%, #1f2450 100%);
+}
+
+.stars i {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #ffffff;
+  animation: drift 8s ease-in-out infinite alternate;
+}
+
+.wave-panel.dark {
+  position: relative;
+  background: linear-gradient(180deg, rgba(26, 32, 67, 0.96) 0%, rgba(16, 18, 39, 0.98) 100%);
+  color: #e9edff;
+}`,
+      ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
+const disc = document.getElementById('disc') as HTMLDivElement
+const progress = document.getElementById('progress-fill') as HTMLSpanElement
+
+let isPlaying = true
+let current = 42
+
+const interval = window.setInterval(() => {
+  if (!isPlaying) return
+  current = current >= 100 ? 0 : current + 0.34
+  progress.style.width = current + '%'
+}, 120)
+
+playButton.addEventListener('click', () => {
+  isPlaying = !isPlaying
+  disc.classList.toggle('is-playing', isPlaying)
+  playButton.textContent = isPlaying ? '❚❚' : '▶'
+})
+
+window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
+    },
+    'forest-leaf-music-player-card': {
+      html: `<article class="forest-player">
+  <div class="leaves"><span></span><span></span><span></span><span></span></div>
+  <div class="top-actions">
+    <button type="button" aria-label="Voltar">←</button>
+    <button type="button" aria-label="Menu">≡</button>
+  </div>
+
+  <div id="disc" class="disc is-playing">
+    <div class="album-art">
+      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+    </div>
+  </div>
+
+  <section class="wave-panel forest">
+    <button type="button" class="share-btn" aria-label="Compartilhar faixa">↗</button>
+    <strong>Haim - The Wire</strong>
+    <p>Forest Canopy Mix</p>
+    <div class="progress"><i id="progress-fill" style="width: 46%"></i></div>
+    <button id="retro-play" type="button">❚❚</button>
+  </section>
+</article>`,
+      css: `.forest-player {
+  position: relative;
+  width: min(100%, 320px);
+  border-radius: 32px;
+  padding: 1rem;
+  overflow: hidden;
+  background: linear-gradient(165deg, #10291d 0%, #1C472D 52%, #2e6b45 100%);
+}
+
+.leaves span {
+  position: absolute;
+  width: 18px;
+  height: 30px;
+  border-radius: 100% 0;
+  background: rgba(166, 214, 150, 0.16);
+  animation: sway 7s ease-in-out infinite alternate;
+}
+
+.wave-panel.forest {
+  position: relative;
+  background: linear-gradient(180deg, rgba(24, 61, 40, 0.96) 0%, rgba(13, 33, 22, 0.98) 100%);
+  color: #eaf9ec;
+}`,
+      ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
+const disc = document.getElementById('disc') as HTMLDivElement
+const progress = document.getElementById('progress-fill') as HTMLSpanElement
+
+let isPlaying = true
+let current = 46
+
+const interval = window.setInterval(() => {
+  if (!isPlaying) return
+  current = current >= 100 ? 0 : current + 0.32
+  progress.style.width = current + '%'
+}, 120)
+
+playButton.addEventListener('click', () => {
+  isPlaying = !isPlaying
+  disc.classList.toggle('is-playing', isPlaying)
+  playButton.textContent = isPlaying ? '❚❚' : '▶'
+})
+
+window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
+    },
+    'music-player-top-icon-button': {
+      html: `<button id="mp-top-btn" class="mp-top-icon-button mp-theme-night" type="button" aria-pressed="false" aria-label="Abrir menu">≡</button>`,
+      css: `.mp-top-icon-button {
+  width: 46px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #d9e4ff;
+  font-size: 1.25rem;
+  background: linear-gradient(145deg, #253264, #151d39);
+  box-shadow: 8px 8px 14px rgba(8, 12, 26, 0.62), -6px -6px 12px rgba(75, 95, 164, 0.24);
+}`,
+      ts: `const topButton = document.getElementById('mp-top-btn') as HTMLButtonElement
+
+topButton.addEventListener('click', () => {
+  const isOpen = topButton.getAttribute('aria-pressed') === 'true'
+  topButton.setAttribute('aria-pressed', String(!isOpen))
+  topButton.setAttribute('aria-label', isOpen ? 'Abrir menu' : 'Fechar menu')
+  topButton.textContent = isOpen ? '≡' : '×'
+})`,
+    },
+    'music-player-top-icon-button-forest': {
+      html: `<button id="mp-top-btn" class="mp-top-icon-button mp-theme-forest" type="button" aria-pressed="false" aria-label="Abrir menu">≡</button>`,
+      css: `.mp-top-icon-button {
+  width: 46px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #d2efd6;
+  font-size: 1.25rem;
+  background: linear-gradient(145deg, #2d6c42, #173b26);
+  box-shadow: 8px 8px 14px rgba(6, 16, 10, 0.48), -6px -6px 12px rgba(92, 150, 98, 0.2);
+}`,
+      ts: `const topButton = document.getElementById('mp-top-btn') as HTMLButtonElement
+
+topButton.addEventListener('click', () => {
+  const isOpen = topButton.getAttribute('aria-pressed') === 'true'
+  topButton.setAttribute('aria-pressed', String(!isOpen))
+  topButton.textContent = isOpen ? '≡' : '×'
+})`,
+    },
+    'music-player-play-button': {
+      html: `<button id="mp-play-btn" class="mp-play-button mp-theme-night" type="button" aria-pressed="false" aria-label="Tocar">▶</button>`,
+      css: `.mp-play-button {
+  width: 68px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.35rem;
+  background: linear-gradient(145deg, #8b8bff, #6876ff);
+  box-shadow: 10px 10px 18px rgba(16, 21, 46, 0.62), -8px -8px 16px rgba(128, 142, 247, 0.32);
+}`,
+      ts: `const playButton = document.getElementById('mp-play-btn') as HTMLButtonElement
+
+playButton.addEventListener('click', () => {
+  const isPlaying = playButton.getAttribute('aria-pressed') === 'true'
+  playButton.setAttribute('aria-pressed', String(!isPlaying))
+  playButton.setAttribute('aria-label', isPlaying ? 'Tocar' : 'Pausar')
+  playButton.textContent = isPlaying ? '▶' : '❚❚'
+})`,
+    },
+    'music-player-play-button-forest': {
+      html: `<button id="mp-play-btn" class="mp-play-button mp-theme-forest" type="button" aria-pressed="false" aria-label="Tocar">▶</button>`,
+      css: `.mp-play-button {
+  width: 68px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.35rem;
+  background: linear-gradient(145deg, #7dbd74, #5c9a55);
+  box-shadow: 10px 10px 18px rgba(10, 23, 14, 0.6), -8px -8px 16px rgba(131, 189, 122, 0.3);
+}`,
+      ts: `const playButton = document.getElementById('mp-play-btn') as HTMLButtonElement
+
+playButton.addEventListener('click', () => {
+  const isPlaying = playButton.getAttribute('aria-pressed') === 'true'
+  playButton.setAttribute('aria-pressed', String(!isPlaying))
+  playButton.textContent = isPlaying ? '▶' : '❚❚'
+})`,
+    },
+    'music-player-share-button': {
+      html: `<button id="mp-share-btn" class="mp-share-button mp-theme-night" type="button" aria-pressed="false" aria-label="Compartilhar faixa">↗</button>`,
+      css: `.mp-share-button {
+  width: 42px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #d8e2ff;
+  font-size: 1rem;
+  background: linear-gradient(145deg, #253264, #151d39);
+  box-shadow: 7px 7px 12px rgba(7, 10, 23, 0.6), -5px -5px 10px rgba(78, 98, 165, 0.24);
+}
+
+.mp-share-button.is-shared {
+  color: #ffffff;
+  background: linear-gradient(145deg, #5c9a55, #7dbd74);
+}`,
+      ts: `const shareButton = document.getElementById('mp-share-btn') as HTMLButtonElement
+
+shareButton.addEventListener('click', () => {
+  const isShared = shareButton.getAttribute('aria-pressed') === 'true'
+  shareButton.setAttribute('aria-pressed', String(!isShared))
+  shareButton.classList.toggle('is-shared', !isShared)
+})`,
+    },
+    'music-player-share-button-forest': {
+      html: `<button id="mp-share-btn" class="mp-share-button mp-theme-forest" type="button" aria-pressed="false" aria-label="Compartilhar faixa">↗</button>`,
+      css: `.mp-share-button {
+  width: 42px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  color: #daf3de;
+  font-size: 1rem;
+  background: linear-gradient(145deg, #2d6c42, #173b26);
+  box-shadow: 6px 6px 12px rgba(5, 15, 9, 0.55), -4px -4px 10px rgba(76, 133, 84, 0.2);
+}
+
+.mp-share-button.is-shared {
+  color: #ffffff;
+  background: linear-gradient(145deg, #7dbd74, #5c9a55);
+}`,
+      ts: `const shareButton = document.getElementById('mp-share-btn') as HTMLButtonElement
+
+shareButton.addEventListener('click', () => {
+  const isShared = shareButton.getAttribute('aria-pressed') === 'true'
+  shareButton.setAttribute('aria-pressed', String(!isShared))
+  shareButton.classList.toggle('is-shared', !isShared)
 })`,
     },
     'arcade-score-pill': {
@@ -3289,3 +5342,4 @@ function TabbedCodeBox({ activeTab, onTabChange, code, copied, onCopy }: TabbedC
     </section>
   )
 }
+
