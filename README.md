@@ -1,6 +1,6 @@
 # BestElements
 
-BestElements e uma galeria autoral de componentes visuais, loaders, padroes e micro-experiencias front-end.
+BestElements e uma galeria autoral de componentes visuais, loaders, padroes e micro-experiencias Front End.
 
 O projeto une portfolio tecnico e laboratorio de UI: cada item possui preview interativo e snippets de codigo (HTML, CSS e TypeScript) para estudo, referencia e reutilizacao com credito.
 
@@ -36,12 +36,12 @@ O BestElements foi criado para centralizar elementos de interface prontos para:
 
 ## Stack
 
-| Camada | Tecnologias |
-| --- | --- |
-| Front-end | React 19, TypeScript 6, Vite 8, React Router DOM 7 |
-| UI | CSS com variaveis (tokens), design responsivo, dark/light mode |
-| Iconografia | Lucide React |
-| Qualidade | ESLint, typescript-eslint, @vitejs/plugin-react |
+| Camada      | Tecnologias                                                    |
+| ----------- | -------------------------------------------------------------- |
+| Front-end   | React 19, TypeScript 6, Vite 8, React Router DOM 7             |
+| UI          | CSS com variaveis (tokens), design responsivo, dark/light mode |
+| Iconografia | Lucide React                                                   |
+| Qualidade   | ESLint, typescript-eslint, @vitejs/plugin-react                |
 
 ## Arquitetura
 
