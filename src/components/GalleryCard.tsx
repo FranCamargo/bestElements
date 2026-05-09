@@ -37,7 +37,7 @@ export function GalleryCard({ item, isLiked, onToggleLike }: GalleryCardProps) {
           </button>
 
           <Link to={item.route} className="details-link">
-            View
+            Ver
             <MoveRight size={17} />
           </Link>
         </div>

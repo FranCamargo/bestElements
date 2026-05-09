@@ -51,10 +51,10 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
     <main className="app-shell">
       <header className="hero-section">
         <p className="hero-kicker">Fran Camargo</p>
-        <h1>UI & Dashboard gallery</h1>
+        <h1>UI & Dashboard Gallery</h1>
         <p className="hero-signature">
-          Curadoria de interfaces e componentes front-end desenvolvidos por mim, para você se inspirar e utilizar. 
-          Clique nos cards para ver detalhes e código-fonte.
+          Curadoria de interfaces e componentes front-end desenvolvidos por mim para você se inspirar e utilizar.
+          Clique nos cards para ver detalhes e o código-fonte.
         </p>
       </header>
 
