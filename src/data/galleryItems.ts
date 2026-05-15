@@ -871,4 +871,44 @@ export const galleryItems: GalleryItem[] = [
       trend: '+13% com hierarquia visual e contraste tematico',
     },
   },
+  {
+    slug: 'curadoria-grid-fade-pattern',
+    title: 'Grid Fade Pattern',
+    subtitle: 'Grade suave com fade radial para fundos de interface.',
+    category: 'Padrao Visual',
+    gradientClass: 'thumb-curadoria-grid-fade-pattern',
+    route: '/elementos/curadoria-grid-fade-pattern',
+    description:
+      'Padrao visual com grade fina e mascara radial para criar profundidade discreta em backgrounds sem comprometer legibilidade.',
+    highlights: [
+      'Versao base para temas escuros com linhas sutis',
+      'Variacao light com contraste calibrado para fundos claros',
+      'Aplicacao simples com apenas uma div de overlay',
+    ],
+    kpi: {
+      label: 'Leitura de Conteudo com Overlay',
+      value: '95%',
+      trend: '+11 p.p. em testes com fundo texturizado',
+    },
+  },
+  {
+    slug: 'curadoria-screen-lights-pattern',
+    title: 'Olive lights pattern',
+    subtitle: 'Focos de luz desfocados com flutuacao vertical suave.',
+    category: 'Padrao Visual',
+    gradientClass: 'thumb-curadoria-screen-lights-pattern',
+    route: '/elementos/curadoria-screen-lights-pattern',
+    description:
+      'Padrao visual com blobs luminosos desfocados que sobem e descem lentamente, simulando luzes voltadas para a tela em um ambiente escuro.',
+    highlights: [
+      'Movimento vertical continuo com velocidade suave',
+      'Blobs amplos com blur para criar atmosfera cinematografica',
+      'Composicao pronta para hero sections e planos de fundo imersivos',
+    ],
+    kpi: {
+      label: 'Percepcao de Atmosfera Visual',
+      value: '94%',
+      trend: '+12 p.p. em testes com fundo dinamico',
+    },
+  },
 ]

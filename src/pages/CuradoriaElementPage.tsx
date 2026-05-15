@@ -160,6 +160,10 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <GradientRiverPatternInteractive />
     case 'curadoria-fluid-water':
       return <FluidWaterInteractive />
+    case 'curadoria-grid-fade-pattern':
+      return <GridFadePatternInteractive />
+    case 'curadoria-screen-lights-pattern':
+      return <ScreenLightsPatternInteractive />
     case 'velvet-command-button':
       return <VelvetCommandButtonInteractive />
     case 'confetti-pop-button':
@@ -1282,6 +1286,38 @@ function FluidWaterInteractive() {
         <div className="water-body" />
         <div className="wave" />
       </div>
+    </div>
+  )
+}
+
+function GridFadePatternInteractive() {
+  const [isLight, setIsLight] = useState(false)
+
+  return (
+    <div
+      className={`component-mock mock-pattern-grid-fade ${isLight ? 'is-light' : ''}`}
+      aria-label="Padrao de grade com fade radial"
+    >
+      <button
+        type="button"
+        className="grid-fade-toggle"
+        onClick={() => setIsLight((current) => !current)}
+        aria-pressed={isLight}
+      >
+        {isLight ? 'Light' : 'Default'}
+      </button>
+
+      <div className={`bg-pattern ${isLight ? 'light' : ''}`} />
+    </div>
+  )
+}
+
+function ScreenLightsPatternInteractive() {
+  return (
+    <div className="component-mock mock-pattern-screen-lights" aria-label="Padrao de luzes suaves em movimento vertical">
+      <span className="screen-light-orb orb-left" />
+      <span className="screen-light-orb orb-right" />
+      <span className="screen-light-orb orb-center" />
     </div>
   )
 }
@@ -4169,6 +4205,85 @@ window.setInterval(() => {
   }
 }`,
       ts: `// Padrao de agua com preenchimento gradual e ondas laterais.`,
+    },
+    'curadoria-grid-fade-pattern': {
+      html: `<div class="bg-pattern"></div>\n<!-- ou -->\n<div class="bg-pattern light"></div>`,
+      css: `.bg-pattern {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(140, 204, 232, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 204, 232, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.72), transparent 75%);
+  z-index: -1;
+}
+
+.bg-pattern.light {
+  background-image:
+    linear-gradient(rgba(40, 94, 128, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40, 94, 128, 0.11) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.55), transparent 78%);
+}`,
+      ts: `// Padrao passivo: sem JavaScript necessario para renderizar o efeito.`,
+    },
+    'curadoria-screen-lights-pattern': {
+      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n  <span class="screen-light-orb orb-center"></span>\n</div>`,
+      css: `.screen-lights-pattern {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #1f2024;
+}
+
+.screen-light-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(52px);
+  background: radial-gradient(circle at center, rgba(193, 227, 122, 0.92) 0%, rgba(193, 227, 122, 0.18) 64%, transparent 100%);
+  animation: screen-light-float 8.2s ease-in-out infinite;
+}
+
+.orb-left {
+  width: clamp(220px, 36vw, 420px);
+  height: clamp(220px, 36vw, 420px);
+  left: -7%;
+  bottom: 2%;
+  animation-delay: -1.4s;
+}
+
+.orb-right {
+  width: clamp(240px, 38vw, 460px);
+  height: clamp(240px, 38vw, 460px);
+  right: 4%;
+  top: -4%;
+  animation-duration: 9.4s;
+}
+
+.orb-center {
+  width: clamp(180px, 24vw, 300px);
+  height: clamp(180px, 24vw, 300px);
+  left: 44%;
+  top: 33%;
+  opacity: 0.38;
+  animation-duration: 10.2s;
+  animation-delay: -2.3s;
+}
+
+@keyframes screen-light-float {
+  0%,
+  100% {
+    transform: translate3d(0, -16px, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, 16px, 0) scale(1.04);
+  }
+}`,
+      ts: `// Padrao passivo: toda a animacao acontece via CSS.`,
     },
     'velvet-command-button': {
       html: `<button class="velvet-command-btn">Deploy seguro</button>`,

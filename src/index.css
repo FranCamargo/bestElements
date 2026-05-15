@@ -658,6 +658,14 @@ body {
   background: linear-gradient(145deg, #20103f 0%, #5c1f81 48%, #f9a8ff 100%);
 }
 
+.thumb-curadoria-grid-fade-pattern {
+  background: linear-gradient(145deg, #122437 0%, #2e5f84 48%, #c5e8f6 100%);
+}
+
+.thumb-curadoria-screen-lights-pattern {
+  background: linear-gradient(145deg, #111217 0%, #2d333b 52%, #7a9158 100%);
+}
+
 .thumb-velvet-command-button {
   background: linear-gradient(145deg, #2d2149 0%, #7654bd 50%, #d8cbff 100%);
 }
@@ -1670,7 +1678,9 @@ body {
 .mock-loader-candy,
 .mock-loader-wave-bars,
 .mock-pattern-starfield,
-.mock-pattern-gradient-river {
+.mock-pattern-gradient-river,
+.mock-pattern-grid-fade,
+.mock-pattern-screen-lights {
   width: 100%;
   height: 100%;
   display: grid;
@@ -1995,6 +2005,105 @@ body {
   background: linear-gradient(140deg, #111a37, #25124d);
 }
 
+.mock-pattern-grid-fade {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(128, 202, 236, 0.22), transparent 50%),
+    linear-gradient(152deg, #071624 0%, #10273c 55%, #13344d 100%);
+  isolation: isolate;
+}
+
+.mock-pattern-grid-fade.is-light {
+  background:
+    radial-gradient(circle at 22% 20%, rgba(161, 205, 226, 0.3), transparent 55%),
+    linear-gradient(152deg, #f3f8fb 0%, #e6f0f6 55%, #d9e8f1 100%);
+}
+
+.mock-pattern-grid-fade .bg-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(140, 204, 232, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 204, 232, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.72), transparent 75%);
+  z-index: 0;
+}
+
+.mock-pattern-grid-fade .bg-pattern.light {
+  background-image:
+    linear-gradient(rgba(40, 94, 128, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40, 94, 128, 0.11) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.55), transparent 78%);
+}
+
+.grid-fade-toggle {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  z-index: 2;
+  border: 1px solid rgba(124, 183, 213, 0.58);
+  border-radius: 999px;
+  min-height: 1.8rem;
+  padding: 0 0.62rem;
+  background: rgba(6, 20, 30, 0.64);
+  color: #dbedf7;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mock-pattern-screen-lights {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #1f2024;
+  isolation: isolate;
+}
+
+.screen-light-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(52px);
+  background: radial-gradient(
+    circle at center,
+    rgba(193, 227, 122, 0.92) 0%,
+    rgba(193, 227, 122, 0.18) 64%,
+    transparent 100%
+  );
+  will-change: transform;
+  animation: screen-light-float 8.2s ease-in-out infinite;
+}
+
+.screen-light-orb.orb-left {
+  width: clamp(220px, 36vw, 420px);
+  height: clamp(220px, 36vw, 420px);
+  left: -7%;
+  bottom: 2%;
+  animation-delay: -1.4s;
+}
+
+.screen-light-orb.orb-right {
+  width: clamp(240px, 38vw, 460px);
+  height: clamp(240px, 38vw, 460px);
+  right: 4%;
+  top: -4%;
+  animation-duration: 9.4s;
+}
+
+.screen-light-orb.orb-center {
+  width: clamp(180px, 24vw, 300px);
+  height: clamp(180px, 24vw, 300px);
+  left: 44%;
+  top: 33%;
+  opacity: 0.38;
+  animation-duration: 10.2s;
+  animation-delay: -2.3s;
+}
+
 .river-layer {
   position: absolute;
   inset: -30% -26%;
@@ -2080,6 +2189,17 @@ body {
 @keyframes wave-bar-jump {
   0%, 100% { height: 22px; }
   50% { height: 82px; }
+}
+
+@keyframes screen-light-float {
+  0%,
+  100% {
+    transform: translate3d(0, -16px, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, 16px, 0) scale(1.04);
+  }
 }
 
 .interactive-progress input[type='range'] {
