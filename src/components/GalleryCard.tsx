@@ -10,8 +10,11 @@ type GalleryCardProps = {
 }
 
 export function GalleryCard({ item, isLiked, onToggleLike }: GalleryCardProps) {
+  const isScreenLightsCard = item.slug.startsWith('curadoria-screen-lights-pattern')
+  const cardClasses = `gallery-card ${isScreenLightsCard ? 'gallery-card-screen-lights' : ''}`
+
   return (
-    <article className="gallery-card">
+    <article className={cardClasses}>
       <div className="card-thumbnail card-thumbnail-clean">
         <div className="card-preview-live" aria-hidden="true">
           <div className="preview-center-frame">

@@ -122,6 +122,16 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <DashboardInteractive />
     case 'curadoria-button':
       return <ButtonInteractive />
+    case 'curadoria-ocean-pill-button':
+      return <OceanPillButtonInteractive />
+    case 'curadoria-rose-gold-pill-button':
+      return <RoseGoldPillButtonInteractive />
+    case 'curadoria-forest-pill-button':
+      return <ForestPillButtonInteractive />
+    case 'curadoria-wood-brown-pill-button':
+      return <WoodBrownPillButtonInteractive />
+    case 'curadoria-obsidian-plum-pill-button':
+      return <ObsidianPlumPillButtonInteractive />
     case 'curadoria-neomorphic-button':
       return <NeomorphicButtonInteractive />
     case 'soft-depth-search-bar':
@@ -163,7 +173,13 @@ export function InteractivePreview({ slug }: { slug: string }) {
     case 'curadoria-grid-fade-pattern':
       return <GridFadePatternInteractive />
     case 'curadoria-screen-lights-pattern':
-      return <ScreenLightsPatternInteractive />
+      return <ScreenLightsPatternInteractive theme="olive" />
+    case 'curadoria-screen-lights-pattern-amber':
+      return <ScreenLightsPatternInteractive theme="amber" />
+    case 'curadoria-screen-lights-pattern-aqua':
+      return <ScreenLightsPatternInteractive theme="aqua" />
+    case 'curadoria-screen-lights-pattern-rose':
+      return <ScreenLightsPatternInteractive theme="rose" />
     case 'velvet-command-button':
       return <VelvetCommandButtonInteractive />
     case 'confetti-pop-button':
@@ -285,19 +301,46 @@ function ButtonInteractive() {
   const [pressed, setPressed] = useState(false)
 
   return (
-    <div className="component-mock mock-sharp-button-wrap">
-      <button
-        type="button"
-        className={`mock-sharp-btn ${pressed ? 'is-engaged' : ''}`}
-        onClick={() => setPressed((v) => !v)}
-      >
-        Button
-      </button>
-      <p className="interactive-note mock-sharp-button-note">
-        {pressed ? 'Acao confirmada com destaque visual' : 'Passe o mouse para ver o brilho afiado'}
-      </p>
-    </div>
+    <button
+      type="button"
+      className={`mock-sharp-btn ${pressed ? 'is-engaged' : ''}`}
+      onClick={() => setPressed((v) => !v)}
+    >
+      Button
+    </button>
   )
+}
+
+function PillButtonInteractive({
+  variant,
+}: {
+  variant: 'ocean' | 'rose-gold' | 'forest' | 'wood-brown' | 'obsidian'
+}) {
+  return (
+    <button type="button" className={`mock-pill-btn mock-${variant}-pill-btn`}>
+      Button
+    </button>
+  )
+}
+
+function OceanPillButtonInteractive() {
+  return <PillButtonInteractive variant="ocean" />
+}
+
+function RoseGoldPillButtonInteractive() {
+  return <PillButtonInteractive variant="rose-gold" />
+}
+
+function ForestPillButtonInteractive() {
+  return <PillButtonInteractive variant="forest" />
+}
+
+function WoodBrownPillButtonInteractive() {
+  return <PillButtonInteractive variant="wood-brown" />
+}
+
+function ObsidianPlumPillButtonInteractive() {
+  return <PillButtonInteractive variant="obsidian" />
 }
 
 function NeomorphicButtonInteractive() {
@@ -1312,12 +1355,16 @@ function GridFadePatternInteractive() {
   )
 }
 
-function ScreenLightsPatternInteractive() {
+function ScreenLightsPatternInteractive({ theme }: { theme?: 'olive' | 'amber' | 'aqua' | 'rose' }) {
+  const variantClass = `screen-lights-theme-${theme ?? 'olive'}`
+
   return (
-    <div className="component-mock mock-pattern-screen-lights" aria-label="Padrao de luzes suaves em movimento vertical">
+    <div
+      className={`component-mock mock-pattern-screen-lights ${variantClass}`}
+      aria-label="Padrao com dois focos de luz em movimento em L opostos"
+    >
       <span className="screen-light-orb orb-left" />
       <span className="screen-light-orb orb-right" />
-      <span className="screen-light-orb orb-center" />
     </div>
   )
 }
@@ -2534,6 +2581,232 @@ ctaBtn.addEventListener('click', () => {
     ? 'Acao confirmada com destaque visual'
     : 'Passe o mouse para ver o brilho afiado'
 })`,
+    },
+    'curadoria-ocean-pill-button': {
+      html: `<div class="pill-demo">
+  <button class="pill-button pill-ocean">Button</button>
+</div>`,
+      css: `.pill-demo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.pill-button {
+  min-width: 400px;
+  height: 80px;
+  border: none;
+  border-radius: 999px;
+  color: #f6fbff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0 2rem;
+  cursor: pointer;
+  background: linear-gradient(120deg, #30c1e4 0%, #1f75a8 48%, #0c2f52 100%);
+  box-shadow: 0 20px 35px rgba(10, 30, 55, 0.22);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow: 0 28px 48px rgba(10, 30, 55, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.pill-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 18px 30px rgba(10, 30, 55, 0.18);
+}
+
+.pill-ocean {
+  background: linear-gradient(120deg, #30c1e4 0%, #1f75a8 48%, #0c2f52 100%);
+}
+`,
+      ts: `const button = document.querySelector<HTMLButtonElement>('.pill-button')
+button?.addEventListener('click', () => button.classList.toggle('is-active'))`,
+    },
+    'curadoria-rose-gold-pill-button': {
+      html: `<div class="pill-demo">
+  <button class="pill-button pill-rose-gold">Button</button>
+</div>`,
+      css: `.pill-demo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.pill-button {
+  min-width: 400px;
+  height: 80px;
+  border: none;
+  border-radius: 999px;
+  color: #31151e;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0 2rem;
+  cursor: pointer;
+  box-shadow: 0 20px 35px rgba(65, 28, 46, 0.22);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow: 0 28px 48px rgba(65, 28, 46, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.pill-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 18px 30px rgba(65, 28, 46, 0.18);
+}
+
+.pill-rose-gold {
+  background: linear-gradient(120deg, #f8d3c5 0%, #d2786c 48%, #88526b 100%);
+}
+`,
+      ts: `const button = document.querySelector<HTMLButtonElement>('.pill-button')
+button?.addEventListener('click', () => button.classList.toggle('is-active'))`,
+    },
+    'curadoria-forest-pill-button': {
+      html: `<div class="pill-demo">
+  <button class="pill-button pill-forest">Button</button>
+</div>`,
+      css: `.pill-demo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.pill-button {
+  min-width: 400px;
+  height: 80px;
+  border: none;
+  border-radius: 999px;
+  color: #f5fbf3;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0 2rem;
+  cursor: pointer;
+  box-shadow: 0 20px 35px rgba(10, 35, 18, 0.24);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow: 0 28px 48px rgba(10, 35, 18, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.pill-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 18px 30px rgba(10, 35, 18, 0.18);
+}
+
+.pill-forest {
+  background: linear-gradient(120deg, #3d8d56 0%, #256b39 48%, #102f19 100%);
+}
+`,
+      ts: `const button = document.querySelector<HTMLButtonElement>('.pill-button')
+button?.addEventListener('click', () => button.classList.toggle('is-active'))`,
+    },
+    'curadoria-wood-brown-pill-button': {
+      html: `<div class="pill-demo">
+  <button class="pill-button pill-wood-brown">Button</button>
+</div>`,
+      css: `.pill-demo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.pill-button {
+  min-width: 400px;
+  height: 80px;
+  border: none;
+  border-radius: 999px;
+  color: #fff7ed;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0 2rem;
+  cursor: pointer;
+  box-shadow: 0 20px 35px rgba(55, 32, 14, 0.25);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow: 0 28px 48px rgba(55, 32, 14, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.pill-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 18px 30px rgba(55, 32, 14, 0.18);
+}
+
+.pill-wood-brown {
+  background: linear-gradient(120deg, #8a5a35 0%, #5d3720 48%, #2b160d 100%);
+}
+`,
+      ts: `const button = document.querySelector<HTMLButtonElement>('.pill-button')
+button?.addEventListener('click', () => button.classList.toggle('is-active'))`,
+    },
+    'curadoria-obsidian-plum-pill-button': {
+      html: `<div class="pill-demo">
+  <button class="pill-button pill-obsidian">Button</button>
+</div>`,
+      css: `.pill-demo {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.pill-button {
+  min-width: 400px;
+  height: 80px;
+  border: none;
+  border-radius: 999px;
+  color: #f6efff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0 2rem;
+  cursor: pointer;
+  box-shadow: 0 20px 35px rgba(20, 10, 35, 0.3);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.12);
+  box-shadow: 0 28px 48px rgba(20, 10, 35, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.pill-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 18px 30px rgba(20, 10, 35, 0.2);
+}
+
+.pill-obsidian {
+  background: linear-gradient(120deg, #2a163a 0%, #582a64 48%, #120a16 100%);
+}
+`,
+      ts: `const button = document.querySelector<HTMLButtonElement>('.pill-button')
+button?.addEventListener('click', () => button.classList.toggle('is-active'))`,
     },
     'curadoria-neomorphic-button': {
       html: `<section class="demo-neomorphic-stage">\n  <button id="neomorphic-button" class="demo-neomorphic-button is-drop" type="button" aria-label="Botao neomorfico">\n    <span class="demo-neomorphic-core"></span>\n  </button>\n  <p id="neomorphic-label">Parado</p>\n</section>`,
@@ -4230,60 +4503,107 @@ window.setInterval(() => {
       ts: `// Padrao passivo: sem JavaScript necessario para renderizar o efeito.`,
     },
     'curadoria-screen-lights-pattern': {
-      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n  <span class="screen-light-orb orb-center"></span>\n</div>`,
+      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
       css: `.screen-lights-pattern {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #1f2024;
+  background: var(--screen-lights-bg, #1f2024);
 }
 
 .screen-light-orb {
   position: absolute;
   border-radius: 999px;
   filter: blur(52px);
-  background: radial-gradient(circle at center, rgba(193, 227, 122, 0.92) 0%, rgba(193, 227, 122, 0.18) 64%, transparent 100%);
-  animation: screen-light-float 8.2s ease-in-out infinite;
+  background: radial-gradient(circle at center, rgba(var(--screen-light-rgb, 193,227,122), 0.92) 0%, rgba(var(--screen-light-rgb, 193,227,122), 0.18) 64%, transparent 100%);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 .orb-left {
   width: clamp(220px, 36vw, 420px);
   height: clamp(220px, 36vw, 420px);
-  left: -7%;
-  bottom: 2%;
-  animation-delay: -1.4s;
+  animation-name: screen-light-l-path-left;
+  animation-duration: 5.4s;
 }
 
 .orb-right {
   width: clamp(240px, 38vw, 460px);
   height: clamp(240px, 38vw, 460px);
-  right: 4%;
-  top: -4%;
-  animation-duration: 9.4s;
+  animation-name: screen-light-l-path-right;
+  animation-duration: 5.4s;
 }
 
-.orb-center {
-  width: clamp(180px, 24vw, 300px);
-  height: clamp(180px, 24vw, 300px);
-  left: 44%;
-  top: 33%;
-  opacity: 0.38;
-  animation-duration: 10.2s;
-  animation-delay: -2.3s;
-}
-
-@keyframes screen-light-float {
-  0%,
-  100% {
-    transform: translate3d(0, -16px, 0) scale(1);
+@keyframes screen-light-l-path-left {
+  0% {
+    left: -8%;
+    top: 62%;
+    transform: scale(1);
   }
 
   50% {
-    transform: translate3d(0, 16px, 0) scale(1.04);
+    left: -8%;
+    top: -10%;
+    transform: scale(1.05);
+  }
+
+  100% {
+    left: 58%;
+    top: -10%;
+    transform: scale(1);
+  }
+}
+
+@keyframes screen-light-l-path-right {
+  0% {
+    left: 58%;
+    top: -10%;
+    transform: scale(1);
+  }
+
+  50% {
+    left: 58%;
+    top: 62%;
+    transform: scale(1.05);
+  }
+
+  100% {
+    left: -8%;
+    top: 62%;
+    transform: scale(1);
   }
 }`,
-      ts: `// Padrao passivo: toda a animacao acontece via CSS.`,
+      ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
+    pattern?.setAttribute('aria-hidden', 'true')`,
+    },
+    'curadoria-screen-lights-pattern-amber': {
+      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
+      css: `.screen-lights-pattern { background: #241a12; }
+.screen-light-orb { background: radial-gradient(circle at center, rgba(255,188,99,0.92) 0%, rgba(255,188,99,0.18) 64%, transparent 100%); }
+.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
+.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
+    pattern?.setAttribute('aria-hidden', 'true')`,
+    },
+    'curadoria-screen-lights-pattern-aqua': {
+      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
+      css: `.screen-lights-pattern { background: #101f25; }
+.screen-light-orb { background: radial-gradient(circle at center, rgba(117,229,255,0.92) 0%, rgba(117,229,255,0.18) 64%, transparent 100%); }
+.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
+.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
+    pattern?.setAttribute('aria-hidden', 'true')`,
+    },
+    'curadoria-screen-lights-pattern-rose': {
+      html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
+      css: `.screen-lights-pattern { background: #24131d; }
+.screen-light-orb { background: radial-gradient(circle at center, rgba(255,139,176,0.92) 0%, rgba(255,139,176,0.18) 64%, transparent 100%); }
+.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
+.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
+    pattern?.setAttribute('aria-hidden', 'true')`,
     },
     'velvet-command-button': {
       html: `<button class="velvet-command-btn">Deploy seguro</button>`,
