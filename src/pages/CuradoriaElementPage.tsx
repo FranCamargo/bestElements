@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
+﻿import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
 import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2 } from 'lucide-react'
 import { ItemPageShell } from './ItemPageShell.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
@@ -19,20 +19,6 @@ type SnippetKey = 'html' | 'css' | 'ts'
 
 type PeriodOption = '7' | '15' | '30'
 
-type TableRow = {
-  id: string
-  date: string
-  ativo: string
-  thumb: 'up' | 'down'
-}
-
-type DatatableRow = {
-  id: number
-  nome: string
-  categoria: string
-  pontos: number
-}
-
 type ChatRole = 'assistant' | 'user'
 
 type ChatMessage = {
@@ -44,26 +30,6 @@ type ChatQuickAction = {
   label: string
   prompt: string
 }
-
-const tableRows: TableRow[] = [
-  { id: '1', date: '08/05', ativo: 'Todos', thumb: 'up' },
-  { id: '2', date: '08/05', ativo: 'Produto A', thumb: 'down' },
-  { id: '3', date: '07/05', ativo: 'Produto B', thumb: 'up' },
-  { id: '4', date: '07/05', ativo: 'Produto C', thumb: 'up' },
-  { id: '5', date: '06/05', ativo: 'Produto A', thumb: 'down' },
-  { id: '6', date: '06/05', ativo: 'Produto B', thumb: 'up' },
-]
-
-const datatableRowsSeed: DatatableRow[] = [
-  { id: 1, nome: 'Card Hero', categoria: 'Layout', pontos: 96 },
-  { id: 2, nome: 'Tabela Financeira', categoria: 'Dados', pontos: 89 },
-  { id: 3, nome: 'Filtro Avancado', categoria: 'Form', pontos: 82 },
-  { id: 4, nome: 'Widget KPI', categoria: 'Dashboard', pontos: 91 },
-  { id: 5, nome: 'Painel Heatmap', categoria: 'Grafico', pontos: 77 },
-  { id: 6, nome: 'Lista de Alertas', categoria: 'Dados', pontos: 85 },
-  { id: 7, nome: 'Chat Dock', categoria: 'UX', pontos: 88 },
-  { id: 8, nome: 'Modal de Revisao', categoria: 'Fluxo', pontos: 80 },
-]
 
 const chatbotQuickActions: ChatQuickAction[] = [
   { label: 'Resumir feedbacks recentes', prompt: 'Resuma os feedbacks negativos da semana.' },
@@ -144,10 +110,6 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <LineGraphInteractive />
     case 'curadoria-progress-bar':
       return <ProgressBarInteractive />
-    case 'curadoria-table-list':
-      return <TableInteractive />
-    case 'curadoria-datatable-simples':
-      return <DatatableSimpleInteractive />
     case 'curadoria-modal-chatbot':
       return <ChatbotModalInteractive />
     case 'curadoria-magic-cube':
@@ -206,8 +168,6 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <CloudDrizzleLoaderInteractive />
     case 'sunrise-kpi-card':
       return <SunriseKpiCardInteractive />
-    case 'finance-snapshot-card':
-      return <FinanceSnapshotCardInteractive />
     case 'team-status-card':
       return <TeamStatusCardInteractive />
     case 'retro-music-player-card':
@@ -238,6 +198,62 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <MorphingActionFabInteractive />
     case 'neon-glass-login-card':
       return <NeonGlassLoginCardInteractive />
+    case 'radial-heatmap-clock':
+      return <RadialHeatmapClockInteractive />
+    case 'liquid-level-gauge':
+      return <LiquidLevelGaugeInteractive />
+    case 'typewriter-terminal-card':
+      return <TypewriterTerminalCardInteractive />
+    case 'event-ticket-card':
+      return <EventTicketCardInteractive />
+    case 'notification-bell-badge':
+      return <NotificationBellBadgeInteractive />
+    case 'rotary-dial-knob':
+      return <RotaryDialKnobInteractive />
+    case 'aurora-chip-selector':
+      return <AuroraChipSelectorInteractive />
+    case 'timeline-stepper':
+      return <TimelineStepperInteractive />
+    case 'flip-counter-display':
+      return <FlipCounterDisplayInteractive />
+    case 'holographic-card':
+      return <HolographicCardInteractive />
+    case 'neo-toggle-switch':
+      return <NeoToggleSwitchInteractive />
+    case 'neo-music-player':
+      return <NeoMusicPlayerInteractive />
+    case 'neo-numpad':
+      return <NeoNumpadInteractive />
+    case 'neo-stat-display':
+      return <NeoStatDisplayInteractive />
+    case 'neo-color-swatches':
+      return <NeoColorSwatchesInteractive />
+    case 'neo-analog-clock':
+      return <NeoAnalogClockInteractive />
+    case 'neo-equalizer':
+      return <NeoEqualizerInteractive />
+    case 'neo-pin-lock':
+      return <NeoPinLockInteractive />
+    case 'neo-star-rating':
+      return <NeoStarRatingInteractive />
+    case 'neo-progress-arc':
+      return <NeoProgressArcInteractive />
+    case 'neo-switch-panel':
+      return <NeoSwitchPanelInteractive />
+    case 'neo-volume-dial':
+      return <NeoVolumeDialInteractive />
+    case 'neo-tag-cloud':
+      return <NeoTagCloudInteractive />
+    case 'glass-profile-card':
+      return <GlassProfileCardInteractive />
+    case 'brutalist-block-card':
+      return <BrutalistBlockCardInteractive />
+    case 'clay-morphism-buttons':
+      return <ClayMorphismButtonsInteractive />
+    case 'mesh-aurora-card':
+      return <MeshAuroraCardInteractive />
+    case 'retro-crt-terminal':
+      return <RetroCrtTerminalInteractive />
     default:
       return <div className="component-mock"><p>Preview indisponivel para este item.</p></div>
   }
@@ -503,207 +519,6 @@ function ProgressBarInteractive() {
       <div className="mock-progress"><span style={{ width: `${positive}%` }} /></div>
       <div className="mock-progress-label">{negative}% negativos</div>
       <div className="mock-progress is-danger"><span style={{ width: `${negative}%` }} /></div>
-    </div>
-  )
-}
-
-function TableInteractive() {
-  const [thumbFilter, setThumbFilter] = useState<'all' | 'up' | 'down'>('all')
-  const [page, setPage] = useState(1)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-
-  const filteredRows = useMemo(
-    () => tableRows.filter((row) => (thumbFilter === 'all' ? true : row.thumb === thumbFilter)),
-    [thumbFilter],
-  )
-  const pageSize = 3
-  const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize))
-  const safePage = Math.min(page, totalPages)
-  const pageRows = filteredRows.slice((safePage - 1) * pageSize, safePage * pageSize)
-
-  return (
-    <div className="component-mock mock-table-wrap interactive-table">
-      <div className="preview-controls">
-        <button type="button" className={`chip-button ${thumbFilter === 'all' ? 'is-active' : ''}`} onClick={() => { setThumbFilter('all'); setPage(1) }}>Todos</button>
-        <button type="button" className={`chip-button ${thumbFilter === 'up' ? 'is-active' : ''}`} onClick={() => { setThumbFilter('up'); setPage(1) }}>👍</button>
-        <button type="button" className={`chip-button ${thumbFilter === 'down' ? 'is-active' : ''}`} onClick={() => { setThumbFilter('down'); setPage(1) }}>👎</button>
-      </div>
-      <div className="mock-table-head">
-        <span>Data</span><span>Ativo</span><span>Thumb</span><span>Acoes</span>
-      </div>
-      {pageRows.map((row) => (
-        <div key={row.id} className={`mock-table-row ${selectedId === row.id ? 'is-selected' : ''}`}>
-          <span>{row.date}</span><span>{row.ativo}</span><span>{row.thumb === 'up' ? '👍' : '👎'}</span>
-          <button type="button" className="table-action" onClick={() => setSelectedId(row.id)}>Detalhe</button>
-        </div>
-      ))}
-      <div className="preview-controls table-pagination">
-        <button type="button" className="chip-button" onClick={() => setPage((p) => Math.max(1, p - 1))}>Anterior</button>
-        <span className="interactive-note">Pagina {safePage} de {totalPages}</span>
-        <button type="button" className="chip-button" onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>Proxima</button>
-      </div>
-    </div>
-  )
-}
-
-function DatatableSimpleInteractive() {
-  const [rows, setRows] = useState<DatatableRow[]>(datatableRowsSeed)
-  const [sortColumn, setSortColumn] = useState<keyof DatatableRow>('pontos')
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
-  const [page, setPage] = useState(1)
-  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set())
-  const [lastAction, setLastAction] = useState('Selecione uma linha para ver o detalhe.')
-
-  const pageSize = 5
-
-  const sortedRows = useMemo(() => {
-    return [...rows].sort((a, b) => {
-      const valueA = a[sortColumn]
-      const valueB = b[sortColumn]
-      const comparison =
-        typeof valueA === 'number' && typeof valueB === 'number'
-          ? valueA - valueB
-          : String(valueA).localeCompare(String(valueB), 'pt-BR', { numeric: true })
-      return sortDirection === 'asc' ? comparison : -comparison
-    })
-  }, [rows, sortColumn, sortDirection])
-
-  const totalPages = Math.max(1, Math.ceil(sortedRows.length / pageSize))
-  const safePage = Math.min(page, totalPages)
-
-  const pagedRows = useMemo(() => {
-    const start = (safePage - 1) * pageSize
-    const visibleRows = sortedRows.slice(start, start + pageSize)
-    if (visibleRows.length < pageSize) {
-      return [...visibleRows, ...Array(pageSize - visibleRows.length).fill(null)]
-    }
-    return visibleRows
-  }, [safePage, sortedRows])
-
-  const toggleSort = (column: keyof DatatableRow) => {
-    if (sortColumn === column) {
-      setSortDirection((current) => (current === 'asc' ? 'desc' : 'asc'))
-    } else {
-      setSortColumn(column)
-      setSortDirection('asc')
-    }
-    setPage(1)
-  }
-
-  const toggleSelection = (row: DatatableRow) => {
-    setSelectedRows((current) => {
-      const next = new Set(current)
-      if (next.has(row.id)) {
-        next.delete(row.id)
-      } else {
-        next.add(row.id)
-      }
-      return next
-    })
-  }
-
-  const selectAllRows = () => {
-    const allIds = rows.map((row) => row.id)
-    const allSelected = allIds.length > 0 && allIds.every((id) => selectedRows.has(id))
-    setSelectedRows(allSelected ? new Set() : new Set(allIds))
-  }
-
-  const deleteSelectedRows = () => {
-    if (!selectedRows.size) {
-      return
-    }
-    setRows((current) => current.filter((row) => !selectedRows.has(row.id)))
-    setLastAction(`${selectedRows.size} linha(s) excluida(s).`)
-    setSelectedRows(new Set())
-    setPage(1)
-  }
-
-  return (
-    <div className="component-mock mock-datatable-wrap">
-      <div className="mock-datatable-head">
-        <button type="button" className="chip-button" onClick={selectAllRows}>
-          {rows.length > 0 && selectedRows.size === rows.length ? 'Desfazer selecao' : 'Selecionar todos'}
-        </button>
-        <button
-          type="button"
-          className="chip-button"
-          onClick={deleteSelectedRows}
-          disabled={!selectedRows.size}
-        >
-          Excluir selecionados
-        </button>
-      </div>
-
-      <div className="mock-datatable-grid mock-datatable-grid-head">
-        <span className="mock-datatable-check">Sel.</span>
-        <button type="button" className="mock-sort-btn" onClick={() => toggleSort('nome')}>
-          Nome {sortColumn === 'nome' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
-        </button>
-        <button type="button" className="mock-sort-btn" onClick={() => toggleSort('categoria')}>
-          Categoria {sortColumn === 'categoria' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
-        </button>
-        <button type="button" className="mock-sort-btn" onClick={() => toggleSort('pontos')}>
-          Pontos {sortColumn === 'pontos' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
-        </button>
-        <span>Acoes</span>
-      </div>
-
-      {pagedRows.map((row, index) => {
-        if (!row) {
-          return (
-            <div key={`empty-${index}`} className="mock-datatable-grid mock-datatable-row is-empty" aria-hidden="true">
-              <span className="mock-datatable-check" />
-              <span>-</span>
-              <span>-</span>
-              <span>-</span>
-              <span />
-            </div>
-          )
-        }
-
-        return (
-          <div
-            key={row.id}
-            className={`mock-datatable-grid mock-datatable-row ${selectedRows.has(row.id) ? 'is-selected' : ''}`}
-            onClick={() => setLastAction(`Detalhe da linha: ${row.nome}.`)}
-            role="button"
-            tabIndex={0}
-          >
-            <span className="mock-datatable-check">
-              <input
-                type="checkbox"
-                checked={selectedRows.has(row.id)}
-                onChange={() => toggleSelection(row)}
-                onClick={(event) => event.stopPropagation()}
-              />
-            </span>
-            <span>{row.nome}</span>
-            <span>{row.categoria}</span>
-            <span className="mock-points">{row.pontos}</span>
-            <button
-              type="button"
-              className="table-action"
-              onClick={(event) => {
-                event.stopPropagation()
-                setLastAction(`Acao executada para #${row.id}.`)
-              }}
-            >
-              Acao
-            </button>
-          </div>
-        )
-      })}
-
-      <div className="preview-controls table-pagination">
-        <button type="button" className="chip-button" onClick={() => setPage((current) => Math.max(1, current - 1))}>
-          Anterior
-        </button>
-        <span className="interactive-note">Pagina {safePage} de {totalPages}</span>
-        <button type="button" className="chip-button" onClick={() => setPage((current) => Math.min(totalPages, current + 1))}>
-          Proxima
-        </button>
-      </div>
-      <p className="interactive-note">{lastAction}</p>
     </div>
   )
 }
@@ -1810,17 +1625,6 @@ function SunriseKpiCardInteractive() {
   )
 }
 
-function FinanceSnapshotCardInteractive() {
-  return (
-    <div className="component-mock mock-centered-demo mock-finance-snapshot">
-      <small>Saldo operacional</small>
-      <strong>R$ 128.430</strong>
-      <div className="snapshot-bar"><i style={{ width: '74%' }} /></div>
-      <span>Meta mensal: 74%</span>
-    </div>
-  )
-}
-
 function TeamStatusCardInteractive() {
   return (
     <div className="component-mock mock-centered-demo mock-team-status">
@@ -2443,6 +2247,1005 @@ function NeonGlassLoginCardInteractive() {
           {isSubmitted ? 'Login simulated with lilac theme.' : 'Not registered yet? Sign up >'}
         </small>
       </form>
+    </div>
+  )
+}
+
+function RadialHeatmapClockInteractive() {
+  const [hoveredSegment, setHoveredSegment] = useState<number | null>(null)
+  const heatData = [0.08, 0.04, 0.02, 0.02, 0.06, 0.18, 0.35, 0.72, 0.92, 0.87, 0.74, 0.85, 0.9, 0.8, 0.72, 0.68, 0.76, 0.88, 0.82, 0.7, 0.52, 0.38, 0.24, 0.14]
+  const now = new Date()
+
+  const getHeatColor = (v: number) => {
+    if (v < 0.2) return `hsl(220,55%,${28 + v * 60}%)`
+    if (v < 0.45) return `hsl(${210 - (v - 0.2) * 360},65%,52%)`
+    if (v < 0.7) return `hsl(${120 - (v - 0.45) * 320},72%,52%)`
+    return `hsl(${40 - (v - 0.7) * 133},90%,58%)`
+  }
+
+  const size = 160
+  const cx = size / 2
+  const cy = size / 2
+  const outerR = 68
+  const innerR = 40
+
+  const segments = heatData.map((heat, idx) => {
+    const startA = (idx / 24) * 2 * Math.PI - Math.PI / 2
+    const endA = ((idx + 1) / 24) * 2 * Math.PI - Math.PI / 2
+    const g = 0.018
+    const x1 = cx + outerR * Math.cos(startA + g)
+    const y1 = cy + outerR * Math.sin(startA + g)
+    const x2 = cx + outerR * Math.cos(endA - g)
+    const y2 = cy + outerR * Math.sin(endA - g)
+    const x3 = cx + innerR * Math.cos(endA - g)
+    const y3 = cy + innerR * Math.sin(endA - g)
+    const x4 = cx + innerR * Math.cos(startA + g)
+    const y4 = cy + innerR * Math.sin(startA + g)
+    return { idx, d: `M${x1},${y1} A${outerR},${outerR} 0 0,1 ${x2},${y2} L${x3},${y3} A${innerR},${innerR} 0 0,0 ${x4},${y4} Z`, heat, color: getHeatColor(heat) }
+  })
+
+  const currentHour = now.getHours() + now.getMinutes() / 60
+  const hourAngle = (currentHour / 24) * 2 * Math.PI - Math.PI / 2
+  const handX = cx + 28 * Math.cos(hourAngle)
+  const handY = cy + 28 * Math.sin(hourAngle)
+
+  return (
+    <div className="component-mock mock-heatmap-clock">
+      <svg viewBox={`0 0 ${size} ${size}`} aria-label="Radial heatmap clock" className="heatmap-svg">
+        {segments.map((seg) => (
+          <path
+            key={seg.idx}
+            d={seg.d}
+            fill={seg.color}
+            style={{
+              cursor: 'pointer',
+              transformBox: 'fill-box',
+              transformOrigin: 'center',
+              transform: hoveredSegment === seg.idx ? 'scale(1.08)' : 'scale(1)',
+              transition: 'transform 0.15s ease',
+            }}
+            onMouseEnter={() => setHoveredSegment(seg.idx)}
+            onMouseLeave={() => setHoveredSegment(null)}
+          />
+        ))}
+        <circle cx={cx} cy={cy} r={34} fill="var(--bg-secondary)" />
+        <text x={cx} y={cy - 4} textAnchor="middle" fontSize={11} fill="#e5f5ff" fontFamily="Space Grotesk, sans-serif" fontWeight="700">
+          {String(now.getHours()).padStart(2, '0')}
+        </text>
+        <text x={cx} y={cy + 9} textAnchor="middle" fontSize={10} fill="#6b8898">
+          {String(now.getMinutes()).padStart(2, '0')}
+        </text>
+        <line x1={cx} y1={cy} x2={handX} y2={handY} stroke="#ff6b35" strokeWidth={2} strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r={2.5} fill="#ff6b35" />
+      </svg>
+      <p className="interactive-note">
+        {hoveredSegment !== null
+          ? `Hora ${String(hoveredSegment).padStart(2, '0')}h — ${Math.round(heatData[hoveredSegment] * 100)}% de atividade`
+          : 'Passe o mouse nos segmentos para ver atividade'}
+      </p>
+    </div>
+  )
+}
+
+function LiquidLevelGaugeInteractive() {
+  const [level, setLevel] = useState(62)
+
+  const getColor = (lv: number) => {
+    if (lv < 25) return '#ef4444'
+    if (lv < 50) return '#f97316'
+    if (lv < 75) return '#3b82f6'
+    return '#22c55e'
+  }
+  const getLabel = (lv: number) => {
+    if (lv < 25) return 'Crítico'
+    if (lv < 50) return 'Baixo'
+    if (lv < 75) return 'Normal'
+    return 'Ótimo'
+  }
+
+  const r = 50
+  const circ = 2 * Math.PI * r
+  const fill = (circ * level) / 100
+  const color = getColor(level)
+
+  return (
+    <div className="component-mock mock-liquid-gauge">
+      <div className="liquid-gauge-ring">
+        <svg viewBox="0 0 120 120" aria-label={`Gauge: ${level}%`}>
+          <circle cx={60} cy={60} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={9} />
+          <circle
+            cx={60}
+            cy={60}
+            r={r}
+            fill="none"
+            stroke={color}
+            strokeWidth={9}
+            strokeDasharray={`${fill} ${circ}`}
+            strokeLinecap="round"
+            transform="rotate(-90 60 60)"
+            style={{ transition: 'stroke-dasharray 0.45s ease, stroke 0.45s ease', filter: `drop-shadow(0 0 6px ${color})` }}
+          />
+          <text x={60} y={55} textAnchor="middle" fontSize={22} fontWeight="700" fill="white" fontFamily="Space Grotesk, sans-serif">{level}%</text>
+          <text x={60} y={72} textAnchor="middle" fontSize={9} fill={color} fontWeight="600">{getLabel(level)}</text>
+        </svg>
+      </div>
+      <label className="interactive-note" htmlFor="gauge-range">Nível atual: {level}%</label>
+      <input id="gauge-range" type="range" min={0} max={100} value={level} onChange={(e) => setLevel(Number(e.target.value))} className="gauge-slider" />
+    </div>
+  )
+}
+
+function TypewriterTerminalCardInteractive() {
+  const lines = [
+    '> iniciando análise de componentes...',
+    '> carregando design system...',
+    '> 47 elementos detectados.',
+    '> todos os checks passaram ✓',
+    '> pronto para produção 🚀',
+  ]
+  const [done, setDone] = useState<string[]>([])
+  const [lineIdx, setLineIdx] = useState(0)
+  const [charIdx, setCharIdx] = useState(0)
+
+  useEffect(() => {
+    if (lineIdx >= lines.length) {
+      const t = window.setTimeout(() => { setDone([]); setLineIdx(0); setCharIdx(0) }, 2800)
+      return () => window.clearTimeout(t)
+    }
+    if (charIdx < lines[lineIdx].length) {
+      const t = window.setTimeout(() => setCharIdx((c) => c + 1), 38)
+      return () => window.clearTimeout(t)
+    }
+    const t = window.setTimeout(() => {
+      setDone((prev) => [...prev, lines[lineIdx]])
+      setLineIdx((l) => l + 1)
+      setCharIdx(0)
+    }, 320)
+    return () => window.clearTimeout(t)
+  }, [lineIdx, charIdx])
+
+  const typing = lineIdx < lines.length ? lines[lineIdx].substring(0, charIdx) : ''
+
+  return (
+    <div className="component-mock mock-typewriter-card">
+      <div className="typewriter-header">
+        <span className="term-dot dot-red" />
+        <span className="term-dot dot-yellow" />
+        <span className="term-dot dot-green" />
+        <span className="term-title">design-system — bash</span>
+      </div>
+      <div className="typewriter-body">
+        {done.map((ln, i) => <div key={i} className="term-line is-done">{ln}</div>)}
+        {lineIdx < lines.length && (
+          <div className="term-line">{typing}<span className="term-cursor" aria-hidden="true">▊</span></div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function EventTicketCardInteractive() {
+  const [isUsed, setIsUsed] = useState(false)
+
+  return (
+    <div className="component-mock mock-event-ticket-wrap">
+      <article
+        className={`event-ticket ${isUsed ? 'is-used' : ''}`}
+        role="button"
+        tabIndex={0}
+        onClick={() => setIsUsed((v) => !v)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsUsed((v) => !v) }}
+        aria-label={isUsed ? 'Ingresso validado — clique para desfazer' : 'Clique para validar ingresso'}
+      >
+        <div className="ticket-left">
+          <div className="ticket-tag">UI SUMMIT</div>
+          <h3 className="ticket-title">Design Systems<br />Conference</h3>
+          <div className="ticket-meta">
+            <span>15 AGO 2025</span>
+            <span>19:00h</span>
+          </div>
+          <div className="ticket-seat">FILA A · LUGAR 12</div>
+        </div>
+        <div className="ticket-perforation" aria-hidden="true">
+          {Array.from({ length: 8 }, (_, i) => <span key={i} />)}
+        </div>
+        <div className="ticket-right">
+          <div className="ticket-qr" aria-label="QR code mock">
+            <svg viewBox="0 0 40 40" width={56} height={56}>
+              {[0,10,20,30].map((x) => [0,10,20,30].map((y) => (
+                Math.random() > 0.38 && <rect key={`${x}-${y}`} x={x} y={y} width={8} height={8} fill="white" rx={1} />
+              )))}
+              <rect x={0} y={0} width={16} height={16} fill="none" stroke="white" strokeWidth={2} />
+              <rect x={24} y={0} width={16} height={16} fill="none" stroke="white" strokeWidth={2} />
+              <rect x={0} y={24} width={16} height={16} fill="none" stroke="white" strokeWidth={2} />
+              <rect x={3} y={3} width={10} height={10} fill="white" rx={1} />
+              <rect x={27} y={3} width={10} height={10} fill="white" rx={1} />
+              <rect x={3} y={27} width={10} height={10} fill="white" rx={1} />
+            </svg>
+          </div>
+          <div className="ticket-serial">#UI-20250815-012</div>
+          {isUsed && <div className="ticket-stamp" aria-label="Ingresso usado">USADO</div>}
+        </div>
+      </article>
+      <p className="interactive-note">{isUsed ? 'Ingresso validado com sucesso' : 'Clique para validar o ingresso'}</p>
+    </div>
+  )
+}
+
+function NotificationBellBadgeInteractive() {
+  const [count, setCount] = useState(7)
+  const [ringing, setRinging] = useState(false)
+
+  const addNotification = () => {
+    setCount((c) => c + 1)
+    setRinging(true)
+    window.setTimeout(() => setRinging(false), 700)
+  }
+
+  return (
+    <div className="component-mock mock-notif-bell-wrap">
+      <button
+        type="button"
+        className={`notif-bell-btn ${ringing ? 'is-ringing' : ''}`}
+        onClick={() => setCount(0)}
+        aria-label={`${count} notificações — clique para limpar`}
+      >
+        <svg viewBox="0 0 24 24" width={28} height={28} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        {count > 0 && (
+          <span className="notif-badge" aria-hidden="true">{count > 99 ? '99+' : count}</span>
+        )}
+      </button>
+      <div className="preview-controls" style={{ marginTop: '1rem' }}>
+        <button type="button" className="chip-button" onClick={addNotification}>+ Nova</button>
+        <button type="button" className="chip-button" onClick={() => setCount(0)} disabled={count === 0}>Limpar</button>
+      </div>
+      <p className="interactive-note">{count === 0 ? 'Sem notificações' : `${count} notificação(ões) pendente(s)`}</p>
+    </div>
+  )
+}
+
+function RotaryDialKnobInteractive() {
+  const [angle, setAngle] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const knobRef = useRef<HTMLButtonElement>(null)
+
+  const MIN_ANGLE = -135
+  const MAX_ANGLE = 135
+  const value = Math.round(((angle - MIN_ANGLE) / (MAX_ANGLE - MIN_ANGLE)) * 100)
+
+  const handleMouseDown = (_e: React.MouseEvent) => {
+    const rect = knobRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    setIsDragging(true)
+
+    const onMove = (ev: MouseEvent) => {
+      const dx = ev.clientX - cx
+      const dy = ev.clientY - cy
+      let a = (Math.atan2(dy, dx) * 180) / Math.PI + 90
+      if (a > 180) a -= 360
+      setAngle(Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, a)))
+    }
+    const onUp = () => {
+      setIsDragging(false)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }
+
+  const ticks = Array.from({ length: 11 }, (_, i) => {
+    const a = ((-135 + i * 27) * Math.PI) / 180
+    const r1 = 43
+    const r2 = 49
+    return {
+      x1: 50 + r1 * Math.sin(a),
+      y1: 50 - r1 * Math.cos(a),
+      x2: 50 + r2 * Math.sin(a),
+      y2: 50 - r2 * Math.cos(a),
+      active: i * 10 <= value,
+    }
+  })
+
+  return (
+    <div className="component-mock mock-rotary-knob-wrap">
+      <div className="rotary-knob-ring">
+        <svg viewBox="0 0 100 100" width={150} height={150} aria-hidden="true">
+          {ticks.map((tick, i) => (
+            <line key={i} x1={tick.x1} y1={tick.y1} x2={tick.x2} y2={tick.y2} stroke={tick.active ? '#5ad0de' : 'rgba(255,255,255,0.15)'} strokeWidth={2.2} strokeLinecap="round" />
+          ))}
+        </svg>
+        <button
+          ref={knobRef}
+          type="button"
+          className={`rotary-knob ${isDragging ? 'is-dragging' : ''}`}
+          style={{ transform: `translate(-50%, -50%) rotate(${angle}deg)` }}
+          onMouseDown={handleMouseDown}
+          aria-label={`Knob rotacional — valor: ${value}`}
+          aria-valuenow={value}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <span className="knob-indicator" aria-hidden="true" />
+        </button>
+      </div>
+      <div className="rotary-value" aria-live="polite">{value}</div>
+      <p className="interactive-note">Arraste o knob para ajustar o valor</p>
+    </div>
+  )
+}
+
+function AuroraChipSelectorInteractive() {
+  const chips = [
+    { id: 'design', label: 'Design', color: '#a855f7' },
+    { id: 'dev', label: 'Dev', color: '#3b82f6' },
+    { id: 'data', label: 'Data', color: '#22c55e' },
+    { id: 'ai', label: 'AI', color: '#ec4899' },
+    { id: 'motion', label: 'Motion', color: '#f97316' },
+    { id: 'brand', label: 'Brand', color: '#eab308' },
+  ]
+  const [selected, setSelected] = useState<Set<string>>(new Set(['design', 'dev']))
+
+  const toggle = (id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  return (
+    <div className="component-mock mock-chip-selector">
+      <div className="chip-selector-grid" role="group" aria-label="Seletor de áreas">
+        {chips.map((chip) => (
+          <button
+            key={chip.id}
+            type="button"
+            className={`aurora-chip-item ${selected.has(chip.id) ? 'is-selected' : ''}`}
+            style={{ '--chip-color': chip.color } as CSSProperties}
+            onClick={() => toggle(chip.id)}
+            aria-pressed={selected.has(chip.id)}
+          >
+            {chip.label}
+          </button>
+        ))}
+      </div>
+      <p className="interactive-note">
+        {selected.size === 0 ? 'Nenhuma área selecionada' : `Selecionado: ${[...selected].join(', ')}`}
+      </p>
+    </div>
+  )
+}
+
+function TimelineStepperInteractive() {
+  const [currentStep, setCurrentStep] = useState(1)
+
+  const steps = [
+    { label: 'Briefing', icon: '📋', desc: 'Coleta de requisitos' },
+    { label: 'Design', icon: '🎨', desc: 'Prototipagem e UI' },
+    { label: 'Review', icon: '🔍', desc: 'Feedback e ajustes' },
+    { label: 'Deploy', icon: '🚀', desc: 'Publicação final' },
+  ]
+
+  return (
+    <div className="component-mock mock-timeline-stepper">
+      <div className="stepper-track" role="list">
+        {steps.map((step, idx) => (
+          <div key={step.label} className="stepper-item" role="listitem">
+            <button
+              type="button"
+              className={`stepper-node ${idx < currentStep ? 'is-done' : ''} ${idx === currentStep ? 'is-active' : ''}`}
+              onClick={() => setCurrentStep(idx)}
+              aria-label={`Etapa ${idx + 1}: ${step.label}`}
+            >
+              {idx < currentStep ? '✓' : step.icon}
+            </button>
+            {idx < steps.length - 1 && (
+              <div className={`stepper-line ${idx < currentStep ? 'is-done' : ''}`} aria-hidden="true" />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="stepper-info">
+        <strong>{steps[currentStep]?.label}</strong>
+        <span>{steps[currentStep]?.desc}</span>
+      </div>
+      <div className="preview-controls" style={{ marginTop: '0.75rem' }}>
+        <button type="button" className="chip-button" onClick={() => setCurrentStep((s) => Math.max(0, s - 1))} disabled={currentStep === 0}>← Voltar</button>
+        <button type="button" className="chip-button" onClick={() => setCurrentStep((s) => Math.min(steps.length - 1, s + 1))} disabled={currentStep === steps.length - 1}>Avançar →</button>
+      </div>
+    </div>
+  )
+}
+
+function FlipCounterDisplayInteractive() {
+  const [value, setValue] = useState(42)
+  const [flipping, setFlipping] = useState(false)
+  const [dir, setDir] = useState<'up' | 'down'>('up')
+
+  const change = (delta: number) => {
+    setDir(delta > 0 ? 'up' : 'down')
+    setFlipping(true)
+    window.setTimeout(() => {
+      setValue((v) => Math.max(0, Math.min(99, v + delta)))
+      setFlipping(false)
+    }, 220)
+  }
+
+  const digits = String(value).padStart(2, '0').split('')
+
+  return (
+    <div className="component-mock mock-flip-counter">
+      <div className="flip-display" aria-live="polite" aria-label={`Valor: ${value}`}>
+        {digits.map((digit, idx) => (
+          <div key={idx} className={`flip-card ${flipping ? `flip-${dir}` : ''}`}>
+            <div className="flip-top">{digit}</div>
+            <div className="flip-divider" aria-hidden="true" />
+            <div className="flip-bottom">{digit}</div>
+          </div>
+        ))}
+      </div>
+      <div className="flip-controls">
+        <button type="button" className="flip-btn flip-btn-down" onClick={() => change(-1)} disabled={value <= 0} aria-label="Decrementar">−</button>
+        <button type="button" className="flip-btn flip-btn-up" onClick={() => change(1)} disabled={value >= 99} aria-label="Incrementar">+</button>
+      </div>
+      <p className="interactive-note">Display flip retro — valor: {value}</p>
+    </div>
+  )
+}
+
+function HolographicCardInteractive() {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [shine, setShine] = useState({ x: 50, y: 50 })
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 22
+    const y = -((e.clientY - rect.top) / rect.height - 0.5) * 22
+    setTilt({ x, y })
+    setShine({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 })
+  }
+
+  const handleMouseLeave = () => { setTilt({ x: 0, y: 0 }); setShine({ x: 50, y: 50 }) }
+
+  return (
+    <div className="component-mock mock-holo-card-wrap">
+      <div
+        ref={cardRef}
+        className="holo-card"
+        style={{
+          transform: `perspective(900px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
+          '--shine-x': `${shine.x}%`,
+          '--shine-y': `${shine.y}%`,
+        } as CSSProperties}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        role="img"
+        aria-label="Card holográfico interativo"
+      >
+        <div className="holo-shine" aria-hidden="true" />
+        <div className="holo-logo" aria-hidden="true">★ HOLO</div>
+        <div className="holo-chip" aria-hidden="true">
+          <span /><span /><span /><span />
+        </div>
+        <div className="holo-number">•••• •••• •••• 7831</div>
+        <div className="holo-footer">
+          <span className="holo-name">DESIGN SYSTEM PRO</span>
+          <span className="holo-expiry">12/28</span>
+        </div>
+      </div>
+      <p className="interactive-note">Mova o mouse sobre o card para o efeito holográfico</p>
+    </div>
+  )
+}
+
+function NeoToggleSwitchInteractive() {
+  const [on, setOn] = useState(false)
+  return (
+    <div className="component-mock mock-neo-toggle">
+      <div
+        className={`neo-toggle-track ${on ? 'is-on' : ''}`}
+        onClick={() => setOn(v => !v)}
+        role="switch"
+        aria-checked={on}
+        tabIndex={0}
+        onKeyDown={e => e.key === ' ' && setOn(v => !v)}
+      >
+        <div className="neo-toggle-thumb" />
+      </div>
+      <p className="interactive-note">{on ? 'Ativado' : 'Desativado'}</p>
+    </div>
+  )
+}
+
+function NeoMusicPlayerInteractive() {
+  const [playing, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(34)
+  const [trackIdx, setTrackIdx] = useState(0)
+  const tracks = [
+    { title: 'Midnight Echo', artist: 'Lunar Drift' },
+    { title: 'Soft Terrain', artist: 'Marble Field' },
+    { title: 'Inner Tide', artist: 'Coastal Hymn' },
+  ]
+  const track = tracks[trackIdx]
+  useEffect(() => {
+    if (!playing) return
+    const id = window.setInterval(() => {
+      setProgress(p => {
+        if (p >= 100) { setTrackIdx(i => (i + 1) % tracks.length); return 0 }
+        return p + 0.4
+      })
+    }, 200)
+    return () => window.clearInterval(id)
+  }, [playing])
+  const totalSecs = 210
+  const elapsed = Math.round((progress / 100) * totalSecs)
+  const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  return (
+    <div className="component-mock mock-neo-player">
+      <div className="neo-player-card">
+        <div className="neo-track-info">
+          <span className="neo-track-title">{track.title}</span>
+          <span className="neo-track-artist">{track.artist}</span>
+        </div>
+        <div className="neo-progress-track">
+          <div className="neo-progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+        <div className="neo-player-time">
+          <span>{fmt(elapsed)}</span>
+          <span>{fmt(totalSecs)}</span>
+        </div>
+        <div className="neo-player-controls">
+          <button className="neo-ctrl-btn" onClick={() => { setTrackIdx(i => (i - 1 + tracks.length) % tracks.length); setProgress(0) }}>⏮</button>
+          <button className="neo-ctrl-btn neo-ctrl-main" onClick={() => setPlaying(p => !p)}>{playing ? '⏸' : '▶'}</button>
+          <button className="neo-ctrl-btn" onClick={() => { setTrackIdx(i => (i + 1) % tracks.length); setProgress(0) }}>⏭</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function NeoNumpadInteractive() {
+  const [input, setInput] = useState('')
+  const keys = ['1','2','3','4','5','6','7','8','9','C','0','⌫']
+  const press = (k: string) => {
+    if (k === 'C') { setInput(''); return }
+    if (k === '⌫') { setInput(p => p.slice(0, -1)); return }
+    if (input.length < 8) setInput(p => p + k)
+  }
+  return (
+    <div className="component-mock mock-neo-numpad">
+      <div className="neo-numpad-display">{input || '0'}</div>
+      <div className="neo-numpad-grid">
+        {keys.map(k => (
+          <button key={k} className={`neo-num-key${k === 'C' ? ' neo-key-clear' : ''}${k === '⌫' ? ' neo-key-back' : ''}`} onClick={() => press(k)}>{k}</button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function NeoStatDisplayInteractive() {
+  const [metric, setMetric] = useState(0)
+  const stats = [
+    { label: 'Receita Mensal', value: 'R$ 148k', sub: '+12.4%', color: '#22c55e', pct: 74 },
+    { label: 'Usuários Ativos', value: '9.2k', sub: '+8.1%', color: '#3b82f6', pct: 61 },
+    { label: 'Taxa de Conversão', value: '4.8%', sub: '+2.3 p.p.', color: '#a855f7', pct: 48 },
+  ]
+  const s = stats[metric]
+  return (
+    <div className="component-mock mock-neo-stat">
+      <div className="neo-stat-card">
+        <span className="neo-stat-label">{s.label}</span>
+        <span className="neo-stat-value">{s.value}</span>
+        <span className="neo-stat-sub" style={{ color: s.color }}>{s.sub}</span>
+        <div className="neo-stat-bar-track">
+          <div className="neo-stat-bar-fill" style={{ width: `${s.pct}%`, background: s.color }} />
+        </div>
+      </div>
+      <div className="neo-stat-switcher">
+        {stats.map((_, i) => (
+          <button key={i} className={`neo-dot ${metric === i ? 'is-active' : ''}`} onClick={() => setMetric(i)} aria-label={`Métrica ${i + 1}`} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function NeoColorSwatchesInteractive() {
+  const [selected, setSelected] = useState(0)
+  const swatches = [
+    { color: '#ef4444', label: 'Vermelho' },
+    { color: '#f97316', label: 'Laranja' },
+    { color: '#eab308', label: 'Amarelo' },
+    { color: '#22c55e', label: 'Verde' },
+    { color: '#3b82f6', label: 'Azul' },
+    { color: '#a855f7', label: 'Roxo' },
+  ]
+  return (
+    <div className="component-mock mock-neo-swatches">
+      <div className="neo-swatch-grid">
+        {swatches.map((sw, i) => (
+          <button
+            key={sw.color}
+            className={`neo-swatch ${selected === i ? 'is-selected' : ''}`}
+            style={{ '--sw-color': sw.color } as CSSProperties}
+            onClick={() => setSelected(i)}
+            aria-label={sw.label}
+          />
+        ))}
+      </div>
+      <p className="interactive-note">{swatches[selected].label}</p>
+    </div>
+  )
+}
+
+function NeoAnalogClockInteractive() {
+  const [time, setTime] = useState(new Date())
+  useEffect(() => {
+    const id = window.setInterval(() => setTime(new Date()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+  const sec = time.getSeconds()
+  const min = time.getMinutes() + sec / 60
+  const hour = (time.getHours() % 12) + min / 60
+  const deg = (v: number) => (v - 90) * (Math.PI / 180)
+  const pt = (d: number, r: number) => ({ x: 80 + r * Math.cos(d), y: 80 + r * Math.sin(d) })
+  const hPt = pt(deg(hour * 30), 44)
+  const mPt = pt(deg(min * 6), 58)
+  const sPt = pt(deg(sec * 6), 65)
+  return (
+    <div className="component-mock mock-neo-clock">
+      <div className="neo-clock-face">
+        <svg viewBox="0 0 160 160" width="150" height="150">
+          {Array.from({ length: 12 }, (_, i) => {
+            const a = deg(i * 30)
+            const r1 = 70, r2 = i % 3 === 0 ? 60 : 65
+            return <line key={i} x1={80 + r1 * Math.cos(a)} y1={80 + r1 * Math.sin(a)} x2={80 + r2 * Math.cos(a)} y2={80 + r2 * Math.sin(a)} stroke={i % 3 === 0 ? '#6c8ebf' : 'rgba(163,177,198,0.7)'} strokeWidth={i % 3 === 0 ? 2.5 : 1.5} strokeLinecap="round" />
+          })}
+          <line x1={80} y1={80} x2={hPt.x} y2={hPt.y} stroke="#3d4a5c" strokeWidth={4} strokeLinecap="round" />
+          <line x1={80} y1={80} x2={mPt.x} y2={mPt.y} stroke="#3d4a5c" strokeWidth={2.5} strokeLinecap="round" />
+          <line x1={80} y1={80} x2={sPt.x} y2={sPt.y} stroke="#ef4444" strokeWidth={1.5} strokeLinecap="round" />
+          <circle cx={80} cy={80} r={5} fill="#3d4a5c" />
+          <circle cx={80} cy={80} r={2.5} fill="#ef4444" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+function NeoEqualizerInteractive() {
+  const [levels, setLevels] = useState([45, 68, 82, 91, 75, 58, 40])
+  const labels = ['Sub', '80', '250', '1k', '4k', '8k', '16k']
+  const cycle = (i: number) => setLevels(prev => prev.map((v, j) => j !== i ? v : v >= 90 ? 0 : v + 20))
+  return (
+    <div className="component-mock mock-neo-eq">
+      <div className="neo-eq-bars">
+        {levels.map((lv, i) => (
+          <div key={i} className="neo-eq-column" onClick={() => cycle(i)}>
+            <div className="neo-eq-track">
+              <div className="neo-eq-fill" style={{ height: `${lv}%` }} />
+            </div>
+            <span className="neo-eq-label">{labels[i]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function NeoPinLockInteractive() {
+  const [pin, setPin] = useState('')
+  const [status, setStatus] = useState<'idle' | 'ok' | 'err'>('idle')
+  const CORRECT = '1234'
+  const press = (k: string) => {
+    if (status !== 'idle') { setPin(''); setStatus('idle'); return }
+    const next = pin + k
+    if (next.length === 4) {
+      const result = next === CORRECT ? 'ok' : 'err'
+      setPin(next); setStatus(result)
+      window.setTimeout(() => { setPin(''); setStatus('idle') }, 1200)
+    } else { setPin(next) }
+  }
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫']
+  return (
+    <div className="component-mock mock-neo-pin">
+      <div className={`neo-pin-slots ${status === 'ok' ? 'is-ok' : status === 'err' ? 'is-err' : ''}`}>
+        {Array.from({ length: 4 }, (_, i) => (
+          <div key={i} className={`neo-pin-slot ${i < pin.length ? 'is-filled' : ''}`}>{i < pin.length ? '●' : ''}</div>
+        ))}
+      </div>
+      <div className="neo-pin-keypad">
+        {keys.map((k, i) => (
+          <button key={i} className={`neo-pin-key${!k ? ' invisible' : ''}`} onClick={() => k === '⌫' ? setPin(p => p.slice(0,-1)) : k && press(k)} disabled={!k}>{k}</button>
+        ))}
+      </div>
+      <p className="interactive-note">{status === 'ok' ? '✓ Correto' : status === 'err' ? '✗ PIN incorreto' : 'Digite o PIN: 1234'}</p>
+    </div>
+  )
+}
+
+function NeoStarRatingInteractive() {
+  const [rating, setRating] = useState(3)
+  const [hover, setHover] = useState<number | null>(null)
+  const labels = ['', 'Ruim', 'Regular', 'Bom', 'Ótimo', 'Excelente']
+  const active = hover ?? rating
+  return (
+    <div className="component-mock mock-neo-stars">
+      <div className="neo-stars-row">
+        {[1,2,3,4,5].map(n => (
+          <button
+            key={n}
+            className={`neo-star-btn ${n <= active ? 'is-filled' : ''}`}
+            onClick={() => setRating(n)}
+            onMouseEnter={() => setHover(n)}
+            onMouseLeave={() => setHover(null)}
+            aria-label={`${n} estrela${n > 1 ? 's' : ''}`}
+          >★</button>
+        ))}
+      </div>
+      <p className="interactive-note">{labels[active]}</p>
+    </div>
+  )
+}
+
+function NeoProgressArcInteractive() {
+  const [value, setValue] = useState(68)
+  const cx = 90, cy = 90, r = 70
+  const startDeg = 225, totalDeg = 270
+  const toRad = (d: number) => d * Math.PI / 180
+  const pt = (deg: number) => ({ x: cx + r * Math.cos(toRad(deg)), y: cy + r * Math.sin(toRad(deg)) })
+  const bgEnd = pt(startDeg + totalDeg)
+  const bgStart = pt(startDeg)
+  const fgEndDeg = startDeg + (value / 100) * totalDeg
+  const fgEnd = pt(fgEndDeg)
+  const bgLarge = 1
+  const fgLarge = (value / 100) * totalDeg > 180 ? 1 : 0
+  const bgPath = `M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 ${bgLarge} 1 ${bgEnd.x} ${bgEnd.y}`
+  const fgPath = value > 0 ? `M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 ${fgLarge} 1 ${fgEnd.x} ${fgEnd.y}` : ''
+  return (
+    <div className="component-mock mock-neo-arc">
+      <div className="neo-arc-face">
+        <svg viewBox="0 0 180 180" width="180" height="180">
+          <path d={bgPath} fill="none" stroke="rgba(163,177,198,0.35)" strokeWidth="12" strokeLinecap="round" />
+          {fgPath && <path d={fgPath} fill="none" stroke="#6c8ebf" strokeWidth="12" strokeLinecap="round" />}
+          <text x={cx} y={cy - 4} textAnchor="middle" fontSize="26" fontWeight="800" fill="#3d4a5c" fontFamily="Space Grotesk, sans-serif">{value}%</text>
+          <text x={cx} y={cy + 16} textAnchor="middle" fontSize="11" fill="#8899aa" fontFamily="Space Grotesk, sans-serif">Progresso</text>
+        </svg>
+      </div>
+      <input type="range" min={0} max={100} value={value} className="neo-arc-slider" onChange={e => setValue(Number(e.target.value))} />
+    </div>
+  )
+}
+
+function NeoSwitchPanelInteractive() {
+  const [switches, setSwitches] = useState([true, false, true, false])
+  const labels = ['Wi-Fi', 'Bluetooth', 'Notificações', 'Modo Escuro']
+  const icons = ['📶', '🔵', '🔔', '🌙']
+  const toggle = (i: number) => setSwitches(prev => prev.map((v, j) => j === i ? !v : v))
+  return (
+    <div className="component-mock mock-neo-switch-panel">
+      <div className="neo-panel-card">
+        {switches.map((on, i) => (
+          <div key={i} className="neo-panel-row">
+            <span className="neo-panel-icon">{icons[i]}</span>
+            <span className="neo-panel-label">{labels[i]}</span>
+            <div className={`neo-panel-toggle ${on ? 'is-on' : ''}`} onClick={() => toggle(i)} role="switch" aria-checked={on} tabIndex={0}>
+              <div className="neo-panel-thumb" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function NeoVolumeDialInteractive() {
+  const [volume, setVolume] = useState(60)
+  const [dragging, setDragging] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const dialAngle = (volume / 100) * 270 - 135
+  const handleMouseDown = (_e: ReactMouseEvent) => {
+    setDragging(true)
+    const onMove = (e: MouseEvent) => {
+      if (!wrapRef.current) return
+      const rect = wrapRef.current.getBoundingClientRect()
+      let a = Math.atan2(e.clientY - (rect.top + rect.height / 2), e.clientX - (rect.left + rect.width / 2)) * 180 / Math.PI + 90
+      if (a > 180) a -= 360
+      setVolume(Math.round((Math.max(-135, Math.min(135, a)) + 135) / 270 * 100))
+    }
+    const onUp = () => { setDragging(false); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
+    window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp)
+  }
+  const cx = 80, cy = 80, r = 60
+  const toRad = (d: number) => d * Math.PI / 180
+  const sA = toRad(135 + 90), eA = sA + toRad((volume / 100) * 270)
+  const bgEA = sA + toRad(270)
+  const arc = (sa: number, ea: number, lg: number) => `M ${cx + r * Math.cos(sa)} ${cy + r * Math.sin(sa)} A ${r} ${r} 0 ${lg} 1 ${cx + r * Math.cos(ea)} ${cy + r * Math.sin(ea)}`
+  return (
+    <div className="component-mock mock-neo-volume">
+      <div className="neo-vol-wrap" ref={wrapRef} style={{ position: 'relative', width: 160, height: 160 }}>
+        <svg viewBox="0 0 160 160" width="160" height="160" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
+          <path d={arc(sA, bgEA, 1)} fill="none" stroke="rgba(163,177,198,0.35)" strokeWidth="8" strokeLinecap="round" />
+          {volume > 0 && <path d={arc(sA, eA, (volume / 100) * 270 > 180 ? 1 : 0)} fill="none" stroke="#6c8ebf" strokeWidth="8" strokeLinecap="round" />}
+        </svg>
+        <div className={`neo-vol-knob ${dragging ? 'is-dragging' : ''}`} style={{ transform: `translate(-50%,-50%) rotate(${dialAngle}deg)` }} onMouseDown={handleMouseDown}>
+          <div className="neo-vol-indicator" />
+        </div>
+      </div>
+      <span className="neo-vol-value">{volume}</span>
+    </div>
+  )
+}
+
+function NeoTagCloudInteractive() {
+  const [selected, setSelected] = useState<Set<number>>(new Set([1, 3]))
+  const tags = [
+    { label: 'React', size: 'lg' }, { label: 'TypeScript', size: 'lg' }, { label: 'CSS', size: 'md' },
+    { label: 'Design', size: 'lg' }, { label: 'Motion', size: 'sm' }, { label: 'A11y', size: 'sm' },
+    { label: 'UX', size: 'md' }, { label: 'Figma', size: 'md' }, { label: 'Node', size: 'sm' }, { label: 'API', size: 'sm' },
+  ]
+  const toggle = (i: number) => setSelected(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n })
+  return (
+    <div className="component-mock mock-neo-tags">
+      <div className="neo-tag-cloud">
+        {tags.map((t, i) => (
+          <button key={i} className={`neo-tag-chip neo-tag-${t.size} ${selected.has(i) ? 'is-selected' : ''}`} onClick={() => toggle(i)}>{t.label}</button>
+        ))}
+      </div>
+      <p className="interactive-note">{selected.size} tag{selected.size !== 1 ? 's' : ''} selecionada{selected.size !== 1 ? 's' : ''}</p>
+    </div>
+  )
+}
+
+function GlassProfileCardInteractive() {
+  const [followed, setFollowed] = useState(false)
+  return (
+    <div className="component-mock mock-glass-profile">
+      <div className="glass-bg" aria-hidden="true" />
+      <div className="glass-card">
+        <div className="glass-avatar-ring">
+          <div className="glass-avatar">👤</div>
+        </div>
+        <h3 className="glass-name">Alex Rivera</h3>
+        <p className="glass-role">Senior UI Designer</p>
+        <div className="glass-stats">
+          <div className="glass-stat"><strong>248</strong><span>Posts</span></div>
+          <div className="glass-stat"><strong>12.4k</strong><span>Seguidores</span></div>
+          <div className="glass-stat"><strong>891</strong><span>Seguindo</span></div>
+        </div>
+        <button className={`glass-follow-btn ${followed ? 'is-following' : ''}`} onClick={() => setFollowed(f => !f)}>
+          {followed ? 'Seguindo ✓' : 'Seguir'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function BrutalistBlockCardInteractive() {
+  const [liked, setLiked] = useState(false)
+  const [likes, setLikes] = useState(247)
+  const handleLike = () => { const next = !liked; setLiked(next); setLikes(n => next ? n + 1 : n - 1) }
+  return (
+    <div className="component-mock mock-brutalist">
+      <div className="brutalist-card">
+        <div className="brutalist-tag">DESIGN</div>
+        <h2 className="brutalist-title">THE FUTURE OF UI IS HERE</h2>
+        <p className="brutalist-body">Bold. Raw. Unfiltered. Design that refuses to be ignored by anyone.</p>
+        <div className="brutalist-footer">
+          <button className={`brutalist-like-btn ${liked ? 'is-liked' : ''}`} onClick={handleLike}>♥ {likes}</button>
+          <span className="brutalist-date">MAY 2025</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ClayMorphismButtonsInteractive() {
+  const [pressed, setPressed] = useState<number | null>(null)
+  const [active, setActive] = useState(0)
+  const buttons = [
+    { label: 'Upload', icon: '☁️', color: '#ff7eb3', shadow: '#c8467a' },
+    { label: 'Save', icon: '💾', color: '#7eb8ff', shadow: '#3a6fd9' },
+    { label: 'Share', icon: '✈️', color: '#7effb2', shadow: '#2ab860' },
+    { label: 'Delete', icon: '🗑️', color: '#ffb07e', shadow: '#d97040' },
+  ]
+  return (
+    <div className="component-mock mock-clay">
+      <div className="clay-grid">
+        {buttons.map((b, i) => (
+          <button
+            key={i}
+            className={`clay-btn ${pressed === i ? 'is-pressed' : ''}`}
+            style={{ '--clay-color': b.color, '--clay-shadow': b.shadow } as CSSProperties}
+            onMouseDown={() => setPressed(i)}
+            onMouseUp={() => { setPressed(null); setActive(i) }}
+            onMouseLeave={() => setPressed(null)}
+          >
+            <span className="clay-icon">{b.icon}</span>
+            <span className="clay-label">{b.label}</span>
+          </button>
+        ))}
+      </div>
+      <p className="interactive-note">{buttons[active].label} selecionado</p>
+    </div>
+  )
+}
+
+function MeshAuroraCardInteractive() {
+  const [tab, setTab] = useState(0)
+  const tabs = ['Overview', 'Analytics', 'Reports']
+  const datasets = [
+    [{ metric: '$48.3k', label: 'Receita', delta: '+18%' }, { metric: '9,847', label: 'Usuários', delta: '+12%' }, { metric: '2.3%', label: 'Churn', delta: '-0.4%' }],
+    [{ metric: '1.24M', label: 'Sessões', delta: '+9%' }, { metric: '3m 42s', label: 'Duração', delta: '+7%' }, { metric: '38%', label: 'Bounce', delta: '-5%' }],
+    [{ metric: '142', label: 'Relatórios', delta: '+21%' }, { metric: '98%', label: 'Entrega', delta: '+2%' }, { metric: '4.9', label: 'Rating', delta: '+0.3' }],
+  ]
+  return (
+    <div className="component-mock mock-mesh-aurora">
+      <div className="mesh-blob mesh-blob-1" aria-hidden="true" />
+      <div className="mesh-blob mesh-blob-2" aria-hidden="true" />
+      <div className="mesh-blob mesh-blob-3" aria-hidden="true" />
+      <div className="mesh-card-content">
+        <div className="mesh-tabs">
+          {tabs.map((t, i) => (
+            <button key={i} className={`mesh-tab ${tab === i ? 'is-active' : ''}`} onClick={() => setTab(i)}>{t}</button>
+          ))}
+        </div>
+        <div className="mesh-metrics">
+          {datasets[tab].map((d, i) => (
+            <div key={i} className="mesh-metric">
+              <span className="mesh-metric-value">{d.metric}</span>
+              <span className="mesh-metric-label">{d.label}</span>
+              <span className="mesh-metric-delta is-positive">{d.delta}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function RetroCrtTerminalInteractive() {
+  const [input, setInput] = useState('')
+  const [history, setHistory] = useState(['> SYSTEM BOOT v2.1.0', '> LOADING MODULES... OK', '> READY.'])
+  const commands: Record<string, string> = {
+    help: '> CMDS: help, status, ping, clear',
+    status: '> SYS: ONLINE | CPU: 12% | MEM: 2.1GB',
+    ping: '> PONG! Latency: 4ms',
+    clear: '__clear__',
+  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const cmd = input.trim().toLowerCase()
+    const response = commands[cmd] ?? `> ERR: '${input.trim()}' not found`
+    if (response === '__clear__') { setHistory(['> CLEARED.']) }
+    else { setHistory(h => [...h.slice(-5), `$ ${input.trim()}`, response]) }
+    setInput('')
+  }
+  return (
+    <div className="component-mock mock-crt">
+      <div className="crt-bezel">
+        <div className="crt-screen">
+          <div className="crt-scanlines" aria-hidden="true" />
+          <div className="crt-content">
+            {history.map((line, i) => <div key={i} className="crt-line">{line}</div>)}
+            <form className="crt-input-row" onSubmit={handleSubmit}>
+              <span className="crt-prompt">$</span>
+              <input className="crt-input" value={input} onChange={e => setInput(e.target.value)} maxLength={24} aria-label="Terminal input" />
+              <span className="crt-cursor" />
+            </form>
+          </div>
+        </div>
+        <div className="crt-label">TERM-80</div>
+      </div>
     </div>
   )
 }
@@ -3533,133 +4336,6 @@ updateToggleState()`,
   background: #d24248;
 }`,
       ts: `const range = document.getElementById('positive-range') as HTMLInputElement\nconst positiveLabel = document.getElementById('positive-label') as HTMLElement\nconst negativeLabel = document.getElementById('negative-label') as HTMLElement\nconst positiveBar = document.getElementById('positive-bar') as HTMLElement\nconst negativeBar = document.getElementById('negative-bar') as HTMLElement\n\nfunction render(value: number) {\n  const negative = 100 - value\n  positiveLabel.textContent = value + '%'\n  negativeLabel.textContent = negative + '% negativos'\n  positiveBar.style.width = value + '%'\n  negativeBar.style.width = negative + '%'\n}\n\nrange.addEventListener('input', () => render(Number(range.value)))\nrender(Number(range.value))`,
-    },
-    'curadoria-table-list': {
-      html: `<section class="demo-table">\n  <div class="demo-controls">\n    <button type="button" data-filter="all">Todos</button>\n    <button type="button" data-filter="up">👍</button>\n    <button type="button" data-filter="down">👎</button>\n  </div>\n  <div class="head"><span>Data</span><span>Ativo</span><span>Thumb</span><span>Ações</span></div>\n  <div id="table-body"></div>\n  <div class="demo-controls pagination">\n    <button id="prev" type="button">Anterior</button>\n    <span id="page-label">Página 1 de 1</span>\n    <button id="next" type="button">Próxima</button>\n  </div>\n</section>`,
-      css: `.demo-table {
-  display: grid;
-  gap: 0.4rem;
-  font-family: Arial, sans-serif;
-}
-
-.demo-controls {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-}
-
-.demo-controls button {
-  border: 1px solid #cbd5e1;
-  border-radius: 999px;
-  padding: 0.2rem 0.65rem;
-  background: #fff;
-  cursor: pointer;
-}
-
-.demo-controls button.is-active {
-  border-color: #0e8d9a;
-  background: #e8f7f8;
-}
-
-.head,
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.7fr 0.9fr;
-  gap: 0.4rem;
-  align-items: center;
-}
-
-.head {
-  font-size: 0.78rem;
-  color: #556572;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.row {
-  border: 1px solid #d6e1e9;
-  border-radius: 0.55rem;
-  background: #fff;
-  padding: 0.36rem 0.42rem;
-}
-
-.row button {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.45rem;
-  background: #fff;
-  cursor: pointer;
-}
-
-.row.is-selected {
-  border-color: #0e8d9a;
-}
-
-.pagination {
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: #556572;
-}`,
-      ts: `type Row = { id: string; date: string; ativo: string; thumb: 'up' | 'down' }\n\nconst rows: Row[] = [\n  { id: '1', date: '08/05', ativo: 'Todos', thumb: 'up' },\n  { id: '2', date: '08/05', ativo: 'Produto A', thumb: 'down' },\n  { id: '3', date: '07/05', ativo: 'Produto B', thumb: 'up' },\n  { id: '4', date: '07/05', ativo: 'Produto C', thumb: 'up' },\n  { id: '5', date: '06/05', ativo: 'Produto A', thumb: 'down' },\n  { id: '6', date: '06/05', ativo: 'Produto B', thumb: 'up' },\n]\n\nconst body = document.getElementById('table-body') as HTMLElement\nconst pageLabel = document.getElementById('page-label') as HTMLElement\nconst prevBtn = document.getElementById('prev') as HTMLButtonElement\nconst nextBtn = document.getElementById('next') as HTMLButtonElement\nconst filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'))\n\nlet filter: 'all' | 'up' | 'down' = 'all'\nlet page = 1\nconst pageSize = 3\nlet selectedId: string | null = null\n\nfunction getFiltered() {\n  return rows.filter((row) => (filter === 'all' ? true : row.thumb === filter))\n}\n\nfunction render() {\n  filterButtons.forEach((btn) => btn.classList.toggle('is-active', btn.dataset.filter === filter))\n  const filtered = getFiltered()\n  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))\n  page = Math.min(page, totalPages)\n  const visible = filtered.slice((page - 1) * pageSize, page * pageSize)\n\n  body.innerHTML = ''\n  visible.forEach((row) => {\n    const el = document.createElement('div')\n    el.className = 'row' + (selectedId === row.id ? ' is-selected' : '')\n    el.innerHTML = '<span>' + row.date + '</span><span>' + row.ativo + '</span><span>' + (row.thumb === 'up' ? '👍' : '👎') + '</span><button type="button">Detalhe</button>'\n    const detailBtn = el.querySelector('button') as HTMLButtonElement\n    detailBtn.addEventListener('click', () => {\n      selectedId = row.id\n      render()\n    })\n    body.appendChild(el)\n  })\n\n  pageLabel.textContent = 'Página ' + page + ' de ' + totalPages\n  prevBtn.disabled = page === 1\n  nextBtn.disabled = page === totalPages\n}\n\nfilterButtons.forEach((btn) => {\n  btn.addEventListener('click', () => {\n    filter = (btn.dataset.filter as 'all' | 'up' | 'down') || 'all'\n    page = 1\n    render()\n  })\n})\nprevBtn.addEventListener('click', () => { page = Math.max(1, page - 1); render() })\nnextBtn.addEventListener('click', () => { page = page + 1; render() })\n\nrender()`,
-    },
-    'curadoria-datatable-simples': {
-      html: `<section class="demo-datatable">\n  <div class="demo-actions">\n    <button id="toggle-all" type="button">Selecionar todos</button>\n    <button id="delete-selected" type="button" disabled>Excluir selecionados</button>\n  </div>\n\n  <div class="demo-row demo-head">\n    <span>Sel.</span>\n    <button type="button" data-sort="nome">Nome</button>\n    <button type="button" data-sort="categoria">Categoria</button>\n    <button type="button" data-sort="pontos">Pontos</button>\n    <span>Acoes</span>\n  </div>\n\n  <div id="datatable-body"></div>\n\n  <div class="demo-actions">\n    <button id="prev" type="button">Anterior</button>\n    <span id="page-label">Pagina 1 de 1</span>\n    <button id="next" type="button">Proxima</button>\n  </div>\n</section>`,
-      css: `.demo-datatable {
-  display: grid;
-  gap: 0.42rem;
-  font-family: Arial, sans-serif;
-}
-
-.demo-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
-}
-
-.demo-actions button,
-.demo-head button {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.55rem;
-  background: #fff;
-  min-height: 30px;
-  padding: 0 0.65rem;
-  cursor: pointer;
-}
-
-.demo-row {
-  display: grid;
-  grid-template-columns: 0.6fr 1.4fr 1fr 0.9fr 0.9fr;
-  align-items: center;
-  gap: 0.35rem;
-  border: 1px solid #d6e1e9;
-  border-radius: 0.58rem;
-  background: #fff;
-  padding: 0.38rem 0.45rem;
-}
-
-.demo-head {
-  text-transform: uppercase;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #4b6170;
-}
-
-.demo-cell-action {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.45rem;
-  background: #fff;
-  min-height: 24px;
-}
-
-.demo-row.is-selected {
-  border-color: #0e8d9a;
-  background: #f0fbfc;
-}
-
-.demo-row.is-empty {
-  color: #9bb0be;
-}`,
-      ts: `type Row = { id: number; nome: string; categoria: string; pontos: number }\n\nconst rowsSeed: Row[] = [\n  { id: 1, nome: 'Card Hero', categoria: 'Layout', pontos: 96 },\n  { id: 2, nome: 'Tabela Financeira', categoria: 'Dados', pontos: 89 },\n  { id: 3, nome: 'Filtro Avancado', categoria: 'Form', pontos: 82 },\n  { id: 4, nome: 'Widget KPI', categoria: 'Dashboard', pontos: 91 },\n  { id: 5, nome: 'Painel Heatmap', categoria: 'Grafico', pontos: 77 },\n  { id: 6, nome: 'Lista de Alertas', categoria: 'Dados', pontos: 85 },\n]\n\nconst body = document.getElementById('datatable-body') as HTMLElement\nconst toggleAllBtn = document.getElementById('toggle-all') as HTMLButtonElement\nconst deleteBtn = document.getElementById('delete-selected') as HTMLButtonElement\nconst pageLabel = document.getElementById('page-label') as HTMLElement\nconst prevBtn = document.getElementById('prev') as HTMLButtonElement\nconst nextBtn = document.getElementById('next') as HTMLButtonElement\nconst sortButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-sort]'))\n\nlet rows = [...rowsSeed]\nlet selected = new Set<number>()\nlet sortColumn: keyof Row = 'pontos'\nlet sortDirection: 'asc' | 'desc' = 'desc'\nlet page = 1\nconst pageSize = 5\n\nfunction sortedRows() {\n  return [...rows].sort((a, b) => {\n    const va = a[sortColumn]\n    const vb = b[sortColumn]\n    const cmp = typeof va === 'number' && typeof vb === 'number'\n      ? va - vb\n      : String(va).localeCompare(String(vb), 'pt-BR', { numeric: true })\n    return sortDirection === 'asc' ? cmp : -cmp\n  })\n}\n\nfunction render() {\n  const data = sortedRows()\n  const totalPages = Math.max(1, Math.ceil(data.length / pageSize))\n  page = Math.min(page, totalPages)\n  const visible = data.slice((page - 1) * pageSize, page * pageSize)\n  while (visible.length < pageSize) visible.push(undefined as unknown as Row)\n\n  body.innerHTML = ''\n  visible.forEach((row) => {\n    const rowEl = document.createElement('div')\n    rowEl.className = 'demo-row' + (row && selected.has(row.id) ? ' is-selected' : '') + (!row ? ' is-empty' : '')\n    if (!row) {\n      rowEl.innerHTML = '<span>-</span><span>-</span><span>-</span><span>-</span><span></span>'\n      body.appendChild(rowEl)\n      return\n    }\n\n    const checkbox = document.createElement('input')\n    checkbox.type = 'checkbox'\n    checkbox.checked = selected.has(row.id)\n    checkbox.addEventListener('change', () => {\n      if (selected.has(row.id)) selected.delete(row.id)\n      else selected.add(row.id)\n      render()\n    })\n\n    const actionBtn = document.createElement('button')\n    actionBtn.className = 'demo-cell-action'\n    actionBtn.textContent = 'Acao'\n\n    rowEl.append(checkbox)\n    rowEl.append(Object.assign(document.createElement('span'), { textContent: row.nome }))\n    rowEl.append(Object.assign(document.createElement('span'), { textContent: row.categoria }))\n    rowEl.append(Object.assign(document.createElement('span'), { textContent: String(row.pontos) }))\n    rowEl.append(actionBtn)\n    body.appendChild(rowEl)\n  })\n\n  const allSelected = rows.length > 0 && rows.every((row) => selected.has(row.id))\n  toggleAllBtn.textContent = allSelected ? 'Desfazer selecao' : 'Selecionar todos'\n  deleteBtn.disabled = selected.size === 0\n  pageLabel.textContent = 'Pagina ' + page + ' de ' + totalPages\n  prevBtn.disabled = page === 1\n  nextBtn.disabled = page === totalPages\n}\n\nsortButtons.forEach((btn) => {\n  btn.addEventListener('click', () => {\n    const key = btn.dataset.sort as keyof Row\n    if (sortColumn === key) sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'\n    else { sortColumn = key; sortDirection = 'asc' }\n    page = 1\n    render()\n  })\n})\n\ntoggleAllBtn.addEventListener('click', () => {\n  const allSelected = rows.length > 0 && rows.every((row) => selected.has(row.id))\n  selected = allSelected ? new Set() : new Set(rows.map((row) => row.id))\n  render()\n})\n\ndeleteBtn.addEventListener('click', () => {\n  rows = rows.filter((row) => !selected.has(row.id))\n  selected.clear()\n  page = 1\n  render()\n})\n\nprevBtn.addEventListener('click', () => { page = Math.max(1, page - 1); render() })\nnextBtn.addEventListener('click', () => { page = page + 1; render() })\n\nrender()`,
     },
     'curadoria-modal-chatbot': {
       html: `<section class="demo-chatbot">\n  <article id="chatbot" class="chatbot-modal">\n    <header class="chatbot-head">\n      <div class="chat-title">\n        <strong>Chatbot</strong>\n        <span>Assistente virtual <span class="online-dot" aria-label="Assistente ativo"></span></span>\n      </div>\n      <div class="head-actions">\n        <button id="toggle-size" type="button" aria-label="Expandir chat">⛶</button>\n      </div>\n    </header>\n\n    <div id="chat-body" class="chatbot-body"></div>\n\n    <footer class="chatbot-footer">\n      <input id="chat-input" type="text" placeholder="Digite sua pergunta..." />\n      <button id="send-chat" type="button">Enviar</button>\n    </footer>\n  </article>\n</section>`,
@@ -5128,17 +5804,6 @@ notes.forEach((note) => note.addEventListener('click', () => note.classList.togg
       ts: `const trend = '+5.2 p.p.'
 console.log('Tendencia:', trend)`,
     },
-    'finance-snapshot-card': {
-      html: `<article class="finance-snapshot"><strong>R$ 128.430</strong></article>`,
-      css: `.finance-snapshot {
-  border-radius: 16px;
-  padding: 16px;
-  background: linear-gradient(160deg, #122640, #1e4d72);
-  color: #e9f6ff;
-}`,
-      ts: `const progress = 74
-console.log('Meta mensal:', progress + '%')`,
-    },
     'team-status-card': {
       html: `<article class="team-status-card"><h4>Team Pulse</h4></article>`,
       css: `.team-status-card {
@@ -5677,6 +6342,1001 @@ console.log(profile)`,
       ts: `const fab = document.querySelector('.morphing-fab') as HTMLButtonElement
 fab.addEventListener('click', () => {
   fab.classList.toggle('is-open')
+})`,
+    },
+    'radial-heatmap-clock': {
+      html: `<div class="heatmap-clock-wrap">
+  <svg id="heatmap-svg" viewBox="0 0 160 160" aria-label="Radial heatmap clock"></svg>
+</div>`,
+      css: `.heatmap-clock-wrap {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+}
+#heatmap-svg path {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+#heatmap-svg path:hover {
+  opacity: 1;
+  stroke: rgba(255,255,255,0.6);
+  stroke-width: 0.8px;
+}`,
+      ts: `const heatData = [0.08,0.04,0.02,0.02,0.06,0.18,0.35,0.72,0.92,0.87,0.74,0.85,0.9,0.8,0.72,0.68,0.76,0.88,0.82,0.7,0.52,0.38,0.24,0.14]
+const svg = document.getElementById('heatmap-svg')!
+const cx = 80, cy = 80, outerR = 68, innerR = 40
+
+const getColor = (v: number) => {
+  if (v < 0.2) return \`hsl(220,55%,\${28 + v * 60}%)\`
+  if (v < 0.45) return \`hsl(\${210 - (v - 0.2) * 360},65%,52%)\`
+  if (v < 0.7) return \`hsl(\${120 - (v - 0.45) * 320},72%,52%)\`
+  return \`hsl(\${40 - (v - 0.7) * 133},90%,58%)\`
+}
+
+heatData.forEach((heat, idx) => {
+  const startA = (idx / 24) * 2 * Math.PI - Math.PI / 2
+  const endA = ((idx + 1) / 24) * 2 * Math.PI - Math.PI / 2
+  const g = 0.018
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+  path.setAttribute('d', \`M\${cx + outerR * Math.cos(startA + g)},\${cy + outerR * Math.sin(startA + g)} A\${outerR},\${outerR} 0 0,1 \${cx + outerR * Math.cos(endA - g)},\${cy + outerR * Math.sin(endA - g)} L\${cx + innerR * Math.cos(endA - g)},\${cy + innerR * Math.sin(endA - g)} A\${innerR},\${innerR} 0 0,0 \${cx + innerR * Math.cos(startA + g)},\${cy + innerR * Math.sin(startA + g)} Z\`)
+  path.setAttribute('fill', getColor(heat))
+  path.setAttribute('opacity', '0.8')
+  svg.appendChild(path)
+})`,
+    },
+    'liquid-level-gauge': {
+      html: `<div class="gauge-wrap">
+  <svg viewBox="0 0 120 120" id="gauge-svg" aria-label="Gauge circular">
+    <circle id="gauge-bg" cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9"/>
+    <circle id="gauge-arc" cx="60" cy="60" r="50" fill="none" stroke="#22c55e" stroke-width="9" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+    <text id="gauge-val" x="60" y="55" text-anchor="middle" font-size="22" font-weight="700" fill="white">62%</text>
+    <text id="gauge-lbl" x="60" y="72" text-anchor="middle" font-size="9" fill="#22c55e" font-weight="600">Ótimo</text>
+  </svg>
+  <input type="range" id="gauge-slider" min="0" max="100" value="62"/>
+</div>`,
+      css: `.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+#gauge-svg { width: 150px; height: 150px; }
+#gauge-slider { width: 140px; accent-color: #5ad0de; }`,
+      ts: `const arc = document.getElementById('gauge-arc') as SVGCircleElement
+const val = document.getElementById('gauge-val')!
+const lbl = document.getElementById('gauge-lbl')!
+const slider = document.getElementById('gauge-slider') as HTMLInputElement
+const r = 50, circ = 2 * Math.PI * r
+
+const getColor = (v: number) => v < 25 ? '#ef4444' : v < 50 ? '#f97316' : v < 75 ? '#3b82f6' : '#22c55e'
+const getLabel = (v: number) => v < 25 ? 'Crítico' : v < 50 ? 'Baixo' : v < 75 ? 'Normal' : 'Ótimo'
+
+const update = (level: number) => {
+  const color = getColor(level)
+  arc.style.strokeDasharray = \`\${circ * level / 100} \${circ}\`
+  arc.style.stroke = color
+  val.textContent = level + '%'
+  lbl.textContent = getLabel(level)
+  lbl.style.fill = color
+}
+
+slider.addEventListener('input', () => update(Number(slider.value)))
+update(62)`,
+    },
+    'typewriter-terminal-card': {
+      html: `<div class="typewriter-card">
+  <div class="typewriter-header">
+    <span class="term-dot dot-red"></span>
+    <span class="term-dot dot-yellow"></span>
+    <span class="term-dot dot-green"></span>
+    <span class="term-title">design-system — bash</span>
+  </div>
+  <div id="typewriter-body" class="typewriter-body"></div>
+</div>`,
+      css: `.typewriter-card {
+  background: #0d1117;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: ui-monospace, monospace;
+  min-width: 280px;
+}
+.typewriter-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #161b22;
+}
+.term-dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+.term-title { color: #8b949e; font-size: 12px; margin-left: 6px; }
+.typewriter-body { padding: 12px 16px; min-height: 120px; }
+.term-line { color: #00ff88; font-size: 0.8rem; line-height: 1.7; }
+.term-cursor { animation: blink 0.7s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }`,
+      ts: `const lines = [
+  '> iniciando análise de componentes...',
+  '> carregando design system...',
+  '> 47 elementos detectados.',
+  '> todos os checks passaram ✓',
+  '> pronto para produção 🚀',
+]
+let lineIdx = 0, charIdx = 0, done: string[] = []
+const body = document.getElementById('typewriter-body')!
+
+const tick = () => {
+  if (lineIdx >= lines.length) {
+    setTimeout(() => { done = []; lineIdx = 0; charIdx = 0; body.innerHTML = ''; tick() }, 2800)
+    return
+  }
+  if (charIdx < lines[lineIdx].length) {
+    charIdx++
+  } else {
+    done.push(lines[lineIdx]); lineIdx++; charIdx = 0
+  }
+  render()
+  setTimeout(tick, charIdx > 0 ? 38 : 320)
+}
+
+const render = () => {
+  body.innerHTML = done.map(l => \`<div class="term-line">\${l}</div>\`).join('')
+    + (lineIdx < lines.length ? \`<div class="term-line">\${lines[lineIdx].substring(0, charIdx)}<span class="term-cursor">▊</span></div>\` : '')
+}
+
+tick()`,
+    },
+    'event-ticket-card': {
+      html: `<article id="ticket" class="event-ticket" role="button" tabindex="0" aria-label="Clique para validar">
+  <div class="ticket-left">
+    <div class="ticket-tag">UI SUMMIT</div>
+    <h3 class="ticket-title">Design Systems<br>Conference</h3>
+    <div class="ticket-meta"><span>15 AGO 2025</span><span>19:00h</span></div>
+    <div class="ticket-seat">FILA A · LUGAR 12</div>
+  </div>
+  <div class="ticket-perforation"></div>
+  <div class="ticket-right">
+    <div class="ticket-qr" aria-label="QR code"></div>
+    <div class="ticket-serial">#UI-20250815-012</div>
+  </div>
+</article>`,
+      css: `.event-ticket {
+  display: flex;
+  background: linear-gradient(135deg, #1a0533 0%, #2d1060 50%, #0d2b5c 100%);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.3s, opacity 0.3s;
+}
+.event-ticket.is-used { filter: grayscale(0.7); opacity: 0.7; }
+.ticket-left { padding: 18px; flex: 1; color: white; }
+.ticket-tag { font-size: 0.65rem; letter-spacing: 0.12em; color: #c084fc; font-weight: 700; }
+.ticket-title { margin: 6px 0; font-size: 1rem; line-height: 1.3; }
+.ticket-perforation { width: 2px; border-left: 2px dashed rgba(255,255,255,0.25); margin: 12px 0; }
+.ticket-right { padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ticket-serial { font-size: 0.6rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; }`,
+      ts: `const ticket = document.getElementById('ticket')!
+ticket.addEventListener('click', () => ticket.classList.toggle('is-used'))`,
+    },
+    'notification-bell-badge': {
+      html: `<div class="notif-wrap">
+  <button id="notif-bell" class="notif-bell-btn" aria-label="7 notificações">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+    <span id="notif-count" class="notif-badge">7</span>
+  </button>
+</div>`,
+      css: `.notif-bell-btn {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(145deg, #1a2a4a, #0f1d35);
+  color: #a8d4f5;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.notif-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+}
+.notif-bell-btn.is-ringing { animation: bell-ring 0.6s ease; }
+@keyframes bell-ring {
+  0%,100% { transform: rotate(0); }
+  20% { transform: rotate(-18deg); }
+  40% { transform: rotate(18deg); }
+  60% { transform: rotate(-12deg); }
+  80% { transform: rotate(12deg); }
+}`,
+      ts: `let count = 7
+const bell = document.getElementById('notif-bell')!
+const badge = document.getElementById('notif-count')!
+
+bell.addEventListener('click', () => {
+  count = 0
+  badge.style.display = 'none'
+  bell.setAttribute('aria-label', 'Sem notificações')
+})`,
+    },
+    'rotary-dial-knob': {
+      html: `<div class="rotary-wrap">
+  <div class="rotary-ticks" id="rotary-ticks"></div>
+  <button id="rotary-knob" class="rotary-knob" aria-label="Knob: 50" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    <span class="knob-indicator"></span>
+  </button>
+  <div id="rotary-val" class="rotary-value">50</div>
+</div>`,
+      css: `.rotary-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.rotary-knob {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 64px; height: 64px;
+  border-radius: 50%; border: none;
+  background: radial-gradient(circle at 38% 32%, #4a5568, #1a202c);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  cursor: grab;
+  transform: translate(-50%, -50%);
+}
+.rotary-knob.is-dragging { cursor: grabbing; }
+.knob-indicator {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 10px; background: #5ad0de; border-radius: 2px;
+}
+.rotary-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: #5ad0de; }`,
+      ts: `const knob = document.getElementById('rotary-knob') as HTMLButtonElement
+const valEl = document.getElementById('rotary-val')!
+let angle = 0
+
+knob.addEventListener('mousedown', (e) => {
+  const rect = knob.getBoundingClientRect()
+  const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2
+  const move = (ev: MouseEvent) => {
+    let a = Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180 / Math.PI + 90
+    if (a > 180) a -= 360
+    angle = Math.max(-135, Math.min(135, a))
+    knob.style.transform = \`translate(-50%,-50%) rotate(\${angle}deg)\`
+    const val = Math.round((angle + 135) / 270 * 100)
+    valEl.textContent = String(val)
+    knob.setAttribute('aria-valuenow', String(val))
+  }
+  const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up) }
+  window.addEventListener('mousemove', move); window.addEventListener('mouseup', up)
+})`,
+    },
+    'aurora-chip-selector': {
+      html: `<div class="chip-selector-grid" role="group" aria-label="Seleção de áreas">
+  <button class="aurora-chip-item" style="--chip-color:#a855f7" aria-pressed="true">Design</button>
+  <button class="aurora-chip-item is-selected" style="--chip-color:#3b82f6" aria-pressed="true">Dev</button>
+  <button class="aurora-chip-item" style="--chip-color:#22c55e" aria-pressed="false">Data</button>
+  <button class="aurora-chip-item" style="--chip-color:#ec4899" aria-pressed="false">AI</button>
+  <button class="aurora-chip-item" style="--chip-color:#f97316" aria-pressed="false">Motion</button>
+  <button class="aurora-chip-item" style="--chip-color:#eab308" aria-pressed="false">Brand</button>
+</div>`,
+      css: `.chip-selector-grid {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.aurora-chip-item {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--chip-color) 40%, transparent);
+  background: color-mix(in srgb, var(--chip-color) 10%, transparent);
+  color: var(--chip-color);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.aurora-chip-item.is-selected {
+  background: color-mix(in srgb, var(--chip-color) 22%, transparent);
+  border-color: var(--chip-color);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--chip-color) 40%, transparent);
+}`,
+      ts: `document.querySelectorAll<HTMLButtonElement>('.aurora-chip-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isSelected = btn.getAttribute('aria-pressed') === 'true'
+    btn.setAttribute('aria-pressed', String(!isSelected))
+    btn.classList.toggle('is-selected', !isSelected)
+  })
+})`,
+    },
+    'timeline-stepper': {
+      html: `<div class="stepper-track">
+  <div class="stepper-item">
+    <button class="stepper-node is-done" aria-label="Etapa 1: Briefing">✓</button>
+    <div class="stepper-line is-done"></div>
+  </div>
+  <div class="stepper-item">
+    <button class="stepper-node is-active" aria-label="Etapa 2: Design">🎨</button>
+    <div class="stepper-line"></div>
+  </div>
+  <div class="stepper-item">
+    <button class="stepper-node" aria-label="Etapa 3: Review">🔍</button>
+    <div class="stepper-line"></div>
+  </div>
+  <div class="stepper-item">
+    <button class="stepper-node" aria-label="Etapa 4: Deploy">🚀</button>
+  </div>
+</div>
+<div id="stepper-info" class="stepper-info">
+  <strong>Design</strong><span>Prototipagem e UI</span>
+</div>`,
+      css: `.stepper-track { display: flex; align-items: center; gap: 0; }
+.stepper-item { display: flex; align-items: center; }
+.stepper-node {
+  width: 42px; height: 42px;
+  border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05); color: #6b8898;
+  font-size: 1.1rem; cursor: pointer; flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+.stepper-node.is-done { background: #0e8d9a; border-color: #0e8d9a; color: white; }
+.stepper-node.is-active { background: rgba(90,208,222,0.15); border-color: #5ad0de; color: #5ad0de; box-shadow: 0 0 16px rgba(90,208,222,0.3); }
+.stepper-line { height: 3px; width: 48px; background: rgba(255,255,255,0.1); transition: background 0.3s; }
+.stepper-line.is-done { background: #0e8d9a; }
+.stepper-info { margin-top: 12px; display: flex; flex-direction: column; gap: 2px; }
+.stepper-info strong { font-size: 0.95rem; color: #e5f5ff; }
+.stepper-info span { font-size: 0.78rem; color: #6b8898; }`,
+      ts: `const nodes = document.querySelectorAll<HTMLButtonElement>('.stepper-node')
+const lines = document.querySelectorAll<HTMLDivElement>('.stepper-line')
+const info = document.getElementById('stepper-info')!
+const steps = [
+  { label: 'Briefing', desc: 'Coleta de requisitos' },
+  { label: 'Design', desc: 'Prototipagem e UI' },
+  { label: 'Review', desc: 'Feedback e ajustes' },
+  { label: 'Deploy', desc: 'Publicação final' },
+]
+
+nodes.forEach((node, idx) => {
+  node.addEventListener('click', () => {
+    nodes.forEach((n, i) => {
+      n.className = 'stepper-node' + (i < idx ? ' is-done' : i === idx ? ' is-active' : '')
+    })
+    lines.forEach((l, i) => l.classList.toggle('is-done', i < idx))
+    info.innerHTML = \`<strong>\${steps[idx].label}</strong><span>\${steps[idx].desc}</span>\`
+  })
+})`,
+    },
+    'flip-counter-display': {
+      html: `<div class="flip-counter-wrap">
+  <div class="flip-display">
+    <div class="flip-card" id="flip-d1">
+      <div class="flip-top">4</div>
+      <div class="flip-divider"></div>
+      <div class="flip-bottom">4</div>
+    </div>
+    <div class="flip-card" id="flip-d2">
+      <div class="flip-top">2</div>
+      <div class="flip-divider"></div>
+      <div class="flip-bottom">2</div>
+    </div>
+  </div>
+  <div class="flip-controls">
+    <button id="flip-down" class="flip-btn flip-btn-down">−</button>
+    <button id="flip-up" class="flip-btn flip-btn-up">+</button>
+  </div>
+</div>`,
+      css: `.flip-display { display: flex; gap: 6px; }
+.flip-card {
+  width: 58px; height: 80px;
+  background: #1a1a2e; border-radius: 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700; color: #e5f5ff;
+}
+.flip-divider {
+  position: absolute; top: 50%; left: 0; right: 0;
+  height: 1px; background: rgba(0,0,0,0.5);
+}
+.flip-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+  color: #e5f5ff; font-size: 1.3rem; cursor: pointer;
+  transition: background 0.2s;
+}
+.flip-btn:hover:not(:disabled) { background: rgba(90,208,222,0.15); border-color: #5ad0de; }
+.flip-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.flip-controls { display: flex; gap: 10px; margin-top: 12px; justify-content: center; }
+.flip-card.flip-up { animation: flip-up 0.22s ease; }
+.flip-card.flip-down { animation: flip-down 0.22s ease; }
+@keyframes flip-up { 0%{transform:rotateX(0)} 50%{transform:rotateX(-90deg)} 100%{transform:rotateX(0)} }
+@keyframes flip-down { 0%{transform:rotateX(0)} 50%{transform:rotateX(90deg)} 100%{transform:rotateX(0)} }`,
+      ts: `let value = 42
+const d1 = document.getElementById('flip-d1')!
+const d2 = document.getElementById('flip-d2')!
+const btnUp = document.getElementById('flip-up') as HTMLButtonElement
+const btnDown = document.getElementById('flip-down') as HTMLButtonElement
+
+const updateDisplay = () => {
+  const s = String(value).padStart(2, '0')
+  const cards = [d1, d2]
+  cards.forEach((card, i) => {
+    card.classList.add('flip-up')
+    setTimeout(() => {
+      card.querySelectorAll('.flip-top, .flip-bottom').forEach(el => el.textContent = s[i])
+      card.classList.remove('flip-up')
+    }, 110)
+  })
+  btnDown.disabled = value <= 0
+  btnUp.disabled = value >= 99
+}
+
+btnUp.addEventListener('click', () => { if (value < 99) { value++; updateDisplay() } })
+btnDown.addEventListener('click', () => { if (value > 0) { value--; updateDisplay() } })`,
+    },
+    'holographic-card': {
+      html: `<div id="holo-card" class="holo-card" role="img" aria-label="Card holográfico">
+  <div class="holo-shine"></div>
+  <div class="holo-logo">★ HOLO</div>
+  <div class="holo-chip"><span></span><span></span><span></span><span></span></div>
+  <div class="holo-number">•••• •••• •••• 7831</div>
+  <div class="holo-footer">
+    <span class="holo-name">DESIGN SYSTEM PRO</span>
+    <span class="holo-expiry">12/28</span>
+  </div>
+</div>`,
+      css: `.holo-card {
+  width: 280px; height: 170px;
+  border-radius: 18px; padding: 20px;
+  background: linear-gradient(135deg, #1a1a3e 0%, #2d1b6e 40%, #1a3a2e 100%);
+  position: relative; overflow: hidden;
+  transform-style: preserve-3d; transition: transform 0.1s ease;
+  color: white; cursor: crosshair;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.holo-shine {
+  position: absolute; inset: 0; border-radius: 18px;
+  background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.18) 0%, transparent 60%);
+  mix-blend-mode: overlay; pointer-events: none;
+  background-image: linear-gradient(105deg, transparent 20%, rgba(255,100,200,0.12) 40%, rgba(100,200,255,0.12) 60%, transparent 80%);
+}
+.holo-logo { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.7; }
+.holo-chip {
+  margin-top: 12px; width: 38px; height: 28px; border-radius: 5px;
+  background: linear-gradient(135deg, #c9a227, #f0d060);
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px;
+}
+.holo-chip span { background: rgba(0,0,0,0.15); border-radius: 2px; }
+.holo-number { margin-top: 10px; font-size: 0.9rem; letter-spacing: 0.15em; font-family: monospace; }
+.holo-footer { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.7rem; opacity: 0.8; }`,
+      ts: `const card = document.getElementById('holo-card') as HTMLDivElement
+card.addEventListener('mousemove', (e) => {
+  const rect = card.getBoundingClientRect()
+  const x = ((e.clientX - rect.left) / rect.width - 0.5) * 22
+  const y = -((e.clientY - rect.top) / rect.height - 0.5) * 22
+  card.style.transform = \`perspective(900px) rotateX(\${y}deg) rotateY(\${x}deg)\`
+  card.style.setProperty('--shine-x', \`\${(e.clientX - rect.left) / rect.width * 100}%\`)
+  card.style.setProperty('--shine-y', \`\${(e.clientY - rect.top) / rect.height * 100}%\`)
+})
+card.addEventListener('mouseleave', () => {
+  card.style.transform = 'perspective(900px) rotateX(0) rotateY(0)'
+})`,
+    },
+    'neo-toggle-switch': {
+      html: `<div class="neo-wrap">
+  <div class="neo-toggle-track" id="toggle" role="switch" aria-checked="false" tabindex="0">
+    <div class="neo-toggle-thumb"></div>
+  </div>
+  <p id="toggle-label">Desativado</p>
+</div>`,
+      css: `.neo-wrap { background:#e4e9f2; border-radius:1.5rem; padding:2rem; display:flex; flex-direction:column; align-items:center; gap:1rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); }
+.neo-toggle-track { width:80px; height:42px; border-radius:999px; background:#e4e9f2; box-shadow:inset 6px 6px 12px rgba(163,177,198,.6),inset -6px -6px 12px rgba(255,255,255,.9); cursor:pointer; position:relative; transition:background .3s; }
+.neo-toggle-track.is-on { background:#d0dcf0; }
+.neo-toggle-thumb { position:absolute; top:5px; left:5px; width:32px; height:32px; border-radius:50%; background:#e4e9f2; box-shadow:4px 4px 8px rgba(163,177,198,.6),-4px -4px 8px rgba(255,255,255,.9); transition:transform .3s ease,background .3s,box-shadow .3s; }
+.neo-toggle-track.is-on .neo-toggle-thumb { transform:translateX(38px); background:#6c8ebf; box-shadow:4px 4px 8px rgba(80,120,160,.4),0 0 12px rgba(108,142,191,.4); }`,
+      ts: `const track = document.getElementById('toggle')!
+const label = document.getElementById('toggle-label')!
+track.addEventListener('click', () => {
+  const on = track.getAttribute('aria-checked') === 'true'
+  track.setAttribute('aria-checked', String(!on))
+  track.classList.toggle('is-on', !on)
+  label.textContent = !on ? 'Ativado' : 'Desativado'
+})`,
+    },
+    'neo-music-player': {
+      html: `<div class="neo-player-card">
+  <div class="neo-track-info">
+    <span class="neo-track-title">Midnight Echo</span>
+    <span class="neo-track-artist">Lunar Drift</span>
+  </div>
+  <div class="neo-progress-track"><div id="neo-fill" class="neo-progress-fill" style="width:34%"></div></div>
+  <div class="neo-player-controls">
+    <button class="neo-ctrl-btn" id="neo-prev">⏮</button>
+    <button class="neo-ctrl-btn neo-ctrl-main" id="neo-play">▶</button>
+    <button class="neo-ctrl-btn" id="neo-next">⏭</button>
+  </div>
+</div>`,
+      css: `.neo-player-card { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; width:240px; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:1rem; }
+.neo-track-info { display:flex; flex-direction:column; gap:2px; }
+.neo-track-title { font-weight:700; font-size:.95rem; color:#3d4a5c; }
+.neo-track-artist { font-size:.78rem; color:#8899aa; }
+.neo-progress-track { height:8px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); overflow:hidden; }
+.neo-progress-fill { height:100%; background:#6c8ebf; border-radius:999px; transition:width .2s; }
+.neo-player-controls { display:flex; justify-content:center; gap:12px; }
+.neo-ctrl-btn { width:48px; height:48px; border-radius:50%; border:none; background:#e4e9f2; box-shadow:5px 5px 10px rgba(163,177,198,.6),-5px -5px 10px rgba(255,255,255,.9); cursor:pointer; font-size:1.1rem; color:#3d4a5c; transition:box-shadow .15s; }
+.neo-ctrl-btn:active { box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); }
+.neo-ctrl-main { width:58px; height:58px; font-size:1.3rem; }`,
+      ts: `const play = document.getElementById('neo-play')!
+const fill = document.getElementById('neo-fill') as HTMLDivElement
+let playing = false, pct = 34
+play.addEventListener('click', () => { playing = !playing; play.textContent = playing ? '⏸' : '▶' })
+setInterval(() => { if (playing) { pct = pct >= 100 ? 0 : pct + .3; fill.style.width = pct + '%' } }, 200)`,
+    },
+    'neo-numpad': {
+      html: `<div class="neo-numpad-wrap">
+  <div id="neo-display" class="neo-numpad-display">0</div>
+  <div class="neo-numpad-grid">
+    <button class="neo-num-key">1</button><button class="neo-num-key">2</button><button class="neo-num-key">3</button>
+    <button class="neo-num-key">4</button><button class="neo-num-key">5</button><button class="neo-num-key">6</button>
+    <button class="neo-num-key">7</button><button class="neo-num-key">8</button><button class="neo-num-key">9</button>
+    <button class="neo-num-key neo-key-clear">C</button><button class="neo-num-key">0</button><button class="neo-num-key neo-key-back">⌫</button>
+  </div>
+</div>`,
+      css: `.neo-numpad-wrap { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:1rem; width:220px; }
+.neo-numpad-display { background:#e4e9f2; border-radius:.75rem; padding:.75rem 1rem; text-align:right; font-size:1.6rem; font-weight:700; color:#3d4a5c; box-shadow:inset 5px 5px 10px rgba(163,177,198,.6),inset -5px -5px 10px rgba(255,255,255,.9); min-height:3.2rem; }
+.neo-numpad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.neo-num-key { aspect-ratio:1; border:none; border-radius:.75rem; background:#e4e9f2; box-shadow:4px 4px 8px rgba(163,177,198,.6),-4px -4px 8px rgba(255,255,255,.9); font-size:1.1rem; font-weight:600; color:#3d4a5c; cursor:pointer; transition:box-shadow .12s; }
+.neo-num-key:active { box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); }
+.neo-key-clear { color:#ef4444; } .neo-key-back { font-size:.9rem; }`,
+      ts: `const display = document.getElementById('neo-display')!
+let val = ''
+document.querySelectorAll<HTMLButtonElement>('.neo-num-key').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const k = btn.textContent!.trim()
+    if (k === 'C') val = ''
+    else if (k === '⌫') val = val.slice(0,-1)
+    else if (val.length < 8) val += k
+    display.textContent = val || '0'
+  })
+})`,
+    },
+    'neo-stat-display': {
+      html: `<div class="neo-stat-card">
+  <span class="neo-stat-label">Receita Mensal</span>
+  <span class="neo-stat-value">R$ 148k</span>
+  <span class="neo-stat-sub" style="color:#22c55e">+12.4%</span>
+  <div class="neo-stat-bar-track"><div class="neo-stat-bar-fill" style="width:74%;background:#22c55e"></div></div>
+</div>`,
+      css: `.neo-stat-card { background:#e4e9f2; border-radius:1.5rem; padding:1.75rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:.5rem; min-width:200px; }
+.neo-stat-label { font-size:.75rem; color:#8899aa; text-transform:uppercase; letter-spacing:.07em; font-weight:600; }
+.neo-stat-value { font-size:2rem; font-weight:800; color:#3d4a5c; line-height:1; }
+.neo-stat-sub { font-size:.85rem; font-weight:700; }
+.neo-stat-bar-track { margin-top:.5rem; height:8px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); overflow:hidden; }
+.neo-stat-bar-fill { height:100%; border-radius:999px; transition:width .4s ease; }`,
+      ts: `// Swap data dynamically
+const card = document.querySelector('.neo-stat-card')!
+const data = [
+  { label:'Receita Mensal', value:'R$ 148k', sub:'+12.4%', color:'#22c55e', pct:74 },
+  { label:'Usuários Ativos', value:'9.2k', sub:'+8.1%', color:'#3b82f6', pct:61 },
+]
+let i = 0
+setInterval(() => {
+  i = (i+1) % data.length
+  const d = data[i]
+  card.querySelector('.neo-stat-label')!.textContent = d.label
+  card.querySelector('.neo-stat-value')!.textContent = d.value
+  const sub = card.querySelector<HTMLElement>('.neo-stat-sub')!
+  sub.textContent = d.sub; sub.style.color = d.color
+  const fill = card.querySelector<HTMLElement>('.neo-stat-bar-fill')!
+  fill.style.width = d.pct + '%'; fill.style.background = d.color
+}, 2000)`,
+    },
+    'neo-color-swatches': {
+      html: `<div class="neo-swatch-wrap">
+  <div class="neo-swatch-grid">
+    <button class="neo-swatch" style="--sw-color:#ef4444" aria-label="Vermelho"></button>
+    <button class="neo-swatch" style="--sw-color:#f97316" aria-label="Laranja"></button>
+    <button class="neo-swatch is-selected" style="--sw-color:#eab308" aria-label="Amarelo"></button>
+    <button class="neo-swatch" style="--sw-color:#22c55e" aria-label="Verde"></button>
+    <button class="neo-swatch" style="--sw-color:#3b82f6" aria-label="Azul"></button>
+    <button class="neo-swatch" style="--sw-color:#a855f7" aria-label="Roxo"></button>
+  </div>
+</div>`,
+      css: `.neo-swatch-wrap { background:#e4e9f2; border-radius:1.5rem; padding:2rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); }
+.neo-swatch-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.neo-swatch { width:52px; height:52px; border-radius:50%; border:none; background:var(--sw-color); cursor:pointer; box-shadow:5px 5px 10px rgba(163,177,198,.6),-5px -5px 10px rgba(255,255,255,.9); transition:box-shadow .18s,transform .18s; }
+.neo-swatch:hover { transform:scale(1.06); }
+.neo-swatch.is-selected { box-shadow:inset 4px 4px 8px rgba(0,0,0,.25),inset -2px -2px 6px rgba(255,255,255,.2),0 0 0 3px var(--sw-color),0 0 0 5px #e4e9f2; transform:scale(.96); }`,
+      ts: `document.querySelectorAll<HTMLButtonElement>('.neo-swatch').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.neo-swatch').forEach(b => b.classList.remove('is-selected'))
+    btn.classList.add('is-selected')
+  })
+})`,
+    },
+    'neo-analog-clock': {
+      html: `<div class="neo-clock-face">
+  <svg id="clock-svg" viewBox="0 0 160 160" width="150" height="150"></svg>
+</div>`,
+      css: `.neo-clock-face { background:#e4e9f2; border-radius:50%; width:180px; height:180px; display:grid; place-items:center; box-shadow:10px 10px 20px rgba(163,177,198,.6),-10px -10px 20px rgba(255,255,255,.9); }`,
+      ts: `const svg = document.getElementById('clock-svg') as unknown as SVGSVGElement
+const ns = 'http://www.w3.org/2000/svg'
+const line = (x2:number,y2:number,stroke:string,w:number) => {
+  const el = document.createElementNS(ns,'line')
+  Object.entries({x1:'80',y1:'80',x2:String(x2),y2:String(y2),stroke,strokeWidth:String(w),strokeLinecap:'round'}).forEach(([k,v])=>el.setAttribute(k,v))
+  return el
+}
+function draw() {
+  svg.innerHTML = ''
+  const now = new Date()
+  const s = now.getSeconds(), m = now.getMinutes()+s/60, h = (now.getHours()%12)+m/60
+  const pt = (deg:number,r:number) => ({ x:80+r*Math.cos((deg-90)*Math.PI/180), y:80+r*Math.sin((deg-90)*Math.PI/180) })
+  const hp=pt(h*30,44),mp=pt(m*6,58),sp=pt(s*6,65)
+  for(let i=0;i<12;i++){const a=(i*30-90)*Math.PI/180;const r1=70,r2=i%3===0?60:65;const l=document.createElementNS(ns,'line');Object.entries({x1:String(80+r1*Math.cos(a)),y1:String(80+r1*Math.sin(a)),x2:String(80+r2*Math.cos(a)),y2:String(80+r2*Math.sin(a)),stroke:i%3===0?'#6c8ebf':'rgba(163,177,198,.7)',strokeWidth:i%3===0?'2.5':'1.5',strokeLinecap:'round'}).forEach(([k,v])=>l.setAttribute(k,v));svg.appendChild(l)}
+  svg.appendChild(line(hp.x,hp.y,'#3d4a5c',4))
+  svg.appendChild(line(mp.x,mp.y,'#3d4a5c',2.5))
+  svg.appendChild(line(sp.x,sp.y,'#ef4444',1.5))
+  const c=document.createElementNS(ns,'circle');c.setAttribute('cx','80');c.setAttribute('cy','80');c.setAttribute('r','5');c.setAttribute('fill','#3d4a5c');svg.appendChild(c)
+}
+draw(); setInterval(draw,1000)`,
+    },
+    'neo-equalizer': {
+      html: `<div class="neo-eq-wrap">
+  <div class="neo-eq-bars" id="neo-eq">
+    <div class="neo-eq-column" data-level="45"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">Sub</span></div>
+    <div class="neo-eq-column" data-level="68"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">80</span></div>
+    <div class="neo-eq-column" data-level="82"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">250</span></div>
+    <div class="neo-eq-column" data-level="91"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">1k</span></div>
+    <div class="neo-eq-column" data-level="75"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">4k</span></div>
+    <div class="neo-eq-column" data-level="58"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">8k</span></div>
+    <div class="neo-eq-column" data-level="40"><div class="neo-eq-track"><div class="neo-eq-fill"></div></div><span class="neo-eq-label">16k</span></div>
+  </div>
+</div>`,
+      css: `.neo-eq-wrap { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); }
+.neo-eq-bars { display:flex; gap:10px; align-items:flex-end; height:140px; }
+.neo-eq-column { display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; cursor:pointer; }
+.neo-eq-track { flex:1; width:22px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); position:relative; overflow:hidden; }
+.neo-eq-fill { position:absolute; bottom:0; width:100%; background:linear-gradient(to top,#6c8ebf,#a8c8e8); border-radius:999px; transition:height .3s ease; }
+.neo-eq-label { font-size:.6rem; color:#8899aa; font-weight:600; }`,
+      ts: `document.querySelectorAll<HTMLElement>('.neo-eq-column').forEach(col => {
+  const fill = col.querySelector<HTMLElement>('.neo-eq-fill')!
+  let lv = Number(col.dataset.level) || 60
+  fill.style.height = lv + '%'
+  col.addEventListener('click', () => { lv = lv >= 90 ? 0 : lv + 20; fill.style.height = lv + '%' })
+})`,
+    },
+    'neo-pin-lock': {
+      html: `<div class="neo-pin-wrap">
+  <div class="neo-pin-slots" id="pin-slots">
+    <div class="neo-pin-slot"></div><div class="neo-pin-slot"></div>
+    <div class="neo-pin-slot"></div><div class="neo-pin-slot"></div>
+  </div>
+  <div class="neo-pin-keypad">
+    <button class="neo-pin-key">1</button><button class="neo-pin-key">2</button><button class="neo-pin-key">3</button>
+    <button class="neo-pin-key">4</button><button class="neo-pin-key">5</button><button class="neo-pin-key">6</button>
+    <button class="neo-pin-key">7</button><button class="neo-pin-key">8</button><button class="neo-pin-key">9</button>
+    <div></div><button class="neo-pin-key">0</button><button class="neo-pin-key">⌫</button>
+  </div>
+</div>`,
+      css: `.neo-pin-wrap { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:1.2rem; width:220px; }
+.neo-pin-slots { display:flex; gap:12px; justify-content:center; }
+.neo-pin-slot { width:48px; height:48px; border-radius:.75rem; background:#e4e9f2; box-shadow:inset 5px 5px 10px rgba(163,177,198,.6),inset -5px -5px 10px rgba(255,255,255,.9); display:grid; place-items:center; font-size:1.4rem; color:#3d4a5c; transition:box-shadow .2s; }
+.neo-pin-slot.is-filled { box-shadow:inset 3px 3px 6px rgba(163,177,198,.5),inset -3px -3px 6px rgba(255,255,255,.8); color:#6c8ebf; }
+.neo-pin-keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.neo-pin-key { aspect-ratio:1; border:none; border-radius:.75rem; background:#e4e9f2; box-shadow:4px 4px 8px rgba(163,177,198,.6),-4px -4px 8px rgba(255,255,255,.9); font-size:1.1rem; font-weight:600; color:#3d4a5c; cursor:pointer; transition:box-shadow .12s; }
+.neo-pin-key:active { box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); }`,
+      ts: `const CORRECT='1234'; let pin=''
+const slots = document.querySelectorAll<HTMLElement>('.neo-pin-slot')
+const update = () => slots.forEach((s,i) => { s.textContent = i<pin.length?'●':''; s.classList.toggle('is-filled',i<pin.length) })
+document.querySelectorAll<HTMLButtonElement>('.neo-pin-key').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const k = btn.textContent!.trim()
+    if(k==='⌫'){pin=pin.slice(0,-1)}else if(pin.length<4){pin+=k}
+    update()
+    if(pin.length===4){setTimeout(()=>{pin='';update()},800)}
+  })
+})`,
+    },
+    'neo-star-rating': {
+      html: `<div class="neo-stars-wrap">
+  <div class="neo-stars-row" id="stars-row">
+    <button class="neo-star-btn is-filled">★</button>
+    <button class="neo-star-btn is-filled">★</button>
+    <button class="neo-star-btn is-filled">★</button>
+    <button class="neo-star-btn">★</button>
+    <button class="neo-star-btn">★</button>
+  </div>
+  <p id="star-label">Bom</p>
+</div>`,
+      css: `.neo-stars-wrap { background:#e4e9f2; border-radius:1.5rem; padding:2rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; align-items:center; gap:1rem; }
+.neo-stars-row { display:flex; gap:10px; }
+.neo-star-btn { width:52px; height:52px; border-radius:50%; border:none; background:#e4e9f2; font-size:1.5rem; color:#c8d0dc; cursor:pointer; box-shadow:4px 4px 8px rgba(163,177,198,.6),-4px -4px 8px rgba(255,255,255,.9); transition:box-shadow .15s,color .15s; display:grid; place-items:center; }
+.neo-star-btn.is-filled { color:#f59e0b; box-shadow:inset 3px 3px 6px rgba(163,177,198,.5),inset -3px -3px 6px rgba(255,255,255,.8); }`,
+      ts: `const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('.neo-star-btn'))
+const label = document.getElementById('star-label')!
+const labels = ['','Ruim','Regular','Bom','Ótimo','Excelente']
+let rating = 3
+const paint = (n:number) => btns.forEach((b,i) => b.classList.toggle('is-filled',i<n))
+btns.forEach((btn,i) => {
+  btn.addEventListener('mouseenter', () => { paint(i+1); label.textContent = labels[i+1] })
+  btn.addEventListener('mouseleave', () => { paint(rating); label.textContent = labels[rating] })
+  btn.addEventListener('click', () => { rating = i+1 })
+})`,
+    },
+    'neo-progress-arc': {
+      html: `<div class="neo-arc-wrap">
+  <div class="neo-arc-face">
+    <svg id="arc-svg" viewBox="0 0 180 180" width="180" height="180"></svg>
+  </div>
+  <input type="range" min="0" max="100" value="68" class="neo-arc-slider" id="arc-range">
+</div>`,
+      css: `.neo-arc-wrap { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; align-items:center; gap:1rem; }
+.neo-arc-face { border-radius:50%; background:#e4e9f2; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); }
+.neo-arc-slider { width:150px; accent-color:#6c8ebf; cursor:pointer; }`,
+      ts: `const svg = document.getElementById('arc-svg') as unknown as SVGSVGElement
+const range = document.getElementById('arc-range') as HTMLInputElement
+const ns='http://www.w3.org/2000/svg'
+const cx=90,cy=90,r=70
+const pt=(deg:number)=>({x:cx+r*Math.cos((deg)*Math.PI/180),y:cy+r*Math.sin((deg)*Math.PI/180)})
+function drawArc(val:number){
+  svg.innerHTML=''
+  const sd=225,td=270,fgDeg=sd+val/100*td
+  const bs=pt(sd),be=pt(sd+td),fe=pt(fgDeg)
+  const mkPath=(d:string,stroke:string,w:number)=>{const p=document.createElementNS(ns,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',stroke);p.setAttribute('stroke-width',String(w));p.setAttribute('stroke-linecap','round');svg.appendChild(p)}
+  mkPath(\`M\${bs.x} \${bs.y} A\${r} \${r} 0 1 1 \${be.x} \${be.y}\`,'rgba(163,177,198,.35)',12)
+  if(val>0)mkPath(\`M\${bs.x} \${bs.y} A\${r} \${r} 0 \${val/100*td>180?1:0} 1 \${fe.x} \${fe.y}\`,'#6c8ebf',12)
+  const t=document.createElementNS(ns,'text');t.setAttribute('x','90');t.setAttribute('y','86');t.setAttribute('text-anchor','middle');t.setAttribute('font-size','26');t.setAttribute('font-weight','800');t.setAttribute('fill','#3d4a5c');t.textContent=val+'%';svg.appendChild(t)
+}
+drawArc(68); range.addEventListener('input',()=>drawArc(Number(range.value)))`,
+    },
+    'neo-switch-panel': {
+      html: `<div class="neo-panel-card">
+  <div class="neo-panel-row"><span class="neo-panel-icon">📶</span><span class="neo-panel-label">Wi-Fi</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon">🔵</span><span class="neo-panel-label">Bluetooth</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon">🔔</span><span class="neo-panel-label">Notificações</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon">🌙</span><span class="neo-panel-label">Modo Escuro</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+</div>`,
+      css: `.neo-panel-card { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:1rem; min-width:240px; }
+.neo-panel-row { display:flex; align-items:center; gap:.75rem; }
+.neo-panel-icon { font-size:1.1rem; }
+.neo-panel-label { flex:1; font-size:.88rem; font-weight:600; color:#3d4a5c; }
+.neo-panel-toggle { width:58px; height:30px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); cursor:pointer; position:relative; flex-shrink:0; transition:background .3s; }
+.neo-panel-toggle.is-on { background:#d0dcf0; }
+.neo-panel-thumb { position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#e4e9f2; box-shadow:3px 3px 6px rgba(163,177,198,.6),-3px -3px 6px rgba(255,255,255,.9); transition:transform .3s,background .3s; }
+.neo-panel-toggle.is-on .neo-panel-thumb { transform:translateX(28px); background:#6c8ebf; }`,
+      ts: `document.querySelectorAll<HTMLElement>('.neo-panel-toggle').forEach(t => {
+  t.addEventListener('click', () => {
+    const on = t.getAttribute('aria-checked')==='true'
+    t.setAttribute('aria-checked', String(!on))
+    t.classList.toggle('is-on', !on)
+  })
+})`,
+    },
+    'neo-volume-dial': {
+      html: `<div class="neo-vol-outer">
+  <div class="neo-vol-wrap" id="vol-wrap" style="position:relative;width:160px;height:160px;">
+    <svg id="vol-svg" viewBox="0 0 160 160" width="160" height="160" style="position:absolute;top:0;left:0;pointer-events:none;"></svg>
+    <div class="neo-vol-knob" id="vol-knob" style="transform:translate(-50%,-50%) rotate(27deg)">
+      <div class="neo-vol-indicator"></div>
+    </div>
+  </div>
+  <span class="neo-vol-value" id="vol-val">60</span>
+</div>`,
+      css: `.neo-vol-outer { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; align-items:center; gap:.75rem; }
+.neo-vol-wrap { user-select:none; }
+.neo-vol-knob { position:absolute; top:50%; left:50%; width:80px; height:80px; border-radius:50%; background:#e4e9f2; box-shadow:6px 6px 12px rgba(163,177,198,.6),-6px -6px 12px rgba(255,255,255,.9); cursor:grab; }
+.neo-vol-knob.is-dragging { cursor:grabbing; }
+.neo-vol-indicator { position:absolute; top:8px; left:50%; transform:translateX(-50%); width:3px; height:12px; background:#6c8ebf; border-radius:2px; box-shadow:0 0 6px #6c8ebf; }
+.neo-vol-value { font-size:1.6rem; font-weight:800; color:#3d4a5c; min-width:3ch; text-align:center; }`,
+      ts: `const wrap=document.getElementById('vol-wrap')!,knob=document.getElementById('vol-knob') as HTMLElement,valEl=document.getElementById('vol-val')!,svg=document.getElementById('vol-svg') as unknown as SVGSVGElement
+const ns='http://www.w3.org/2000/svg';let vol=60
+function drawArc(v:number){svg.innerHTML='';const cx=80,cy=80,r=60,sA=(135+90)*Math.PI/180,arc=(sa:number,ea:number,lg:number,stroke:string)=>{const p=document.createElementNS(ns,'path');const x1=cx+r*Math.cos(sa),y1=cy+r*Math.sin(sa),x2=cx+r*Math.cos(ea),y2=cy+r*Math.sin(ea);p.setAttribute('d',\`M\${x1} \${y1} A\${r} \${r} 0 \${lg} 1 \${x2} \${y2}\`);p.setAttribute('fill','none');p.setAttribute('stroke',stroke);p.setAttribute('stroke-width','8');p.setAttribute('stroke-linecap','round');svg.appendChild(p)};arc(sA,sA+270*Math.PI/180,1,'rgba(163,177,198,.35)');if(v>0)arc(sA,sA+v/100*270*Math.PI/180,v/100*270>180?1:0,'#6c8ebf')}
+drawArc(vol)
+knob.addEventListener('mousedown',e=>{e.preventDefault();knob.classList.add('is-dragging');const move=(ev:MouseEvent)=>{const rect=wrap.getBoundingClientRect();let a=Math.atan2(ev.clientY-(rect.top+rect.height/2),ev.clientX-(rect.left+rect.width/2))*180/Math.PI+90;if(a>180)a-=360;const cl=Math.max(-135,Math.min(135,a));vol=Math.round((cl+135)/270*100);knob.style.transform=\`translate(-50%,-50%) rotate(\${cl}deg)\`;valEl.textContent=String(vol);drawArc(vol)};const up=()=>{knob.classList.remove('is-dragging');window.removeEventListener('mousemove',move);window.removeEventListener('mouseup',up)};window.addEventListener('mousemove',move);window.addEventListener('mouseup',up)})`,
+    },
+    'neo-tag-cloud': {
+      html: `<div class="neo-tags-wrap">
+  <div class="neo-tag-cloud">
+    <button class="neo-tag-chip neo-tag-lg is-selected">React</button>
+    <button class="neo-tag-chip neo-tag-lg">TypeScript</button>
+    <button class="neo-tag-chip neo-tag-md">CSS</button>
+    <button class="neo-tag-chip neo-tag-lg is-selected">Design</button>
+    <button class="neo-tag-chip neo-tag-sm">Motion</button>
+    <button class="neo-tag-chip neo-tag-sm">A11y</button>
+    <button class="neo-tag-chip neo-tag-md">UX</button>
+    <button class="neo-tag-chip neo-tag-md">Figma</button>
+    <button class="neo-tag-chip neo-tag-sm">Node</button>
+    <button class="neo-tag-chip neo-tag-sm">API</button>
+  </div>
+</div>`,
+      css: `.neo-tags-wrap { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); }
+.neo-tag-cloud { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; max-width:280px; }
+.neo-tag-chip { border:none; border-radius:999px; background:#e4e9f2; color:#5a6a7a; font-weight:600; cursor:pointer; box-shadow:4px 4px 8px rgba(163,177,198,.6),-4px -4px 8px rgba(255,255,255,.9); transition:box-shadow .18s,color .18s; }
+.neo-tag-lg { padding:10px 20px; font-size:.88rem; }
+.neo-tag-md { padding:8px 16px; font-size:.8rem; }
+.neo-tag-sm { padding:6px 13px; font-size:.74rem; }
+.neo-tag-chip.is-selected { box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); color:#6c8ebf; }`,
+      ts: `document.querySelectorAll<HTMLButtonElement>('.neo-tag-chip').forEach(btn => {
+  btn.addEventListener('click', () => btn.classList.toggle('is-selected'))
+})`,
+    },
+    'glass-profile-card': {
+      html: `<div class="glass-wrap">
+  <div class="glass-bg"></div>
+  <div class="glass-card">
+    <div class="glass-avatar-ring"><div class="glass-avatar">👤</div></div>
+    <h3 class="glass-name">Alex Rivera</h3>
+    <p class="glass-role">Senior UI Designer</p>
+    <div class="glass-stats">
+      <div class="glass-stat"><strong>248</strong><span>Posts</span></div>
+      <div class="glass-stat"><strong>12.4k</strong><span>Seguidores</span></div>
+      <div class="glass-stat"><strong>891</strong><span>Seguindo</span></div>
+    </div>
+    <button id="glass-follow" class="glass-follow-btn">Seguir</button>
+  </div>
+</div>`,
+      css: `.glass-wrap { position:relative; width:280px; height:300px; display:grid; place-items:center; }
+.glass-bg { position:absolute; inset:0; background:linear-gradient(135deg,#667eea 0%,#764ba2 33%,#f093fb 66%,#f5576c 100%); border-radius:1.5rem; }
+.glass-card { position:relative; z-index:1; background:rgba(255,255,255,.18); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.35); border-radius:1.25rem; padding:1.5rem; width:230px; display:flex; flex-direction:column; align-items:center; gap:.5rem; box-shadow:0 8px 32px rgba(0,0,0,.2); }
+.glass-avatar-ring { width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,#fff,rgba(255,255,255,.4)); padding:3px; box-shadow:0 4px 16px rgba(0,0,0,.25); }
+.glass-avatar { width:100%; height:100%; border-radius:50%; background:rgba(255,255,255,.3); display:grid; place-items:center; font-size:2rem; }
+.glass-name { margin:.25rem 0 0; font-size:1rem; font-weight:700; color:#fff; }
+.glass-role { margin:0; font-size:.72rem; color:rgba(255,255,255,.75); font-weight:500; }
+.glass-stats { display:flex; gap:1rem; margin:.5rem 0; }
+.glass-stat { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.glass-stat strong { font-size:.9rem; font-weight:700; color:#fff; }
+.glass-stat span { font-size:.62rem; color:rgba(255,255,255,.65); }
+.glass-follow-btn { padding:.5rem 1.5rem; border-radius:999px; border:1.5px solid rgba(255,255,255,.6); background:rgba(255,255,255,.22); color:#fff; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .2s; }
+.glass-follow-btn:hover { background:rgba(255,255,255,.35); }
+.glass-follow-btn.is-following { background:rgba(255,255,255,.85); color:#764ba2; border-color:transparent; }`,
+      ts: `const btn = document.getElementById('glass-follow')!
+btn.addEventListener('click', () => {
+  const following = btn.classList.toggle('is-following')
+  btn.textContent = following ? 'Seguindo ✓' : 'Seguir'
+})`,
+    },
+    'brutalist-block-card': {
+      html: `<div class="brutalist-card">
+  <div class="brutalist-tag">DESIGN</div>
+  <h2 class="brutalist-title">THE FUTURE OF UI IS HERE</h2>
+  <p class="brutalist-body">Bold. Raw. Unfiltered. Design that refuses to be ignored by anyone.</p>
+  <div class="brutalist-footer">
+    <button id="brut-like" class="brutalist-like-btn">♥ 247</button>
+    <span class="brutalist-date">MAY 2025</span>
+  </div>
+</div>`,
+      css: `.brutalist-card { background:#fff700; border:3px solid #000; box-shadow:6px 6px 0 #000; padding:1.25rem; max-width:280px; transition:transform .1s,box-shadow .1s; }
+.brutalist-card:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 #000; }
+.brutalist-tag { display:inline-block; background:#000; color:#fff700; font-size:.65rem; font-weight:900; letter-spacing:.12em; padding:3px 8px; margin-bottom:.75rem; }
+.brutalist-title { font-size:1.2rem; font-weight:900; line-height:1.1; color:#000; text-transform:uppercase; margin:0 0 .5rem; letter-spacing:-.01em; }
+.brutalist-body { font-size:.8rem; color:#000; margin:0 0 1rem; line-height:1.5; font-weight:500; }
+.brutalist-footer { display:flex; justify-content:space-between; align-items:center; border-top:2px solid #000; padding-top:.75rem; }
+.brutalist-like-btn { border:2px solid #000; background:#fff; font-size:.82rem; font-weight:700; padding:4px 12px; cursor:pointer; box-shadow:3px 3px 0 #000; transition:transform .1s,box-shadow .1s; }
+.brutalist-like-btn:active { transform:translate(2px,2px); box-shadow:1px 1px 0 #000; }
+.brutalist-like-btn.is-liked { background:#ff3333; color:#fff; }
+.brutalist-date { font-size:.68rem; font-weight:900; letter-spacing:.08em; }`,
+      ts: `const btn = document.getElementById('brut-like')!
+let liked = false, count = 247
+btn.addEventListener('click', () => {
+  liked = !liked
+  count += liked ? 1 : -1
+  btn.textContent = '♥ ' + count
+  btn.classList.toggle('is-liked', liked)
+})`,
+    },
+    'clay-morphism-buttons': {
+      html: `<div class="clay-grid">
+  <button class="clay-btn" style="--clay-color:#ff7eb3;--clay-shadow:#c8467a"><span class="clay-icon">☁️</span><span class="clay-label">Upload</span></button>
+  <button class="clay-btn" style="--clay-color:#7eb8ff;--clay-shadow:#3a6fd9"><span class="clay-icon">💾</span><span class="clay-label">Save</span></button>
+  <button class="clay-btn" style="--clay-color:#7effb2;--clay-shadow:#2ab860"><span class="clay-icon">✈️</span><span class="clay-label">Share</span></button>
+  <button class="clay-btn" style="--clay-color:#ffb07e;--clay-shadow:#d97040"><span class="clay-icon">🗑️</span><span class="clay-label">Delete</span></button>
+</div>`,
+      css: `.clay-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:1rem; }
+.clay-btn { display:flex; flex-direction:column; align-items:center; gap:6px; padding:1rem; border-radius:1.25rem; border:none; background:var(--clay-color); cursor:pointer; box-shadow:0 8px 0 var(--clay-shadow),0 12px 20px rgba(0,0,0,.15),inset 0 -3px 6px rgba(0,0,0,.12),inset 0 3px 6px rgba(255,255,255,.6); transition:transform .12s,box-shadow .12s; min-width:90px; }
+.clay-btn:hover { transform:translateY(-3px); box-shadow:0 11px 0 var(--clay-shadow),0 18px 26px rgba(0,0,0,.18),inset 0 -3px 6px rgba(0,0,0,.12),inset 0 3px 6px rgba(255,255,255,.6); }
+.clay-btn:active { transform:translateY(6px); box-shadow:0 2px 0 var(--clay-shadow),0 4px 8px rgba(0,0,0,.12),inset 0 3px 8px rgba(0,0,0,.15); }
+.clay-icon { font-size:1.6rem; }
+.clay-label { font-size:.75rem; font-weight:700; color:rgba(0,0,0,.55); }`,
+      ts: `document.querySelectorAll<HTMLButtonElement>('.clay-btn').forEach(btn => {
+  btn.addEventListener('mousedown', () => btn.style.transform = 'translateY(6px)')
+  btn.addEventListener('mouseup', () => btn.style.transform = '')
+  btn.addEventListener('mouseleave', () => btn.style.transform = '')
+})`,
+    },
+    'mesh-aurora-card': {
+      html: `<div class="mesh-aurora-wrap">
+  <div class="mesh-blob mesh-blob-1"></div>
+  <div class="mesh-blob mesh-blob-2"></div>
+  <div class="mesh-blob mesh-blob-3"></div>
+  <div class="mesh-card-content">
+    <div class="mesh-tabs">
+      <button class="mesh-tab is-active">Overview</button>
+      <button class="mesh-tab">Analytics</button>
+      <button class="mesh-tab">Reports</button>
+    </div>
+    <div class="mesh-metrics">
+      <div class="mesh-metric"><span class="mesh-metric-value">$48.3k</span><span class="mesh-metric-label">Receita</span><span class="mesh-metric-delta is-positive">+18%</span></div>
+      <div class="mesh-metric"><span class="mesh-metric-value">9,847</span><span class="mesh-metric-label">Usuários</span><span class="mesh-metric-delta is-positive">+12%</span></div>
+      <div class="mesh-metric"><span class="mesh-metric-value">2.3%</span><span class="mesh-metric-label">Churn</span><span class="mesh-metric-delta is-positive">-0.4%</span></div>
+    </div>
+  </div>
+</div>`,
+      css: `.mesh-aurora-wrap { position:relative; width:300px; height:200px; border-radius:1.5rem; overflow:hidden; background:#0a0a14; }
+.mesh-blob { position:absolute; border-radius:50%; filter:blur(40px); animation:mesh-drift 8s ease-in-out infinite; }
+.mesh-blob-1 { width:160px; height:160px; background:rgba(120,40,220,.55); top:-40px; left:-40px; animation-delay:0s; }
+.mesh-blob-2 { width:140px; height:140px; background:rgba(20,140,255,.5); bottom:-30px; right:-20px; animation-delay:-3s; }
+.mesh-blob-3 { width:120px; height:120px; background:rgba(0,220,170,.4); top:40%; left:50%; animation-delay:-5s; }
+@keyframes mesh-drift { 0%,100% { transform:translate(0,0) scale(1); } 33% { transform:translate(20px,-15px) scale(1.1); } 66% { transform:translate(-15px,10px) scale(.95); } }
+.mesh-card-content { position:relative; z-index:1; padding:1.25rem; height:100%; display:flex; flex-direction:column; gap:.75rem; }
+.mesh-tabs { display:flex; gap:6px; }
+.mesh-tab { padding:5px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); font-size:.72rem; font-weight:600; cursor:pointer; transition:all .2s; }
+.mesh-tab.is-active { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.45); color:#fff; }
+.mesh-metrics { display:flex; gap:.75rem; }
+.mesh-metric { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:.75rem; padding:.6rem .8rem; display:flex; flex-direction:column; gap:2px; flex:1; }
+.mesh-metric-value { font-size:1rem; font-weight:800; color:#fff; line-height:1; }
+.mesh-metric-label { font-size:.58rem; color:rgba(255,255,255,.5); font-weight:500; }
+.mesh-metric-delta { font-size:.65rem; font-weight:700; color:rgba(255,255,255,.4); }
+.mesh-metric-delta.is-positive { color:#4ade80; }`,
+      ts: `document.querySelectorAll<HTMLButtonElement>('.mesh-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mesh-tab').forEach(b => b.classList.remove('is-active'))
+    btn.classList.add('is-active')
+  })
+})`,
+    },
+    'retro-crt-terminal': {
+      html: `<div class="crt-bezel">
+  <div class="crt-screen">
+    <div class="crt-scanlines"></div>
+    <div class="crt-content" id="crt-content">
+      <div class="crt-line">> SYSTEM BOOT v2.1.0</div>
+      <div class="crt-line">> LOADING MODULES... OK</div>
+      <div class="crt-line">> READY.</div>
+      <div class="crt-input-row">
+        <span class="crt-prompt">$</span>
+        <input id="crt-input" class="crt-input" maxlength="24" autofocus>
+        <span class="crt-cursor"></span>
+      </div>
+    </div>
+  </div>
+  <div class="crt-label">TERM-80</div>
+</div>`,
+      css: `.crt-bezel { background:linear-gradient(145deg,#2a2a2a,#1a1a1a); border-radius:1rem; padding:1rem 1rem .75rem; box-shadow:0 0 0 2px #3a3a3a,0 8px 24px rgba(0,0,0,.7),inset 0 2px 4px rgba(255,255,255,.06); display:flex; flex-direction:column; gap:.5rem; width:280px; }
+.crt-screen { background:#0a1a0a; border-radius:.5rem; padding:.75rem; position:relative; overflow:hidden; box-shadow:inset 0 0 30px rgba(0,255,80,.06),inset 0 0 60px rgba(0,0,0,.5); min-height:160px; }
+.crt-scanlines { position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px); pointer-events:none; z-index:2; }
+.crt-content { position:relative; z-index:1; font-family:'Courier New',monospace; font-size:.7rem; color:#00ff50; text-shadow:0 0 8px rgba(0,255,80,.6); display:flex; flex-direction:column; gap:2px; }
+.crt-line { white-space:nowrap; line-height:1.5; }
+.crt-input-row { display:flex; align-items:center; gap:4px; margin-top:4px; }
+.crt-prompt { color:#00ff50; font-family:'Courier New',monospace; font-size:.7rem; }
+.crt-input { flex:1; background:transparent; border:none; outline:none; color:#00ff50; font-family:'Courier New',monospace; font-size:.7rem; text-shadow:0 0 6px rgba(0,255,80,.6); caret-color:transparent; }
+.crt-cursor { width:7px; height:12px; background:#00ff50; display:inline-block; animation:term-blink .7s step-end infinite; box-shadow:0 0 6px #00ff50; }
+.crt-label { text-align:center; font-size:.58rem; font-weight:700; color:#555; letter-spacing:.12em; }`,
+      ts: `const input = document.getElementById('crt-input') as HTMLInputElement
+const content = document.getElementById('crt-content')!
+const CMDS: Record<string,string> = { help:'> CMDS: help, status, ping, clear', status:'> SYS: ONLINE | CPU: 12%', ping:'> PONG! Latency: 4ms', clear:'__clear__' }
+input.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return
+  const cmd = input.value.trim().toLowerCase()
+  const res = CMDS[cmd] ?? \`> ERR: '\${input.value.trim()}' not found\`
+  if (res === '__clear__') { content.querySelectorAll('.crt-line').forEach(l => l.remove()) }
+  else {
+    const addLine = (t:string) => { const d = document.createElement('div'); d.className='crt-line'; d.textContent=t; content.insertBefore(d, content.querySelector('.crt-input-row')!) }
+    addLine('$ '+input.value.trim()); addLine(res)
+  }
+  input.value = ''
 })`,
     },
   }
