@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeToggle } from './components/ThemeToggle.tsx'
 import { galleryItems } from './data/galleryItems.ts'
+import { mobileScreens } from './data/mobileItems.ts'
 import { AboutMePage } from './pages/AboutMePage.tsx'
 import { CuradoriaElementPage } from './pages/CuradoriaElementPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
+import { MobileGalleryPage } from './pages/MobileGalleryPage.tsx'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -77,6 +79,12 @@ function App() {
               Home
             </Link>
             <Link
+              to="/mobile"
+              className={`nav-link ${location.pathname === '/mobile' ? 'is-active' : ''}`}
+            >
+              Mobile
+            </Link>
+            <Link
               to="/sobre-mim"
               className={`nav-link ${location.pathname === '/sobre-mim' ? 'is-active' : ''}`}
             >
@@ -105,6 +113,16 @@ function App() {
             element={<CuradoriaElementPage item={item} isLiked={Boolean(likes[item.slug])} />}
           />
         ))}
+        <Route
+          path="/mobile"
+          element={
+            <MobileGalleryPage
+              screens={mobileScreens}
+              likes={likes}
+              onToggleLike={toggleLike}
+            />
+          }
+        />
         <Route path="/sobre-mim" element={<AboutMePage />} />
       </Routes>
     </>

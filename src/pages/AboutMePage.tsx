@@ -18,7 +18,7 @@ const linkedinProfile = 'https://www.linkedin.com/in/francamargodev'
 const email = 'francamargoads@gmail.com'
 
 const resumeSummary =
-  'Desenvolvedora Front-End com foco em Angular e forte base em UI/UX (Figma). Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
+  'Desenvolvedora Front-End com foco em Angular e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
 
 const technicalSkills = [
   'Linguagens: TypeScript, JavaScript, Python, HTML5, CSS3, Sass, Tailwind CSS.',
@@ -30,7 +30,7 @@ const technicalSkills = [
 
 const experiences = [
   {
-    role: 'Digital Solutions Analyst',
+    role: 'Front-End Developer (Digital Solutions Analyst)',
     company: 'Capgemini Brasil',
     period: '2024 - Atual',
     highlights: [

@@ -1,5 +1,5 @@
 ﻿import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
-import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2 } from 'lucide-react'
+import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2, Heart, Upload, Save, Trash2, ChevronDown, BarChart2, FolderOpen, Settings, Users, Home, ClipboardList, Layers, Search, Rocket, MessageCircle, Plus, Wifi, Bluetooth, Bell, Moon } from 'lucide-react'
 import { ItemPageShell } from './ItemPageShell.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
 import haimCover from '../assets/haim.png'
@@ -254,6 +254,38 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <MeshAuroraCardInteractive />
     case 'retro-crt-terminal':
       return <RetroCrtTerminalInteractive />
+    case 'sidebar-accordion':
+      return <SidebarAccordionInteractive />
+    case 'dark-search-field':
+      return <DarkSearchFieldInteractive />
+    case 'dark-select':
+      return <DarkSelectInteractive />
+    case 'dark-checkbox':
+      return <DarkCheckboxInteractive />
+    case 'dark-switch':
+      return <DarkSwitchInteractive />
+    case 'dark-tabs':
+      return <DarkTabsInteractive />
+    case 'dark-primary-button':
+      return <DarkPrimaryButtonInteractive />
+    case 'dark-secondary-button':
+      return <DarkSecondaryButtonInteractive />
+    case 'dark-icon-button':
+      return <DarkIconButtonInteractive />
+    case 'gn-segmented-control':
+      return <GnSegmentedControlInteractive />
+    case 'gn-toggle-switch':
+      return <GnToggleSwitchInteractive />
+    case 'gn-input-field':
+      return <GnInputFieldInteractive />
+    case 'gn-numpad':
+      return <GnNumpadInteractive />
+    case 'gn-bottom-nav':
+      return <GnBottomNavInteractive />
+    case 'gn-text-nav':
+      return <GnTextNavInteractive />
+    case 'gn-reminders-card':
+      return <GnRemindersCardInteractive />
     default:
       return <div className="component-mock"><p>Preview indisponivel para este item.</p></div>
   }
@@ -2627,10 +2659,10 @@ function TimelineStepperInteractive() {
   const [currentStep, setCurrentStep] = useState(1)
 
   const steps = [
-    { label: 'Briefing', icon: '📋', desc: 'Coleta de requisitos' },
-    { label: 'Design', icon: '🎨', desc: 'Prototipagem e UI' },
-    { label: 'Review', icon: '🔍', desc: 'Feedback e ajustes' },
-    { label: 'Deploy', icon: '🚀', desc: 'Publicação final' },
+    { label: 'Briefing', icon: <ClipboardList size={18} />, desc: 'Coleta de requisitos' },
+    { label: 'Design',   icon: <Layers         size={18} />, desc: 'Prototipagem e UI' },
+    { label: 'Review',   icon: <Search         size={18} />, desc: 'Feedback e ajustes' },
+    { label: 'Deploy',   icon: <Rocket         size={18} />, desc: 'Publicação final' },
   ]
 
   return (
@@ -2644,7 +2676,7 @@ function TimelineStepperInteractive() {
               onClick={() => setCurrentStep(idx)}
               aria-label={`Etapa ${idx + 1}: ${step.label}`}
             >
-              {idx < currentStep ? '✓' : step.icon}
+              {idx < currentStep ? <Check size={16} /> : step.icon}
             </button>
             {idx < steps.length - 1 && (
               <div className={`stepper-line ${idx < currentStep ? 'is-done' : ''}`} aria-hidden="true" />
@@ -3029,7 +3061,7 @@ function NeoProgressArcInteractive() {
 function NeoSwitchPanelInteractive() {
   const [switches, setSwitches] = useState([true, false, true, false])
   const labels = ['Wi-Fi', 'Bluetooth', 'Notificações', 'Modo Escuro']
-  const icons = ['📶', '🔵', '🔔', '🌙']
+  const icons = [<Wifi size={18} />, <Bluetooth size={18} />, <Bell size={18} />, <Moon size={18} />]
   const toggle = (i: number) => setSwitches(prev => prev.map((v, j) => j === i ? !v : v))
   return (
     <div className="component-mock mock-neo-switch-panel">
@@ -3113,9 +3145,9 @@ function GlassProfileCardInteractive() {
       <div className="glass-bg" aria-hidden="true" />
       <div className="glass-card">
         <div className="glass-avatar-ring">
-          <div className="glass-avatar">👤</div>
+          <div className="glass-avatar"><UserRound size={32} color="rgba(255,255,255,0.85)" /></div>
         </div>
-        <h3 className="glass-name">Alex Rivera</h3>
+        <h3 className="glass-name">Fran Camargo</h3>
         <p className="glass-role">Senior UI Designer</p>
         <div className="glass-stats">
           <div className="glass-stat"><strong>248</strong><span>Posts</span></div>
@@ -3141,7 +3173,7 @@ function BrutalistBlockCardInteractive() {
         <h2 className="brutalist-title">THE FUTURE OF UI IS HERE</h2>
         <p className="brutalist-body">Bold. Raw. Unfiltered. Design that refuses to be ignored by anyone.</p>
         <div className="brutalist-footer">
-          <button className={`brutalist-like-btn ${liked ? 'is-liked' : ''}`} onClick={handleLike}>♥ {likes}</button>
+          <button className={`brutalist-like-btn ${liked ? 'is-liked' : ''}`} onClick={handleLike}><Heart size={14} />{likes}</button>
           <span className="brutalist-date">MAY 2025</span>
         </div>
       </div>
@@ -3153,10 +3185,10 @@ function ClayMorphismButtonsInteractive() {
   const [pressed, setPressed] = useState<number | null>(null)
   const [active, setActive] = useState(0)
   const buttons = [
-    { label: 'Upload', icon: '☁️', color: '#ff7eb3', shadow: '#c8467a' },
-    { label: 'Save', icon: '💾', color: '#7eb8ff', shadow: '#3a6fd9' },
-    { label: 'Share', icon: '✈️', color: '#7effb2', shadow: '#2ab860' },
-    { label: 'Delete', icon: '🗑️', color: '#ffb07e', shadow: '#d97040' },
+    { label: 'Upload', icon: <Upload size={22} />, color: '#F5D5E0', shadow: '#c4a0b8' },
+    { label: 'Save',   icon: <Save   size={22} />, color: '#9A9BCC', shadow: '#6667AB' },
+    { label: 'Share',  icon: <Share2 size={22} />, color: '#B880BC', shadow: '#7B337E' },
+    { label: 'Delete', icon: <Trash2 size={22} />, color: '#9060A8', shadow: '#420D4B' },
   ]
   return (
     <div className="component-mock mock-clay">
@@ -3246,6 +3278,301 @@ function RetroCrtTerminalInteractive() {
         </div>
         <div className="crt-label">TERM-80</div>
       </div>
+    </div>
+  )
+}
+
+function DarkSearchFieldInteractive() {
+  const [value, setValue] = useState('')
+  const [focused, setFocused] = useState(false)
+  return (
+    <div className="component-mock mock-dark-ui">
+      <div className={`dark-search-field ${focused ? 'is-focused' : ''}`}>
+        <div className="dark-search-row">
+          <Search size={15} className="dark-search-ico" />
+          <input
+            className="dark-search-inp"
+            placeholder="Search..."
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+          />
+        </div>
+        <div className="dark-search-suggestions">
+          <span className="dark-search-bar" style={{ width: '72%' }} />
+          <span className="dark-search-bar" style={{ width: '48%' }} />
+        </div>
+        <div className="dark-search-glow" />
+      </div>
+    </div>
+  )
+}
+
+function DarkSelectInteractive() {
+  const [open, setOpen] = useState(false)
+  const [selected, setSelected] = useState('Option 1')
+  const options = ['Option 1', 'Option 2', 'Option 3']
+  return (
+    <div className="component-mock mock-dark-ui" onClick={() => setOpen(false)}>
+      <div className={`dark-select-field ${open ? 'is-open' : ''}`} onClick={e => { e.stopPropagation(); setOpen(v => !v) }}>
+        <span className="dark-select-val">{selected}</span>
+        <ChevronDown size={15} className={`dark-sel-chevron ${open ? 'is-open' : ''}`} />
+      </div>
+      {open && (
+        <div className="dark-select-menu">
+          {options.map(opt => (
+            <button key={opt} className={`dark-sel-option ${opt === selected ? 'is-sel' : ''}`} onClick={e => { e.stopPropagation(); setSelected(opt); setOpen(false) }}>{opt}</button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function DarkCheckboxInteractive() {
+  const [states, setStates] = useState([true, false, true, false])
+  const variants = ['blue', 'blue', 'purple', 'purple']
+  const toggle = (i: number) => setStates(prev => prev.map((v, idx) => idx === i ? !v : v))
+  return (
+    <div className="component-mock mock-dark-ui">
+      <div className="dark-checkbox-grid">
+        {states.map((checked, i) => (
+          <button key={i} className={`dark-checkbox dark-cb-${variants[i]} ${checked ? 'is-checked' : ''}`} onClick={() => toggle(i)}>
+            {checked && <Check size={14} />}
+          </button>
+        ))}
+      </div>
+      <p className="interactive-note dark-note">{states.filter(Boolean).length} selecionado(s)</p>
+    </div>
+  )
+}
+
+function DarkSwitchInteractive() {
+  const [on, setOn] = useState(true)
+  return (
+    <div className="component-mock mock-dark-ui">
+      <button className={`dark-switch ${on ? 'is-on' : ''}`} onClick={() => setOn(v => !v)} role="switch" aria-checked={on}>
+        <span className="dark-switch-thumb" />
+      </button>
+      <p className="interactive-note dark-note">{on ? 'On' : 'Off'}</p>
+    </div>
+  )
+}
+
+function DarkTabsInteractive() {
+  const [active, setActive] = useState(1)
+  const tabs = ['Overview', 'Activity', 'Settings']
+  return (
+    <div className="component-mock mock-dark-ui">
+      <div className="dark-tabs-container">
+        {tabs.map((tab, i) => (
+          <button key={tab} className={`dark-tab ${active === i ? 'is-active' : ''}`} onClick={() => setActive(i)}>{tab}</button>
+        ))}
+      </div>
+      <p className="interactive-note dark-note">{tabs[active]}</p>
+    </div>
+  )
+}
+
+function DarkPrimaryButtonInteractive() {
+  const [pulse, setPulse] = useState(false)
+  const handleClick = () => { setPulse(true); setTimeout(() => setPulse(false), 600) }
+  return (
+    <div className="component-mock mock-dark-ui">
+      <button className={`dark-primary-btn ${pulse ? 'is-pulse' : ''}`} onClick={handleClick}>
+        Create workspace
+      </button>
+    </div>
+  )
+}
+
+function DarkSecondaryButtonInteractive() {
+  return (
+    <div className="component-mock mock-dark-ui">
+      <button className="dark-secondary-btn">Invite member</button>
+    </div>
+  )
+}
+
+function DarkIconButtonInteractive() {
+  const [active, setActive] = useState(false)
+  return (
+    <div className="component-mock mock-dark-ui">
+      <button className={`dark-icon-btn ${active ? 'is-active' : ''}`} onClick={() => { setActive(true); setTimeout(() => setActive(false), 500) }}>
+        <Plus size={20} />
+      </button>
+      <p className="interactive-note dark-note">Clique para ativar</p>
+    </div>
+  )
+}
+
+function GnSegmentedControlInteractive() {
+  const [active, setActive] = useState(0)
+  const tabs = ['All', 'Unread', 'Favorites']
+  return (
+    <div className="component-mock mock-gn-seg">
+      <div className="gn-seg-control">
+        {tabs.map((tab, i) => (
+          <button key={tab} className={`gn-seg-tab ${active === i ? 'is-active' : ''}`} onClick={() => setActive(i)}>{tab}</button>
+        ))}
+      </div>
+      <p className="interactive-note gn-note">{tabs[active]} selecionado</p>
+    </div>
+  )
+}
+
+function GnToggleSwitchInteractive() {
+  const [on, setOn] = useState(true)
+  return (
+    <div className="component-mock mock-gn-toggle">
+      <button className={`gn-toggle ${on ? 'is-on' : ''}`} onClick={() => setOn(v => !v)} role="switch" aria-checked={on} aria-label="Toggle">
+        <span className="gn-toggle-thumb" />
+      </button>
+      <p className="interactive-note gn-note">{on ? 'Ativado' : 'Desativado'}</p>
+    </div>
+  )
+}
+
+function GnInputFieldInteractive() {
+  const [value, setValue] = useState('')
+  return (
+    <div className="component-mock mock-gn-input">
+      <input className="gn-input" placeholder="New message" value={value} onChange={e => setValue(e.target.value)} maxLength={60} />
+      <p className="interactive-note gn-note">{value.length > 0 ? `${value.length} caracteres` : 'Campo vazio'}</p>
+    </div>
+  )
+}
+
+function GnNumpadInteractive() {
+  const [code, setCode] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sent'>('idle')
+  const press = (n: string) => { if (code.length < 4) setCode(c => c + n) }
+  const del = () => setCode(c => c.slice(0, -1))
+  const send = () => {
+    if (code.length === 0) return
+    setStatus('sent')
+    window.setTimeout(() => { setStatus('idle'); setCode('') }, 1300)
+  }
+  return (
+    <div className="component-mock mock-gn-numpad">
+      <div className="gn-numpad-card">
+        <p className="gn-numpad-title">Enter passcode</p>
+        <div className="gn-numpad-dots">
+          {[0,1,2,3].map(i => <span key={i} className={`gn-dot ${i < code.length ? 'is-filled' : ''}`} />)}
+        </div>
+        <div className="gn-numpad-grid">
+          {[1,2,3,4,5,6,7,8,9].map(n => (
+            <button key={n} className="gn-num-btn" onClick={() => press(String(n))}>{n}</button>
+          ))}
+          <span className="gn-num-empty" />
+          <button className="gn-num-btn" onClick={() => press('0')}>0</button>
+          <button className="gn-num-btn gn-num-del" onClick={del}><X size={15} /></button>
+        </div>
+        <button className={`gn-send-btn ${status === 'sent' ? 'is-sent' : ''}`} onClick={send} disabled={code.length === 0}>
+          {status === 'sent' ? <><Check size={15} /> Enviado</> : 'Send'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function GnBottomNavInteractive() {
+  const [active, setActive] = useState(0)
+  const items = [
+    { icon: <Home size={20} />, label: 'Home' },
+    { icon: <MessageCircle size={20} />, label: 'Chat' },
+    { icon: <Settings size={20} />, label: 'Settings' },
+  ]
+  return (
+    <div className="component-mock mock-gn-bottom-nav">
+      <nav className="gn-bottom-nav">
+        {items.map((item, i) => (
+          <button key={i} className={`gn-nav-item ${active === i ? 'is-active' : ''}`} onClick={() => setActive(i)} aria-label={item.label}>
+            {item.icon}
+          </button>
+        ))}
+      </nav>
+      <p className="interactive-note gn-note">{items[active].label}</p>
+    </div>
+  )
+}
+
+function GnTextNavInteractive() {
+  const [active, setActive] = useState(0)
+  const links = ['Home', 'Search', 'Settings']
+  return (
+    <div className="component-mock mock-gn-text-nav">
+      <nav className="gn-text-nav">
+        {links.map((link, i) => (
+          <button key={link} className={`gn-text-nav-item ${active === i ? 'is-active' : ''}`} onClick={() => setActive(i)}>{link}</button>
+        ))}
+      </nav>
+      <p className="interactive-note gn-note">{links[active]}</p>
+    </div>
+  )
+}
+
+function GnRemindersCardInteractive() {
+  const [items, setItems] = useState([
+    { text: 'Design review', done: false },
+    { text: 'Call John', done: false },
+  ])
+  const toggle = (i: number) => setItems(prev => prev.map((item, idx) => idx === i ? { ...item, done: !item.done } : item))
+  return (
+    <div className="component-mock mock-gn-reminders">
+      <div className="gn-reminders-card">
+        <p className="gn-reminders-title">Reminders</p>
+        <ul className="gn-reminders-list">
+          {items.map((item, i) => (
+            <li key={i} className={`gn-reminder-item ${item.done ? 'is-done' : ''}`} onClick={() => toggle(i)}>
+              <span className="gn-reminder-dot" />
+              {item.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <p className="interactive-note gn-note">Clique para marcar</p>
+    </div>
+  )
+}
+
+function SidebarAccordionInteractive() {
+  const [open, setOpen] = useState<number[]>([0])
+  const [activeItem, setActiveItem] = useState('Overview')
+  const sections = [
+    { icon: <BarChart2 size={15} />, label: 'Analytics', items: ['Overview', 'Reports', 'Metrics'] },
+    { icon: <FolderOpen size={15} />, label: 'Projects', items: ['Active', 'Archived', 'Templates'] },
+    { icon: <Settings size={15} />, label: 'Settings', items: ['Profile', 'Security', 'Billing'] },
+    { icon: <Users size={15} />, label: 'Team', items: ['Members', 'Roles', 'Invites'] },
+  ]
+  const toggle = (i: number) => setOpen(prev => prev.includes(i) ? prev.filter(n => n !== i) : [...prev, i])
+  return (
+    <div className="component-mock mock-sidebar-acc">
+      <nav className="sidebar-acc-nav">
+        <div className="sidebar-acc-brand">
+          <Home size={16} />
+          <span>Dashboard</span>
+        </div>
+        {sections.map((section, i) => (
+          <div key={i} className="sidebar-acc-section">
+            <button className={`sidebar-acc-header ${open.includes(i) ? 'is-open' : ''}`} onClick={() => toggle(i)}>
+              <span className="sidebar-acc-header-left">{section.icon}{section.label}</span>
+              <ChevronDown size={13} className="sidebar-acc-chevron" />
+            </button>
+            {open.includes(i) && (
+              <div className="sidebar-acc-body">
+                {section.items.map(item => (
+                  <button key={item} className={`sidebar-acc-item ${activeItem === item ? 'is-active' : ''}`} onClick={() => setActiveItem(item)}>
+                    {item}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
+      <p className="interactive-note">{activeItem} selecionado</p>
     </div>
   )
 }
@@ -6664,19 +6991,27 @@ knob.addEventListener('mousedown', (e) => {
     'timeline-stepper': {
       html: `<div class="stepper-track">
   <div class="stepper-item">
-    <button class="stepper-node is-done" aria-label="Etapa 1: Briefing">✓</button>
+    <button class="stepper-node is-done" aria-label="Etapa 1: Briefing">
+      <!-- Check icon (Lucide) -->
+    </button>
     <div class="stepper-line is-done"></div>
   </div>
   <div class="stepper-item">
-    <button class="stepper-node is-active" aria-label="Etapa 2: Design">🎨</button>
+    <button class="stepper-node is-active" aria-label="Etapa 2: Design">
+      <!-- Layers icon (Lucide) -->
+    </button>
     <div class="stepper-line"></div>
   </div>
   <div class="stepper-item">
-    <button class="stepper-node" aria-label="Etapa 3: Review">🔍</button>
+    <button class="stepper-node" aria-label="Etapa 3: Review">
+      <!-- Search icon (Lucide) -->
+    </button>
     <div class="stepper-line"></div>
   </div>
   <div class="stepper-item">
-    <button class="stepper-node" aria-label="Etapa 4: Deploy">🚀</button>
+    <button class="stepper-node" aria-label="Etapa 4: Deploy">
+      <!-- Rocket icon (Lucide) -->
+    </button>
   </div>
 </div>
 <div id="stepper-info" class="stepper-info">
@@ -7104,14 +7439,14 @@ drawArc(68); range.addEventListener('input',()=>drawArc(Number(range.value)))`,
     },
     'neo-switch-panel': {
       html: `<div class="neo-panel-card">
-  <div class="neo-panel-row"><span class="neo-panel-icon">📶</span><span class="neo-panel-label">Wi-Fi</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
-  <div class="neo-panel-row"><span class="neo-panel-icon">🔵</span><span class="neo-panel-label">Bluetooth</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
-  <div class="neo-panel-row"><span class="neo-panel-icon">🔔</span><span class="neo-panel-label">Notificações</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
-  <div class="neo-panel-row"><span class="neo-panel-icon">🌙</span><span class="neo-panel-label">Modo Escuro</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon"><!-- Wifi icon --></span><span class="neo-panel-label">Wi-Fi</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon"><!-- Bluetooth icon --></span><span class="neo-panel-label">Bluetooth</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon"><!-- Bell icon --></span><span class="neo-panel-label">Notificações</span><div class="neo-panel-toggle is-on" role="switch" aria-checked="true" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
+  <div class="neo-panel-row"><span class="neo-panel-icon"><!-- Moon icon --></span><span class="neo-panel-label">Modo Escuro</span><div class="neo-panel-toggle" role="switch" aria-checked="false" tabindex="0"><div class="neo-panel-thumb"></div></div></div>
 </div>`,
       css: `.neo-panel-card { background:#e4e9f2; border-radius:1.5rem; padding:1.5rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:1rem; min-width:240px; }
 .neo-panel-row { display:flex; align-items:center; gap:.75rem; }
-.neo-panel-icon { font-size:1.1rem; }
+.neo-panel-icon { width:18px; height:18px; display:flex; align-items:center; justify-content:center; color:#6c8ebf; flex-shrink:0; }
 .neo-panel-label { flex:1; font-size:.88rem; font-weight:600; color:#3d4a5c; }
 .neo-panel-toggle { width:58px; height:30px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); cursor:pointer; position:relative; flex-shrink:0; transition:background .3s; }
 .neo-panel-toggle.is-on { background:#d0dcf0; }
@@ -7178,7 +7513,7 @@ knob.addEventListener('mousedown',e=>{e.preventDefault();knob.classList.add('is-
   <div class="glass-bg"></div>
   <div class="glass-card">
     <div class="glass-avatar-ring"><div class="glass-avatar">👤</div></div>
-    <h3 class="glass-name">Alex Rivera</h3>
+    <h3 class="glass-name">Fran Camargo</h3>
     <p class="glass-role">Senior UI Designer</p>
     <div class="glass-stats">
       <div class="glass-stat"><strong>248</strong><span>Posts</span></div>
@@ -7338,6 +7673,289 @@ input.addEventListener('keydown', e => {
   }
   input.value = ''
 })`,
+    },
+    'dark-search-field': {
+      html: `<div class="dark-search-field">
+  <div class="dark-search-row">
+    <!-- Search icon (Lucide) -->
+    <input class="dark-search-inp" placeholder="Search..." />
+  </div>
+  <div class="dark-search-suggestions">
+    <span class="dark-search-bar" style="width:72%"></span>
+    <span class="dark-search-bar" style="width:48%"></span>
+  </div>
+  <div class="dark-search-glow"></div>
+</div>`,
+      css: `.dark-search-field { width:260px; background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.75rem; border:1px solid rgba(64,144,255,.28); box-shadow:0 0 20px rgba(40,100,255,.12),inset 0 1px 0 rgba(255,255,255,.06); padding:.85rem 1rem; display:flex; flex-direction:column; gap:.55rem; position:relative; overflow:hidden; transition:border-color .2s; }
+.dark-search-field.is-focused { border-color:rgba(64,144,255,.55); box-shadow:0 0 28px rgba(40,100,255,.22); }
+.dark-search-row { display:flex; align-items:center; gap:8px; }
+.dark-search-ico { color:rgba(255,255,255,.4); flex-shrink:0; }
+.dark-search-inp { flex:1; background:transparent; border:none; outline:none; color:rgba(255,255,255,.85); font-size:.85rem; caret-color:#4090ff; }
+.dark-search-inp::placeholder { color:rgba(255,255,255,.25); }
+.dark-search-suggestions { display:flex; flex-direction:column; gap:5px; padding-left:23px; }
+.dark-search-bar { height:3px; background:rgba(255,255,255,.06); border-radius:999px; display:block; }
+.dark-search-glow { height:2px; background:linear-gradient(90deg,transparent,#4090ff 30%,#8b6eff 70%,transparent); filter:blur(1.5px); opacity:.65; margin:0 -1rem; }`,
+      ts: `const [value, setValue] = useState('')
+const [focused, setFocused] = useState(false)
+// <div className={\`dark-search-field \${focused?'is-focused':''}\`}>
+//   <input onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)} />`,
+    },
+    'dark-select': {
+      html: `<div class="dark-select-field">
+  <span class="dark-select-val">Option 1</span>
+  <!-- ChevronDown icon (Lucide) -->
+</div>
+<div class="dark-select-menu">
+  <button class="dark-sel-option is-sel">Option 1</button>
+  <button class="dark-sel-option">Option 2</button>
+  <button class="dark-sel-option">Option 3</button>
+</div>`,
+      css: `.dark-select-field { width:200px; background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.6rem; border:1px solid rgba(64,144,255,.3); box-shadow:0 0 16px rgba(40,100,255,.1); padding:.7rem 1rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:border-color .2s; }
+.dark-select-field:hover,.dark-select-field.is-open { border-color:rgba(64,144,255,.55); }
+.dark-select-val { font-size:.82rem; color:rgba(255,255,255,.7); }
+.dark-sel-chevron { color:rgba(64,144,255,.9); transition:transform .2s; }
+.dark-sel-chevron.is-open { transform:rotate(180deg); }
+.dark-select-menu { width:200px; background:rgba(12,15,40,.97); backdrop-filter:blur(16px); border-radius:.6rem; border:1px solid rgba(64,144,255,.2); box-shadow:0 8px 24px rgba(0,0,0,.5); overflow:hidden; }
+.dark-sel-option { width:100%; padding:.6rem 1rem; text-align:left; border:none; background:transparent; color:rgba(255,255,255,.55); font-size:.82rem; cursor:pointer; }
+.dark-sel-option:hover { background:rgba(64,144,255,.1); color:rgba(255,255,255,.9); }
+.dark-sel-option.is-sel { color:#4090ff; }`,
+      ts: `const [open, setOpen] = useState(false)
+const [selected, setSelected] = useState('Option 1')
+// Toggle open on click, close on option select or outside click`,
+    },
+    'dark-checkbox': {
+      html: `<div class="dark-checkbox-grid">
+  <button class="dark-checkbox dark-cb-blue is-checked"><!-- Check icon --></button>
+  <button class="dark-checkbox dark-cb-blue"></button>
+  <button class="dark-checkbox dark-cb-purple is-checked"><!-- Check icon --></button>
+  <button class="dark-checkbox dark-cb-purple"></button>
+</div>`,
+      css: `.dark-checkbox-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.dark-checkbox { width:36px; height:36px; border-radius:.5rem; border:1.5px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; color:#fff; }
+.dark-checkbox.is-checked.dark-cb-blue { background:#4090ff; border-color:#4090ff; box-shadow:0 0 12px rgba(64,144,255,.55),0 0 24px rgba(64,144,255,.2); }
+.dark-checkbox.is-checked.dark-cb-purple { background:#8b6eff; border-color:#8b6eff; box-shadow:0 0 12px rgba(139,110,255,.55),0 0 24px rgba(139,110,255,.2); }`,
+      ts: `const [states, setStates] = useState([true, false, true, false])
+const toggle = (i:number) => setStates(prev => prev.map((v,idx)=>idx===i?!v:v))`,
+    },
+    'dark-switch': {
+      html: `<button class="dark-switch is-on" role="switch" aria-checked="true">
+  <span class="dark-switch-thumb"></span>
+</button>`,
+      css: `.dark-switch { width:56px; height:30px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.06); position:relative; cursor:pointer; transition:all .3s; box-shadow:inset 0 1px 3px rgba(0,0,0,.3); }
+.dark-switch.is-on { background:rgba(40,100,255,.4); border-color:rgba(64,144,255,.6); box-shadow:0 0 18px rgba(64,144,255,.42),inset 0 1px 3px rgba(0,0,0,.2); }
+.dark-switch-thumb { position:absolute; width:22px; height:22px; border-radius:50%; background:#fff; top:3px; left:3px; box-shadow:0 1px 4px rgba(0,0,0,.3); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+.dark-switch.is-on .dark-switch-thumb { transform:translateX(26px); box-shadow:0 0 8px rgba(64,144,255,.4),0 1px 4px rgba(0,0,0,.3); }`,
+      ts: `const [on, setOn] = useState(true)
+<button className={\`dark-switch \${on?'is-on':''}\`} onClick={()=>setOn(v=>!v)}>`,
+    },
+    'dark-tabs': {
+      html: `<div class="dark-tabs-container">
+  <button class="dark-tab">Overview</button>
+  <button class="dark-tab is-active">Activity</button>
+  <button class="dark-tab">Settings</button>
+</div>`,
+      css: `.dark-tabs-container { background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.75rem; border:1px solid rgba(100,140,255,.14); box-shadow:0 0 20px rgba(40,100,255,.1); display:flex; overflow:hidden; }
+.dark-tab { flex:1; padding:.75rem 0; border:none; background:transparent; color:rgba(255,255,255,.3); font-size:.8rem; font-weight:500; cursor:pointer; position:relative; transition:color .2s; }
+.dark-tab.is-active { color:rgba(255,255,255,.9); }
+.dark-tab.is-active::after { content:''; position:absolute; bottom:0; left:20%; width:60%; height:2px; background:linear-gradient(90deg,transparent,#00d4ff,#4090ff,transparent); box-shadow:0 0 8px rgba(0,212,255,.8),0 0 18px rgba(64,144,255,.4); border-radius:999px; }`,
+      ts: `const [active, setActive] = useState(1)
+const tabs = ['Overview','Activity','Settings']`,
+    },
+    'dark-primary-button': {
+      html: `<button class="dark-primary-btn">Create workspace</button>`,
+      css: `.dark-primary-btn { padding:.9rem 2.5rem; border-radius:999px; border:1px solid rgba(80,160,255,.55); background:linear-gradient(145deg,rgba(15,50,160,.9),rgba(35,90,220,.75)); color:rgba(255,255,255,.95); font-size:.9rem; font-weight:600; cursor:pointer; box-shadow:0 0 28px rgba(40,110,255,.45),0 0 60px rgba(40,110,255,.18),inset 0 1px 0 rgba(255,255,255,.18); position:relative; overflow:hidden; transition:all .2s; letter-spacing:.01em; }
+.dark-primary-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent); animation:dark-shimmer 3s ease-in-out infinite; }
+@keyframes dark-shimmer { 0%{left:-100%} 100%{left:200%} }
+.dark-primary-btn:hover { box-shadow:0 0 38px rgba(40,110,255,.6),0 0 70px rgba(40,110,255,.25),inset 0 1px 0 rgba(255,255,255,.2); }
+.dark-primary-btn.is-pulse { box-shadow:0 0 50px rgba(40,110,255,.8),0 0 90px rgba(40,110,255,.35),inset 0 1px 0 rgba(255,255,255,.22); }`,
+      ts: `<button className="dark-primary-btn">Create workspace</button>`,
+    },
+    'dark-secondary-button': {
+      html: `<button class="dark-secondary-btn">Invite member</button>`,
+      css: `.dark-secondary-btn { padding:.9rem 2rem; border-radius:999px; border:1px solid rgba(139,110,255,.45); background:rgba(139,110,255,.07); color:rgba(160,140,255,.85); font-size:.9rem; font-weight:500; cursor:pointer; box-shadow:0 0 16px rgba(139,110,255,.18),inset 0 1px 0 rgba(255,255,255,.06); transition:all .2s; }
+.dark-secondary-btn:hover { border-color:rgba(139,110,255,.65); box-shadow:0 0 26px rgba(139,110,255,.3); background:rgba(139,110,255,.12); }`,
+      ts: `<button className="dark-secondary-btn">Invite member</button>`,
+    },
+    'dark-icon-button': {
+      html: `<button class="dark-icon-btn" aria-label="Add">
+  <!-- Plus icon (Lucide) -->
+</button>`,
+      css: `.dark-icon-btn { width:52px; height:52px; border-radius:50%; border:1px solid rgba(80,144,255,.3); background:rgba(20,30,70,.6); backdrop-filter:blur(12px); color:rgba(100,180,255,.9); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 16px rgba(64,144,255,.2),inset 0 1px 0 rgba(255,255,255,.08); transition:all .2s; }
+.dark-icon-btn:hover { border-color:rgba(80,144,255,.55); box-shadow:0 0 26px rgba(64,144,255,.38); }
+.dark-icon-btn.is-active { background:rgba(40,90,220,.45); box-shadow:0 0 36px rgba(64,144,255,.6),inset 0 1px 0 rgba(255,255,255,.12); }`,
+      ts: `<button className={\`dark-icon-btn \${active?'is-active':''}\`} onClick={()=>{ setActive(true); setTimeout(()=>setActive(false),500) }}>
+  <Plus size={20} />
+</button>`,
+    },
+    'gn-segmented-control': {
+      html: `<div class="gn-seg-control">
+  <button class="gn-seg-tab is-active">All</button>
+  <button class="gn-seg-tab">Unread</button>
+  <button class="gn-seg-tab">Favorites</button>
+</div>`,
+      css: `.gn-seg-control { display:flex; background:rgba(255,255,255,.45); border-radius:999px; padding:4px; gap:2px; box-shadow:4px 4px 10px rgba(160,140,120,.2),-3px -3px 8px rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.8); }
+.gn-seg-tab { padding:.45rem 1.1rem; border-radius:999px; border:none; background:transparent; color:#a09888; font-size:.82rem; font-weight:500; cursor:pointer; transition:all .2s; }
+.gn-seg-tab.is-active { background:rgba(255,255,255,.9); color:#4a4540; font-weight:600; box-shadow:2px 2px 6px rgba(160,140,120,.15),-1px -1px 4px rgba(255,255,255,.9); }`,
+      ts: `const [active, setActive] = useState(0)
+const tabs = ['All', 'Unread', 'Favorites']
+// <button className={\`gn-seg-tab \${active===i?'is-active':''}\`} onClick={()=>setActive(i)}>`,
+    },
+    'gn-toggle-switch': {
+      html: `<button class="gn-toggle is-on" role="switch" aria-checked="true">
+  <span class="gn-toggle-thumb"></span>
+</button>`,
+      css: `.gn-toggle { width:72px; height:36px; border-radius:999px; border:1.5px solid rgba(255,255,255,.7); background:rgba(255,255,255,.4); position:relative; cursor:pointer; box-shadow:4px 4px 10px rgba(160,140,120,.2),-3px -3px 8px rgba(255,255,255,.85),inset 2px 2px 6px rgba(160,140,120,.15),inset -1px -1px 4px rgba(255,255,255,.7); transition:background .3s; }
+.gn-toggle-thumb { position:absolute; width:28px; height:28px; border-radius:50%; background:#fff; top:3px; left:3px; box-shadow:2px 2px 6px rgba(160,140,120,.3),-1px -1px 4px rgba(255,255,255,.9); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+.gn-toggle.is-on .gn-toggle-thumb { transform:translateX(36px); }`,
+      ts: `const [on, setOn] = useState(true)
+<button className={\`gn-toggle \${on?'is-on':''}\`} onClick={()=>setOn(v=>!v)}>
+  <span className="gn-toggle-thumb" />
+</button>`,
+    },
+    'gn-input-field': {
+      html: `<input class="gn-input" placeholder="New message" />`,
+      css: `.gn-input { width:240px; padding:.75rem 1rem; border-radius:.75rem; border:1.5px solid rgba(255,255,255,.7); background:rgba(255,255,255,.35); color:#4a4540; font-size:.85rem; outline:none; box-shadow:inset 3px 3px 8px rgba(160,140,120,.18),inset -2px -2px 6px rgba(255,255,255,.8); transition:box-shadow .2s,border-color .2s; }
+.gn-input::placeholder { color:#b8afa8; }
+.gn-input:focus { border-color:rgba(255,255,255,.9); box-shadow:inset 3px 3px 10px rgba(160,140,120,.22),inset -2px -2px 6px rgba(255,255,255,.85),0 0 0 2px rgba(212,112,94,.15); }`,
+      ts: `const [value, setValue] = useState('')
+<input className="gn-input" placeholder="New message" value={value} onChange={e=>setValue(e.target.value)} />`,
+    },
+    'gn-numpad': {
+      html: `<div class="gn-numpad-card">
+  <p class="gn-numpad-title">Enter passcode</p>
+  <div class="gn-numpad-dots">
+    <span class="gn-dot is-filled"></span><span class="gn-dot is-filled"></span>
+    <span class="gn-dot"></span><span class="gn-dot"></span>
+  </div>
+  <div class="gn-numpad-grid">
+    <button class="gn-num-btn">1</button><!-- ... 2-9 -->
+    <span class="gn-num-empty"></span>
+    <button class="gn-num-btn">0</button>
+    <button class="gn-num-btn gn-num-del">✕</button>
+  </div>
+  <button class="gn-send-btn">Send</button>
+</div>`,
+      css: `.gn-numpad-card { background:rgba(255,255,255,.45); border-radius:1.25rem; padding:1.5rem 1.25rem; border:1px solid rgba(255,255,255,.8); box-shadow:6px 6px 14px rgba(160,140,120,.2),-4px -4px 10px rgba(255,255,255,.9); display:flex; flex-direction:column; align-items:center; gap:1rem; width:220px; }
+.gn-numpad-title { margin:0; font-size:.9rem; font-weight:600; color:#4a4540; }
+.gn-numpad-dots { display:flex; gap:10px; }
+.gn-dot { width:10px; height:10px; border-radius:50%; background:rgba(160,140,120,.25); transition:background .2s; }
+.gn-dot.is-filled { background:#d4705e; }
+.gn-numpad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; width:100%; }
+.gn-num-btn { aspect-ratio:1; border-radius:.75rem; border:1px solid rgba(255,255,255,.75); background:rgba(255,255,255,.5); color:#4a4540; font-size:1.1rem; font-weight:500; cursor:pointer; box-shadow:3px 3px 8px rgba(160,140,120,.18),-2px -2px 6px rgba(255,255,255,.9); transition:all .1s; }
+.gn-num-btn:active { box-shadow:inset 2px 2px 6px rgba(160,140,120,.2),inset -1px -1px 4px rgba(255,255,255,.7); transform:scale(.97); }
+.gn-send-btn { width:100%; padding:.7rem; border-radius:.75rem; border:none; background:#d4705e; color:#fff; font-size:.9rem; font-weight:600; cursor:pointer; box-shadow:3px 4px 10px rgba(212,112,94,.35); }
+.gn-send-btn:disabled { opacity:.5; cursor:not-allowed; }`,
+      ts: `const [code, setCode] = useState('')
+const press = (n: string) => { if (code.length < 4) setCode(c => c + n) }
+const send = () => { /* submit logic */ setCode('') }`,
+    },
+    'gn-bottom-nav': {
+      html: `<nav class="gn-bottom-nav">
+  <button class="gn-nav-item is-active" aria-label="Home"><!-- Home icon --></button>
+  <button class="gn-nav-item" aria-label="Chat"><!-- MessageCircle icon --></button>
+  <button class="gn-nav-item" aria-label="Settings"><!-- Settings icon --></button>
+</nav>`,
+      css: `.gn-bottom-nav { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.45); border-radius:999px; padding:8px 16px; border:1px solid rgba(255,255,255,.8); box-shadow:4px 4px 10px rgba(160,140,120,.2),-3px -3px 8px rgba(255,255,255,.85); }
+.gn-nav-item { width:44px; height:44px; border-radius:50%; border:none; background:transparent; color:#b8afa8; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.gn-nav-item.is-active { background:rgba(255,255,255,.82); color:#4a4540; box-shadow:2px 2px 6px rgba(160,140,120,.2),-1px -1px 4px rgba(255,255,255,.9); }`,
+      ts: `const [active, setActive] = useState(0)
+const items = [{ icon: <Home size={20}/>, label:'Home' }, { icon:<MessageCircle size={20}/>, label:'Chat' }, { icon:<Settings size={20}/>, label:'Settings' }]
+// <button className={\`gn-nav-item \${active===i?'is-active':''}\`} onClick={()=>setActive(i)}>`,
+    },
+    'gn-text-nav': {
+      html: `<nav class="gn-text-nav">
+  <button class="gn-text-nav-item is-active">Home</button>
+  <button class="gn-text-nav-item">Search</button>
+  <button class="gn-text-nav-item">Settings</button>
+</nav>`,
+      css: `.gn-text-nav { display:flex; align-items:center; background:rgba(255,255,255,.45); border-radius:999px; padding:.5rem .75rem; border:1px solid rgba(255,255,255,.8); box-shadow:4px 4px 10px rgba(160,140,120,.2),-3px -3px 8px rgba(255,255,255,.85); }
+.gn-text-nav-item { padding:.4rem 1.25rem; border-radius:999px; border:none; background:transparent; color:#a09888; font-size:.85rem; font-weight:500; cursor:pointer; transition:all .2s; }
+.gn-text-nav-item.is-active { background:rgba(255,255,255,.78); color:#4a4540; font-weight:600; box-shadow:2px 2px 5px rgba(160,140,120,.15),-1px -1px 4px rgba(255,255,255,.9); }`,
+      ts: `const [active, setActive] = useState(0)
+const links = ['Home', 'Search', 'Settings']
+// <button className={\`gn-text-nav-item \${active===i?'is-active':''}\`} onClick={()=>setActive(i)}>`,
+    },
+    'gn-reminders-card': {
+      html: `<div class="gn-reminders-card">
+  <p class="gn-reminders-title">Reminders</p>
+  <ul class="gn-reminders-list">
+    <li class="gn-reminder-item"><span class="gn-reminder-dot"></span>Design review</li>
+    <li class="gn-reminder-item is-done"><span class="gn-reminder-dot"></span>Call John</li>
+  </ul>
+</div>`,
+      css: `.gn-reminders-card { background:rgba(255,255,255,.5); border-radius:1rem; padding:1rem 1.25rem; border:1px solid rgba(255,255,255,.82); box-shadow:4px 4px 10px rgba(160,140,120,.18),-3px -3px 8px rgba(255,255,255,.9); min-width:180px; }
+.gn-reminders-title { margin:0 0 .65rem; font-size:.88rem; font-weight:700; color:#4a4540; }
+.gn-reminders-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.4rem; }
+.gn-reminder-item { display:flex; align-items:center; gap:8px; font-size:.78rem; color:#6b6058; cursor:pointer; transition:all .2s; }
+.gn-reminder-item.is-done { color:#b8afa8; text-decoration:line-through; }
+.gn-reminder-dot { width:6px; height:6px; border-radius:50%; background:#d4705e; flex-shrink:0; }
+.gn-reminder-item.is-done .gn-reminder-dot { background:#c4bab0; }`,
+      ts: `const [items, setItems] = useState([{ text:'Design review', done:false },{ text:'Call John', done:false }])
+const toggle = (i:number) => setItems(prev => prev.map((item,idx) => idx===i ? {...item,done:!item.done} : item))`,
+    },
+    'sidebar-accordion': {
+      html: `<nav class="sidebar-acc-nav">
+  <div class="sidebar-acc-brand">Dashboard</div>
+  <div class="sidebar-acc-section">
+    <button class="sidebar-acc-header is-open" data-index="0">
+      <span class="sidebar-acc-header-left">Analytics</span>
+      <svg class="sidebar-acc-chevron" .../>
+    </button>
+    <div class="sidebar-acc-body">
+      <button class="sidebar-acc-item is-active">Overview</button>
+      <button class="sidebar-acc-item">Reports</button>
+      <button class="sidebar-acc-item">Metrics</button>
+    </div>
+  </div>
+  <div class="sidebar-acc-section">
+    <button class="sidebar-acc-header" data-index="1">
+      <span class="sidebar-acc-header-left">Projects</span>
+      <svg class="sidebar-acc-chevron" .../>
+    </button>
+  </div>
+</nav>`,
+      css: `.sidebar-acc-nav { background:#1A334A; border-radius:1rem; width:220px; border:1px solid rgba(39,230,236,.12); box-shadow:0 8px 32px rgba(0,0,0,.4); overflow:hidden; }
+.sidebar-acc-brand { display:flex; align-items:center; gap:8px; padding:.9rem 1.1rem; border-bottom:1px solid rgba(39,230,236,.12); color:#27E6EC; font-size:.85rem; font-weight:700; letter-spacing:.04em; }
+.sidebar-acc-section { border-bottom:1px solid rgba(30,83,110,.5); }
+.sidebar-acc-section:last-child { border-bottom:none; }
+.sidebar-acc-header { width:100%; display:flex; align-items:center; justify-content:space-between; padding:.65rem 1.1rem; background:transparent; border:none; color:#5AA5CD; font-size:.78rem; font-weight:600; cursor:pointer; transition:background .15s,color .15s; }
+.sidebar-acc-header:hover { background:rgba(39,230,236,.06); color:#27E6EC; }
+.sidebar-acc-header.is-open { color:#18A3B7; background:rgba(24,163,183,.08); }
+.sidebar-acc-header-left { display:flex; align-items:center; gap:8px; }
+.sidebar-acc-chevron { transition:transform .2s; }
+.sidebar-acc-header.is-open .sidebar-acc-chevron { transform:rotate(180deg); }
+.sidebar-acc-body { padding:2px 0 6px; background:rgba(0,0,0,.15); animation:sidebar-body-in .18s ease; }
+@keyframes sidebar-body-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+.sidebar-acc-item { display:block; width:100%; text-align:left; padding:.45rem 1.1rem .45rem 2.2rem; background:transparent; border:none; border-left:2px solid transparent; color:rgba(90,165,205,.7); font-size:.75rem; font-weight:500; cursor:pointer; transition:background .15s,color .15s,border-color .15s; }
+.sidebar-acc-item:hover { background:rgba(39,230,236,.06); color:#5AA5CD; }
+.sidebar-acc-item.is-active { color:#27E6EC; border-left-color:#27E6EC; background:rgba(39,230,236,.08); font-weight:600; }`,
+      ts: `const [openSections, setOpenSections] = useState<number[]>([0])
+const [activeItem, setActiveItem] = useState('Overview')
+
+const toggle = (i: number) =>
+  setOpenSections(prev => prev.includes(i) ? prev.filter(n => n !== i) : [...prev, i])
+
+// Render section header:
+<button
+  className={\`sidebar-acc-header \${openSections.includes(i) ? 'is-open' : ''}\`}
+  onClick={() => toggle(i)}
+>
+  <span className="sidebar-acc-header-left">{section.icon}{section.label}</span>
+  <ChevronDown size={13} className="sidebar-acc-chevron" />
+</button>
+
+// Render items (conditionally):
+{openSections.includes(i) && (
+  <div className="sidebar-acc-body">
+    {section.items.map(item => (
+      <button
+        key={item}
+        className={\`sidebar-acc-item \${activeItem === item ? 'is-active' : ''}\`}
+        onClick={() => setActiveItem(item)}
+      >{item}</button>
+    ))}
+  </div>
+)}`,
     },
   }
 
