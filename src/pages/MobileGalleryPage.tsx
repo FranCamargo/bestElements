@@ -781,21 +781,6 @@ function StarlightNocturneScreen() {
 function ForestLeafScreen() {
   return (
     <div className="ms-screen-flp">
-      <div className="ms-flp-leaves" aria-hidden="true">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="ms-flp-leaf"
-            style={{
-              left: `${[5, 72, 18, 82, 40, 60][i]}%`,
-              top: `${[8, 4, 55, 62, 30, 75][i]}%`,
-              animationDelay: `${i * 1.2}s`,
-              opacity: [0.18, 0.12, 0.22, 0.14, 0.16, 0.1][i],
-            }}
-          />
-        ))}
-      </div>
-
       <div className="ms-flp-topbar">
         <button className="ms-flp-icon-btn">←</button>
         <span className="ms-flp-np-label">NOW PLAYING</span>

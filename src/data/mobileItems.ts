@@ -61,24 +61,6 @@ export const mobileScreens: MobileScreen[] = [
     category: 'Music',
   },
   {
-    slug: 'mobile-vinyl-lilac',
-    title: 'Vinyl Lilac',
-    subtitle: 'Player musical em gradiente lilás com disco de vinil animado e estética neomórfica.',
-    category: 'Music',
-  },
-  {
-    slug: 'mobile-vinyl-starlight',
-    title: 'Vinyl Starlight',
-    subtitle: 'Player espacial com fundo noturno, estrelas CSS e glow azul profundo.',
-    category: 'Music',
-  },
-  {
-    slug: 'mobile-vinyl-forest',
-    title: 'Vinyl Forest',
-    subtitle: 'Player em tema floresta com gradiente verde profundo, disco animado e glow orgânico.',
-    category: 'Music',
-  },
-  {
     slug: 'mobile-vinyl-music-player',
     title: 'Vinyl Music Player',
     subtitle: 'Player neomórfico azul-acinzentado com disco giratório e painel wave, réplica fiel da gallery.',
