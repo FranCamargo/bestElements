@@ -78,12 +78,12 @@ function App() {
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'is-active' : ''}`}>
               Home
             </Link>
-            <Link
+            {/* <Link
               to="/mobile"
               className={`nav-link ${location.pathname === '/mobile' ? 'is-active' : ''}`}
             >
               Mobile
-            </Link>
+            </Link> */}
             <Link
               to="/sobre-mim"
               className={`nav-link ${location.pathname === '/sobre-mim' ? 'is-active' : ''}`}
