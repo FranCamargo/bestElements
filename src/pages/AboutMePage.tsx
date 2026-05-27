@@ -122,7 +122,7 @@ export function AboutMePage() {
           <p className="hero-kicker">Sobre mim</p>
           <h1>Franciely Camargo</h1>
           <div className="about-subtitle-row">
-            <p className="about-role">Front-End Developer (Angular) • UI/UX Designer | AI-900</p>
+            <p className="about-role">Front-End Developer  • UI/UX Designer | AI-900</p>
           </div>
 
           <section aria-label="Resumo profissional">

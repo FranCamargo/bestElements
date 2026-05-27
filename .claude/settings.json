@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('card-thumbnail-gn-soft'\\); console.log\\(css.slice\\(idx, idx+400\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const anchor='.component-live-preview.is-glass-soft .component-mock {  background: transparent;  border: none;  box-shadow: none;  padding: 0;}'; const idx=css.indexOf\\(anchor\\); const insert='.card-thumbnail-glass-water {  background-image: url\\(\\\\'./assets/bgwater.png\\\\'\\);  background-size: cover;  background-position: center;}.card-thumbnail-glass-water .card-preview-live .preview-center-frame > .component-mock {  background: transparent;  border: none;  box-shadow: none;  padding: 0;}.component-live-preview.is-glass-water {  background-image: url\\(\\\\'./assets/bgwater.png\\\\'\\);  background-size: cover;  background-position: center;}.component-live-preview.is-glass-water .component-mock {  background: transparent;  border: none;  box-shadow: none;  padding: 0;}'; const newCss=css.slice\\(0,idx+anchor.length\\)+insert+css.slice\\(idx+anchor.length\\); if\\(newCss===css\\){console.log\\('NO CHANGE'\\)}else{fs.writeFileSync\\('src/index.css',newCss\\);console.log\\('UPDATED'\\)}\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('.glass-bg'\\); if\\(idx===-1\\){console.log\\('NOT FOUND'\\)}else{console.log\\(css.slice\\(idx, idx+300\\)\\)}\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('mock-glass-profile'\\); if\\(idx===-1\\){console.log\\('NOT FOUND'\\)}else{console.log\\(css.slice\\(idx-5, idx+200\\)\\)}\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('card-thumbnail-glass-water .glass-bg'\\); console.log\\(css.slice\\(idx, idx+150\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('.glass-card'\\); console.log\\(css.slice\\(idx, idx+800\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('.glass-name'\\); console.log\\(css.slice\\(idx, idx+600\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('.glass-follow-btn'\\); console.log\\(css.slice\\(idx, idx+400\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const css=fs.readFileSync\\('src/index.css','utf8'\\); const idx=css.indexOf\\('.glass-follow-btn.is-following'\\); console.log\\(css.slice\\(idx, idx+200\\)\\);\")"
+    ]
+  }
+}

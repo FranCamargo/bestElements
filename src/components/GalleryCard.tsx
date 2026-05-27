@@ -10,9 +10,29 @@ type GalleryCardProps = {
 }
 
 const NEO_SLUGS = new Set(['curadoria-neomorphic-button', 'curadoria-realistic-toggle'])
+const GN_SOFT_SLUGS = new Set([
+  'gn-segmented-control',
+  'gn-toggle-switch',
+  'gn-input-field',
+  'gn-numpad',
+  'gn-bottom-nav',
+  'gn-text-nav',
+])
+const GLASS_WATER_SLUGS = new Set([
+  'glass-profile-card',
+  'gn-reminders-card',
+])
 
 function isNeoSlug(slug: string) {
   return slug.startsWith('neo-') || NEO_SLUGS.has(slug)
+}
+
+function isGnSoftSlug(slug: string) {
+  return GN_SOFT_SLUGS.has(slug)
+}
+
+function isGlassWaterSlug(slug: string) {
+  return GLASS_WATER_SLUGS.has(slug)
 }
 
 function isGnSlug(slug: string) {
@@ -25,9 +45,13 @@ export function GalleryCard({ item, isLiked, onToggleLike }: GalleryCardProps) {
 
   const thumbnailExtra = isNeoSlug(item.slug)
     ? ' card-thumbnail-neo'
-    : isGnSlug(item.slug)
-      ? ' card-thumbnail-gn'
-      : ''
+    : isGnSoftSlug(item.slug)
+      ? ' card-thumbnail-gn-soft'
+      : isGlassWaterSlug(item.slug)
+        ? ' card-thumbnail-glass-water'
+        : isGnSlug(item.slug)
+          ? ' card-thumbnail-gn'
+          : ''
 
   return (
     <article className={cardClasses}>

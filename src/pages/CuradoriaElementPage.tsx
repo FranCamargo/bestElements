@@ -1257,24 +1257,26 @@ function ConfettiPopButtonInteractive() {
 
   return (
     <div className="component-mock mock-centered-demo mock-confetti-pop">
-      <button type="button" className="confetti-pop-btn" onClick={launchConfetti}>
-        Liberar confete
-      </button>
-      <div className="confetti-cloud" key={bursts} aria-hidden="true">
-        {particles.map((particle) => (
-          <i
-            key={particle.id}
-            style={{
-              '--x': `${particle.x}px`,
-              '--y': `${particle.y}px`,
-              '--rot': `${particle.rotate}deg`,
-              '--h': `${particle.hue}deg`,
-              '--delay': `${particle.delay}ms`,
-              '--dur': `${particle.duration}ms`,
-              '--scale': `${particle.scale}`,
-            } as CSSProperties}
-          />
-        ))}
+      <div className="confetti-wrap">
+        <button type="button" className="confetti-pop-btn" onClick={launchConfetti}>
+          Liberar confete
+        </button>
+        <div className="confetti-cloud" key={bursts} aria-hidden="true">
+          {particles.map((particle) => (
+            <i
+              key={particle.id}
+              style={{
+                '--x': `${particle.x}px`,
+                '--y': `${particle.y}px`,
+                '--rot': `${particle.rotate}deg`,
+                '--h': `${particle.hue}deg`,
+                '--delay': `${particle.delay}ms`,
+                '--dur': `${particle.duration}ms`,
+                '--scale': `${particle.scale}`,
+              } as CSSProperties}
+            />
+          ))}
+        </div>
       </div>
       <p className="interactive-note">Celebrou {bursts} conquista(s)</p>
     </div>
@@ -3145,7 +3147,7 @@ function GlassProfileCardInteractive() {
       <div className="glass-bg" aria-hidden="true" />
       <div className="glass-card">
         <div className="glass-avatar-ring">
-          <div className="glass-avatar"><UserRound size={32} color="rgba(255,255,255,0.85)" /></div>
+          <div className="glass-avatar"><UserRound size={32} color="rgba(74,127,165,0.8)" /></div>
         </div>
         <h3 className="glass-name">Fran Camargo</h3>
         <p className="glass-role">Senior UI Designer</p>
@@ -3697,6 +3699,15 @@ const getSnippetsBySlug = (slug: string): SnippetBundle => {
   transform: translateX(130%);
 }
 
+.btn-sharp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(235, 219, 255, 0.55);
+  pointer-events: none;
+}
+
 #button-feedback {
   margin: 0;
   color: #5f4d7b;
@@ -4169,7 +4180,7 @@ searchInput.addEventListener('input', () => {
     'neon-glass-login-card': {
       html: `<section class="login-scene">
   <form id="login-form" class="login-card" autocomplete="off">
-    <div class="login-avatar" aria-hidden="true"><span class="login-avatar-icon">👤</span></div>
+    <div class="login-avatar" aria-hidden="true"><span class="login-avatar-icon"></span></div>
     <p class="login-caption">Sign in to your lilac account</p>
 
     <div class="login-meta">
@@ -4706,6 +4717,29 @@ updateToggleState()`,
 .chatbot-head span {
   color: #9fc5da;
   font-size: 0.73rem;
+}
+
+.online-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #30d158;
+  margin-left: 4px;
+  vertical-align: middle;
+  box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.5);
+  animation: online-breathe 1.8s ease-in-out infinite;
+}
+
+@keyframes online-breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.42);
+    opacity: 0.75;
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(48, 209, 88, 0);
+    opacity: 1;
+  }
 }
 
 .head-actions {
@@ -5583,28 +5617,133 @@ window.setInterval(() => {
     },
     'curadoria-screen-lights-pattern-amber': {
       html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
-      css: `.screen-lights-pattern { background: #241a12; }
-.screen-light-orb { background: radial-gradient(circle at center, rgba(255,188,99,0.92) 0%, rgba(255,188,99,0.18) 64%, transparent 100%); }
-.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
-.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      css: `.screen-lights-pattern {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+  background: #241a12;
+}
+.screen-light-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(52px);
+  background: radial-gradient(circle at center, rgba(255,188,99,0.92) 0%, rgba(255,188,99,0.18) 64%, transparent 100%);
+  will-change: transform, left, top;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.orb-left {
+  width: clamp(220px, 36vw, 420px);
+  height: clamp(220px, 36vw, 420px);
+  animation-name: screen-light-l-path-left;
+  animation-duration: 5.4s;
+}
+.orb-right {
+  width: clamp(240px, 38vw, 460px);
+  height: clamp(240px, 38vw, 460px);
+  animation-name: screen-light-l-path-right;
+  animation-duration: 5.4s;
+}
+@keyframes screen-light-l-path-left {
+  0% { left: -8%; top: 62%; transform: scale(1); }
+  50% { left: -8%; top: -10%; transform: scale(1.05); }
+  100% { left: 58%; top: -10%; transform: scale(1); }
+}
+@keyframes screen-light-l-path-right {
+  0% { left: 58%; top: -10%; transform: scale(1); }
+  50% { left: 58%; top: 62%; transform: scale(1.05); }
+  100% { left: -8%; top: 62%; transform: scale(1); }
+}`,
       ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
     pattern?.setAttribute('aria-hidden', 'true')`,
     },
     'curadoria-screen-lights-pattern-aqua': {
       html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
-      css: `.screen-lights-pattern { background: #101f25; }
-.screen-light-orb { background: radial-gradient(circle at center, rgba(117,229,255,0.92) 0%, rgba(117,229,255,0.18) 64%, transparent 100%); }
-.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
-.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      css: `.screen-lights-pattern {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+  background: #101f25;
+}
+.screen-light-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(52px);
+  background: radial-gradient(circle at center, rgba(117,229,255,0.92) 0%, rgba(117,229,255,0.18) 64%, transparent 100%);
+  will-change: transform, left, top;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.orb-left {
+  width: clamp(220px, 36vw, 420px);
+  height: clamp(220px, 36vw, 420px);
+  animation-name: screen-light-l-path-left;
+  animation-duration: 5.4s;
+}
+.orb-right {
+  width: clamp(240px, 38vw, 460px);
+  height: clamp(240px, 38vw, 460px);
+  animation-name: screen-light-l-path-right;
+  animation-duration: 5.4s;
+}
+@keyframes screen-light-l-path-left {
+  0% { left: -8%; top: 62%; transform: scale(1); }
+  50% { left: -8%; top: -10%; transform: scale(1.05); }
+  100% { left: 58%; top: -10%; transform: scale(1); }
+}
+@keyframes screen-light-l-path-right {
+  0% { left: 58%; top: -10%; transform: scale(1); }
+  50% { left: 58%; top: 62%; transform: scale(1.05); }
+  100% { left: -8%; top: 62%; transform: scale(1); }
+}`,
       ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
     pattern?.setAttribute('aria-hidden', 'true')`,
     },
     'curadoria-screen-lights-pattern-rose': {
       html: `<div class="screen-lights-pattern">\n  <span class="screen-light-orb orb-left"></span>\n  <span class="screen-light-orb orb-right"></span>\n</div>`,
-      css: `.screen-lights-pattern { background: #24131d; }
-.screen-light-orb { background: radial-gradient(circle at center, rgba(255,139,176,0.92) 0%, rgba(255,139,176,0.18) 64%, transparent 100%); }
-.orb-left { animation-name: screen-light-l-path-left; animation-duration: 5.4s; }
-.orb-right { animation-name: screen-light-l-path-right; animation-duration: 5.4s; }`,
+      css: `.screen-lights-pattern {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+  background: #24131d;
+}
+.screen-light-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(52px);
+  background: radial-gradient(circle at center, rgba(255,139,176,0.92) 0%, rgba(255,139,176,0.18) 64%, transparent 100%);
+  will-change: transform, left, top;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.orb-left {
+  width: clamp(220px, 36vw, 420px);
+  height: clamp(220px, 36vw, 420px);
+  animation-name: screen-light-l-path-left;
+  animation-duration: 5.4s;
+}
+.orb-right {
+  width: clamp(240px, 38vw, 460px);
+  height: clamp(240px, 38vw, 460px);
+  animation-name: screen-light-l-path-right;
+  animation-duration: 5.4s;
+}
+@keyframes screen-light-l-path-left {
+  0% { left: -8%; top: 62%; transform: scale(1); }
+  50% { left: -8%; top: -10%; transform: scale(1.05); }
+  100% { left: 58%; top: -10%; transform: scale(1); }
+}
+@keyframes screen-light-l-path-right {
+  0% { left: 58%; top: -10%; transform: scale(1); }
+  50% { left: 58%; top: 62%; transform: scale(1.05); }
+  100% { left: -8%; top: 62%; transform: scale(1); }
+}`,
       ts: `const pattern = document.querySelector('.screen-lights-pattern') as HTMLElement
     pattern?.setAttribute('aria-hidden', 'true')`,
     },
@@ -6084,29 +6223,109 @@ closeButton?.addEventListener('click', () => {
 })`,
     },
     'sticky-notes-kanban': {
-      html: `<section class="sticky-kanban"><div class="note">Card comparativo</div></section>`,
+      html: `<section class="sticky-kanban"><div class="note">Card comparativo</div><div class="note note-green">Em progresso</div><div class="note note-blue">Concluido</div></section>`,
       css: `.sticky-kanban {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  align-items: start;
+  gap: 0.58rem;
+  padding: 0.2rem;
 }
+
 .note {
-  background: #fff2a8;
-  padding: 10px;
-  border-radius: 10px;
+  position: relative;
+  border-radius: 6px;
+  padding: 0.62rem 0.56rem 0.5rem;
+  min-height: 112px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(0,0,0,0.04) 0,
+      rgba(0,0,0,0.04) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #fff4b3;
+  border: 1px solid rgba(77,54,18,0.3);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.45) inset,
+    0 12px 20px -13px rgba(70,54,13,0.6),
+    3px 3px 0 rgba(43,31,16,0.26);
+  color: #2f2514;
+  transform: rotate(-1.6deg);
+  font-size: 0.8rem;
+  font-family: Arial, sans-serif;
+}
+
+.note-green {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(0,0,0,0.04) 0,
+      rgba(0,0,0,0.04) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #b8f5c0;
+  border-color: rgba(18,77,30,0.3);
+  color: #12311a;
+  transform: rotate(1.2deg);
+}
+
+.note-blue {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(0,0,0,0.04) 0,
+      rgba(0,0,0,0.04) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #b8dcf5;
+  border-color: rgba(18,54,77,0.3);
+  color: #122a3a;
+  transform: rotate(-0.8deg);
+}
+
+.note::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 34px;
+  height: 12px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(80,60,30,0.2);
 }`,
       ts: `const notes = document.querySelectorAll('.note')
 notes.forEach((note) => note.addEventListener('click', () => note.classList.toggle('is-highlighted')))`,
     },
     'prism-pulse-loader': {
       html: `<div class="prism-loader"><span></span></div>`,
-      css: `.prism-loader span {
-  width: 74px;
-  height: 74px;
+      css: `.prism-loader {
+  display: grid;
+  place-items: center;
+}
+
+.prism-loader span {
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
-  border: 6px solid #9fd7ff;
-  border-top-color: #3f6cff;
-  animation: spin 1s linear infinite;
+  border: 6px solid #a3d8ff;
+  border-top-color: #4867ff;
+  border-left-color: #5d4df5;
+  animation: spin 1.1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }`,
       ts: `// Loader 100% CSS sem logica adicional.`,
     },
@@ -6320,10 +6539,32 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
 }
 
 .wave-panel {
+  position: relative;
   border-radius: 28px;
   padding: 3.2rem 1.2rem 1.25rem;
   background: linear-gradient(180deg, #d8bcff 0%, #e7d2ff 58%, #fdf9ff 100%);
   text-align: center;
+}
+
+.wave-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -26px;
+  height: 46px;
+  background:
+    radial-gradient(18px 14px at 14px 22px, #d8bcff 98%, transparent 100%),
+    radial-gradient(32px 24px at 58px 22px, #d8bcff 98%, transparent 100%),
+    radial-gradient(18px 14px at 112px 22px, #d8bcff 98%, transparent 100%),
+    radial-gradient(32px 24px at calc(100% - 60px) 22px, #d8bcff 98%, transparent 100%),
+    radial-gradient(18px 14px at calc(100% - 14px) 22px, #d8bcff 98%, transparent 100%);
+}
+
+@keyframes disc-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }`,
       ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
 const disc = document.getElementById('disc') as HTMLDivElement
@@ -6390,6 +6631,11 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
   position: relative;
   background: linear-gradient(180deg, rgba(26, 32, 67, 0.96) 0%, rgba(16, 18, 39, 0.98) 100%);
   color: #e9edff;
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(0.9); }
+  100% { transform: translate(var(--drift-x, 4px), var(--drift-y, -6px)) scale(1.2); }
 }`,
       ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
 const disc = document.getElementById('disc') as HTMLDivElement
@@ -6456,6 +6702,11 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
   position: relative;
   background: linear-gradient(180deg, rgba(24, 61, 40, 0.96) 0%, rgba(13, 33, 22, 0.98) 100%);
   color: #eaf9ec;
+}
+
+@keyframes sway {
+  0% { transform: rotate(-15deg) scale(1); }
+  100% { transform: rotate(12deg) scale(1.08); }
 }`,
       ts: `const playButton = document.getElementById('retro-play') as HTMLButtonElement
 const disc = document.getElementById('disc') as HTMLDivElement
@@ -6641,6 +6892,16 @@ shareButton.addEventListener('click', () => {
   background: #c58c4f;
   transform-origin: left center;
   animation: broom-sweep 0.8s ease-in-out infinite;
+}
+
+@keyframes worker-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes broom-sweep {
+  0%, 100% { transform: rotate(11deg); }
+  50% { transform: rotate(-9deg); }
 }`,
       ts: `// Loader passivo: toda a animacao acontece via CSS.
 // Ideal para estados de espera com identidade retro.`,
@@ -7512,7 +7773,7 @@ knob.addEventListener('mousedown',e=>{e.preventDefault();knob.classList.add('is-
       html: `<div class="glass-wrap">
   <div class="glass-bg"></div>
   <div class="glass-card">
-    <div class="glass-avatar-ring"><div class="glass-avatar">👤</div></div>
+    <div class="glass-avatar-ring"><div class="glass-avatar"></div></div>
     <h3 class="glass-name">Fran Camargo</h3>
     <p class="glass-role">Senior UI Designer</p>
     <div class="glass-stats">
@@ -7575,9 +7836,9 @@ btn.addEventListener('click', () => {
     'clay-morphism-buttons': {
       html: `<div class="clay-grid">
   <button class="clay-btn" style="--clay-color:#ff7eb3;--clay-shadow:#c8467a"><span class="clay-icon">☁️</span><span class="clay-label">Upload</span></button>
-  <button class="clay-btn" style="--clay-color:#7eb8ff;--clay-shadow:#3a6fd9"><span class="clay-icon">💾</span><span class="clay-label">Save</span></button>
-  <button class="clay-btn" style="--clay-color:#7effb2;--clay-shadow:#2ab860"><span class="clay-icon">✈️</span><span class="clay-label">Share</span></button>
-  <button class="clay-btn" style="--clay-color:#ffb07e;--clay-shadow:#d97040"><span class="clay-icon">🗑️</span><span class="clay-label">Delete</span></button>
+  <button class="clay-btn" style="--clay-color:#7eb8ff;--clay-shadow:#3a6fd9"><span class="clay-icon"></span><span class="clay-label">Save</span></button>
+  <button class="clay-btn" style="--clay-color:#7effb2;--clay-shadow:#2ab860"><span class="clay-icon"></span><span class="clay-label">Share</span></button>
+  <button class="clay-btn" style="--clay-color:#ffb07e;--clay-shadow:#d97040"><span class="clay-icon"></span><span class="clay-label">Delete</span></button>
 </div>`,
       css: `.clay-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:1rem; }
 .clay-btn { display:flex; flex-direction:column; align-items:center; gap:6px; padding:1rem; border-radius:1.25rem; border:none; background:var(--clay-color); cursor:pointer; box-shadow:0 8px 0 var(--clay-shadow),0 12px 20px rgba(0,0,0,.15),inset 0 -3px 6px rgba(0,0,0,.12),inset 0 3px 6px rgba(255,255,255,.6); transition:transform .12s,box-shadow .12s; min-width:90px; }
@@ -7658,7 +7919,8 @@ btn.addEventListener('click', () => {
 .crt-prompt { color:#00ff50; font-family:'Courier New',monospace; font-size:.7rem; }
 .crt-input { flex:1; background:transparent; border:none; outline:none; color:#00ff50; font-family:'Courier New',monospace; font-size:.7rem; text-shadow:0 0 6px rgba(0,255,80,.6); caret-color:transparent; }
 .crt-cursor { width:7px; height:12px; background:#00ff50; display:inline-block; animation:term-blink .7s step-end infinite; box-shadow:0 0 6px #00ff50; }
-.crt-label { text-align:center; font-size:.58rem; font-weight:700; color:#555; letter-spacing:.12em; }`,
+.crt-label { text-align:center; font-size:.58rem; font-weight:700; color:#555; letter-spacing:.12em; }
+@keyframes term-blink { 0%, 100% { opacity:1; } 50% { opacity:0; } }`,
       ts: `const input = document.getElementById('crt-input') as HTMLInputElement
 const content = document.getElementById('crt-content')!
 const CMDS: Record<string,string> = { help:'> CMDS: help, status, ping, clear', status:'> SYS: ONLINE | CPU: 12%', ping:'> PONG! Latency: 4ms', clear:'__clear__' }
@@ -7968,6 +8230,19 @@ const toggle = (i: number) =>
   }
 }
 
+const GN_SOFT_SLUGS = new Set([
+  'gn-segmented-control',
+  'gn-toggle-switch',
+  'gn-input-field',
+  'gn-numpad',
+  'gn-bottom-nav',
+  'gn-text-nav',
+])
+const GLASS_WATER_SLUGS = new Set([
+  'glass-profile-card',
+  'gn-reminders-card',
+])
+
 export function CuradoriaElementPage({ item, isLiked }: CuradoriaElementPageProps) {
   const [copiedKey, setCopiedKey] = useState<SnippetKey | null>(null)
   const [activeTab, setActiveTab] = useState<SnippetKey>('html')
@@ -7984,6 +8259,12 @@ export function CuradoriaElementPage({ item, isLiked }: CuradoriaElementPageProp
     }
   }
 
+  const previewBgClass = GN_SOFT_SLUGS.has(item.slug)
+    ? ' is-glass-soft'
+    : GLASS_WATER_SLUGS.has(item.slug)
+      ? ' is-glass-water'
+      : ''
+
   return (
     <ItemPageShell
       title={item.title}
@@ -7992,7 +8273,7 @@ export function CuradoriaElementPage({ item, isLiked }: CuradoriaElementPageProp
     >
       <div className="component-detail-layout">
         <div className="component-preview-col">
-          <div className="component-live-preview">
+          <div className={`component-live-preview${previewBgClass}`}>
             <h3>Visual do componente</h3>
             <div className="preview-pattern-stage">
               <div className="preview-center-frame">
