@@ -1,5 +1,5 @@
 import { Mail } from 'lucide-react'
-import profileImage from '../assets/perfil.jpeg'
+import profileImage from '../assets/perfil.webp'
 
 function LinkedInLogo() {
   return (

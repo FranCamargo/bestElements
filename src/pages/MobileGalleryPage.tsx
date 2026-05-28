@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Heart } from 'lucide-react'
 import type { MobileScreen } from '../data/mobileItems.ts'
-import haimCover from '../assets/haim.png'
+import haimCover from '../assets/haim.webp'
 
 // ─── Shared status bar ──────────────────────────────────────────────────────
 

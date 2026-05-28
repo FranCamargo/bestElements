@@ -2,7 +2,7 @@
 import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2, Heart, Upload, Save, Trash2, ChevronDown, BarChart2, FolderOpen, Settings, Users, Home, ClipboardList, Layers, Search, Rocket, MessageCircle, Plus, Wifi, Bluetooth, Bell, Moon } from 'lucide-react'
 import { ItemPageShell } from './ItemPageShell.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
-import haimCover from '../assets/haim.png'
+import haimCover from '../assets/haim.webp'
 
 type CuradoriaElementPageProps = {
   item: GalleryItem
@@ -4437,7 +4437,7 @@ searchInput.addEventListener('input', () => {
   padding: 1rem;
   background:
     linear-gradient(150deg, rgba(18, 7, 38, 0.42), rgba(43, 14, 70, 0.34)),
-    url('wpplilac.png');
+    url('wpplilac.webp');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -6310,7 +6310,7 @@ console.log('Forecast pixel:', forecast.join(' / '))`,
   padding: 1rem;
   background:
     linear-gradient(150deg, rgba(16, 12, 51, 0.34), rgba(34, 23, 76, 0.3)),
-    url('wpplilac.png');
+    url('wpplilac.webp');
   background-size: cover;
   background-position: center;
   border-radius: 16px;
@@ -6598,7 +6598,7 @@ console.log('Capacidade por squad:', squads)`,
 
   <div id="disc" class="disc is-playing">
     <div class="album-art">
-      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+      <img src="./assets/haim.webp" alt="Capa Days Are Gone - HAIM" />
     </div>
   </div>
 
@@ -6734,7 +6734,7 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
 
   <div id="disc" class="disc is-playing">
     <div class="album-art">
-      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+      <img src="./assets/haim.webp" alt="Capa Days Are Gone - HAIM" />
     </div>
   </div>
 
@@ -6825,7 +6825,7 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
 
   <div id="disc" class="disc is-playing">
     <div class="album-art">
-      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+      <img src="./assets/haim.webp" alt="Capa Days Are Gone - HAIM" />
     </div>
   </div>
 
@@ -6896,7 +6896,7 @@ window.addEventListener('beforeunload', () => window.clearInterval(interval))`,
 
   <div id="disc" class="disc is-playing">
     <div class="album-art">
-      <img src="./assets/haim.png" alt="Capa Days Are Gone - HAIM" />
+      <img src="./assets/haim.webp" alt="Capa Days Are Gone - HAIM" />
     </div>
   </div>
 
