@@ -286,9 +286,232 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <GnTextNavInteractive />
     case 'gn-reminders-card':
       return <GnRemindersCardInteractive />
+    case 'plasma-burst-button':
+      return <PlasmaBurstButtonInteractive />
+    case 'hologram-search-bar':
+      return <HologramSearchBarInteractive />
+    case 'hex-grid-pattern':
+      return <HexGridPatternInteractive />
+    case 'neon-volume-ring':
+      return <NeonVolumeRingInteractive />
+    case 'quantum-spin-loader':
+      return <QuantumSpinLoaderInteractive />
     default:
       return <div className="component-mock"><p>Preview indisponivel para este item.</p></div>
   }
+}
+
+function PlasmaBurstButtonInteractive() {
+  const [burst, setBurst] = useState(false)
+  const [sparks, setSparks] = useState<{ id: number; x: number; y: number; angle: number }[]>([])
+
+  const handleClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const newSparks = Array.from({ length: 10 }, (_, i) => ({
+      id: Date.now() + i,
+      x,
+      y,
+      angle: (i / 10) * 360,
+    }))
+    setSparks(newSparks)
+    setBurst(true)
+    window.setTimeout(() => { setSparks([]); setBurst(false) }, 700)
+  }
+
+  return (
+    <div className="plasma-stage">
+      <button
+        type="button"
+        className={`plasma-burst-btn${burst ? ' is-burst' : ''}`}
+        onClick={handleClick}
+      >
+        <span className="plasma-btn-shimmer" aria-hidden="true" />
+        <span className="plasma-btn-text">ACTIVATE</span>
+      </button>
+      {sparks.map((s) => (
+        <span
+          key={s.id}
+          className="plasma-spark"
+          style={{ '--spark-angle': `${s.angle}deg`, left: `${s.x}px`, top: `${s.y}px` } as CSSProperties}
+          aria-hidden="true"
+        />
+      ))}
+    </div>
+  )
+}
+
+function HologramSearchBarInteractive() {
+  const [value, setValue] = useState('')
+  const [focused, setFocused] = useState(false)
+  const [scanning, setScanning] = useState(false)
+
+  const handleSearch = () => {
+    if (!value.trim()) return
+    setScanning(true)
+    window.setTimeout(() => setScanning(false), 1400)
+  }
+
+  return (
+    <div className="holo-search-stage">
+      <div className={`holo-search-bar${focused ? ' is-focused' : ''}${scanning ? ' is-scanning' : ''}`}>
+        <span className="holo-scan-line" aria-hidden="true" />
+        <div className="holo-search-inner">
+          <Search size={14} className="holo-search-ico" aria-hidden="true" />
+          <input
+            className="holo-search-inp"
+            placeholder="Search neural network..."
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          />
+          {value && (
+            <button className="holo-search-clear" type="button" onClick={() => setValue('')} aria-label="Limpar">
+              ×
+            </button>
+          )}
+        </div>
+        <div className="holo-glow-line" aria-hidden="true" />
+        <span className="holo-corner holo-corner-tl" aria-hidden="true" />
+        <span className="holo-corner holo-corner-tr" aria-hidden="true" />
+        <span className="holo-corner holo-corner-bl" aria-hidden="true" />
+        <span className="holo-corner holo-corner-br" aria-hidden="true" />
+      </div>
+      <p className="holo-search-hint">
+        {scanning ? 'Scanning...' : focused ? 'Type & press Enter' : 'Click to activate'}
+      </p>
+    </div>
+  )
+}
+
+function HexGridPatternInteractive() {
+  const [pulses, setPulses] = useState<{ id: number; row: number; col: number }[]>([])
+  const rows = 5
+  const cols = 6
+
+  const handleNodeClick = (row: number, col: number) => {
+    const id = Date.now()
+    setPulses((prev) => [...prev, { id, row, col }])
+    window.setTimeout(() => setPulses((prev) => prev.filter((p) => p.id !== id)), 1000)
+  }
+
+  return (
+    <div className="hex-grid-stage">
+      <span className="hex-grid-scan" aria-hidden="true" />
+      <div className="hex-grid-matrix" role="grid" aria-label="Neural grid">
+        {Array.from({ length: rows }, (_, row) =>
+          Array.from({ length: cols }, (_, col) => {
+            const isPulsing = pulses.some((p) => p.row === row && p.col === col)
+            return (
+              <button
+                key={`${row}-${col}`}
+                type="button"
+                className={`hex-node${isPulsing ? ' is-pulsing' : ''}`}
+                onClick={() => handleNodeClick(row, col)}
+                aria-label={`Node ${row}-${col}`}
+              />
+            )
+          })
+        )}
+      </div>
+      <p className="hex-grid-label">NEURAL GRID — clique em um nó</p>
+    </div>
+  )
+}
+
+function NeonVolumeRingInteractive() {
+  const [volume, setVolume] = useState(65)
+  const [muted, setMuted] = useState(false)
+
+  const cx = 65, cy = 65, r = 48
+  const arcStartDeg = 140
+  const arcSweep = 260
+  const toRad = (deg: number) => ((deg - 90) * Math.PI) / 180
+  const makeArcD = (from: number, to: number) => {
+    const x1 = cx + r * Math.cos(toRad(from))
+    const y1 = cy + r * Math.sin(toRad(from))
+    const x2 = cx + r * Math.cos(toRad(to))
+    const y2 = cy + r * Math.sin(toRad(to))
+    const large = to - from > 180 ? 1 : 0
+    return `M${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 ${large},1 ${x2.toFixed(2)},${y2.toFixed(2)}`
+  }
+
+  const progressDeg = arcStartDeg + (volume / 100) * arcSweep
+  const color = muted || volume === 0 ? '#444' : volume < 35 ? '#ff4060' : volume < 70 ? '#ffb500' : '#00e8ff'
+  const thumbX = cx + r * Math.cos(toRad(muted ? arcStartDeg : progressDeg))
+  const thumbY = cy + r * Math.sin(toRad(muted ? arcStartDeg : progressDeg))
+
+  return (
+    <div className="neon-vol-stage">
+      <svg width="130" height="130" viewBox="0 0 130 130" className="neon-vol-svg" aria-label={`Volume: ${muted ? 'mudo' : volume + '%'}`}>
+        <path d={makeArcD(arcStartDeg, arcStartDeg + arcSweep)} stroke="rgba(255,255,255,.07)" strokeWidth="8" fill="none" strokeLinecap="round" />
+        {!muted && volume > 0 && (
+          <path
+            d={makeArcD(arcStartDeg, progressDeg)}
+            stroke={color}
+            strokeWidth="8"
+            fill="none"
+            strokeLinecap="round"
+            style={{ filter: `drop-shadow(0 0 5px ${color})` }}
+          />
+        )}
+        <circle cx={thumbX} cy={thumbY} r="5" fill={color} style={{ filter: `drop-shadow(0 0 8px ${color})` }} />
+        <circle cx={cx} cy={cy} r="28" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.06)" strokeWidth="1" />
+        <text x={cx} y={cy - 2} textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="17" fontWeight="700" fontFamily="Space Grotesk, sans-serif">
+          {muted ? '—' : volume}
+        </text>
+        <text x={cx} y={cy + 14} textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,.3)" fontSize="8" fontWeight="600" letterSpacing="2" fontFamily="Space Grotesk, sans-serif">
+          VOL
+        </text>
+      </svg>
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={volume}
+        onChange={(e) => setVolume(Number(e.target.value))}
+        className="neon-vol-slider"
+        disabled={muted}
+        aria-label="Controle de volume"
+      />
+      <button
+        type="button"
+        className={`neon-vol-mute-btn${muted ? ' is-muted' : ''}`}
+        onClick={() => setMuted((v) => !v)}
+      >
+        {muted ? 'UNMUTE' : 'MUTE'}
+      </button>
+    </div>
+  )
+}
+
+function QuantumSpinLoaderInteractive() {
+  const [state, setState] = useState<'loading' | 'done'>('loading')
+
+  const handleToggle = () => {
+    if (state === 'loading') {
+      setState('done')
+      window.setTimeout(() => setState('loading'), 1200)
+    }
+  }
+
+  return (
+    <div className="quantum-stage">
+      <div className={`quantum-loader${state === 'done' ? ' is-done' : ''}`} aria-busy={state === 'loading'} aria-label={state === 'loading' ? 'Carregando' : 'Concluído'}>
+        <span className="q-ring q-ring-1" aria-hidden="true" />
+        <span className="q-ring q-ring-2" aria-hidden="true" />
+        <span className="q-ring q-ring-3" aria-hidden="true" />
+        <span className="q-core" aria-hidden="true" />
+        <span className="q-core-pulse" aria-hidden="true" />
+      </div>
+      <button type="button" className="quantum-toggle-btn" onClick={handleToggle}>
+        {state === 'loading' ? 'Loading...' : 'Done ✓'}
+      </button>
+    </div>
+  )
 }
 
 function DashboardInteractive() {
@@ -3368,6 +3591,11 @@ function DarkTabsInteractive() {
   return (
     <div className="component-mock mock-dark-ui">
       <div className="dark-tabs-container">
+        <span
+          className="dark-tab-indicator"
+          style={{ transform: `translateX(${active * 100}%)` }}
+          aria-hidden="true"
+        />
         {tabs.map((tab, i) => (
           <button key={tab} className={`dark-tab ${active === i ? 'is-active' : ''}`} onClick={() => setActive(i)}>{tab}</button>
         ))}
@@ -8012,16 +8240,34 @@ const toggle = (i:number) => setStates(prev => prev.map((v,idx)=>idx===i?!v:v))`
     },
     'dark-tabs': {
       html: `<div class="dark-tabs-container">
+  <!-- Sliding indicator — translateX moves by 100% per tab index -->
+  <span class="dark-tab-indicator" style="transform: translateX(100%)"></span>
   <button class="dark-tab">Overview</button>
   <button class="dark-tab is-active">Activity</button>
   <button class="dark-tab">Settings</button>
 </div>`,
-      css: `.dark-tabs-container { background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.75rem; border:1px solid rgba(100,140,255,.14); box-shadow:0 0 20px rgba(40,100,255,.1); display:flex; overflow:hidden; }
-.dark-tab { flex:1; padding:.75rem 0; border:none; background:transparent; color:rgba(255,255,255,.3); font-size:.8rem; font-weight:500; cursor:pointer; position:relative; transition:color .2s; }
+      css: `.dark-tabs-container { position:relative; background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.75rem; border:1px solid rgba(100,140,255,.14); box-shadow:0 0 20px rgba(40,100,255,.1); display:flex; overflow:hidden; }
+.dark-tab { flex:1; padding:.75rem 0; border:none; background:transparent; color:rgba(255,255,255,.3); font-size:.8rem; font-weight:500; cursor:pointer; transition:color .2s; }
 .dark-tab.is-active { color:rgba(255,255,255,.9); }
-.dark-tab.is-active::after { content:''; position:absolute; bottom:0; left:20%; width:60%; height:2px; background:linear-gradient(90deg,transparent,#00d4ff,#4090ff,transparent); box-shadow:0 0 8px rgba(0,212,255,.8),0 0 18px rgba(64,144,255,.4); border-radius:999px; }`,
+.dark-tab-indicator { position:absolute; bottom:0; left:0; width:calc(100% / 3); height:2px; background:linear-gradient(90deg,transparent,#00d4ff,#4090ff,transparent); box-shadow:0 0 8px rgba(0,212,255,.8),0 0 18px rgba(64,144,255,.4); border-radius:999px; transition:transform .28s cubic-bezier(0.4,0,0.2,1); pointer-events:none; }`,
       ts: `const [active, setActive] = useState(1)
-const tabs = ['Overview','Activity','Settings']`,
+const tabs = ['Overview', 'Activity', 'Settings']
+
+// Indicator slides via transform — one tab-width per step
+<div className="dark-tabs-container">
+  <span
+    className="dark-tab-indicator"
+    style={{ transform: \`translateX(\${active * 100}%)\` }}
+    aria-hidden="true"
+  />
+  {tabs.map((tab, i) => (
+    <button
+      key={tab}
+      className={\`dark-tab \${active === i ? 'is-active' : ''}\`}
+      onClick={() => setActive(i)}
+    >{tab}</button>
+  ))}
+</div>`,
     },
     'dark-primary-button': {
       html: `<button class="dark-primary-btn">Create workspace</button>`,
@@ -8154,6 +8400,221 @@ const links = ['Home', 'Search', 'Settings']
 .gn-reminder-item.is-done .gn-reminder-dot { background:#c4bab0; }`,
       ts: `const [items, setItems] = useState([{ text:'Design review', done:false },{ text:'Call John', done:false }])
 const toggle = (i:number) => setItems(prev => prev.map((item,idx) => idx===i ? {...item,done:!item.done} : item))`,
+    },
+    'plasma-burst-button': {
+      html: `<div class="plasma-stage">
+  <button class="plasma-burst-btn" id="plasma-btn">
+    <span class="plasma-btn-shimmer"></span>
+    <span class="plasma-btn-text">ACTIVATE</span>
+  </button>
+</div>`,
+      css: `.plasma-stage { position:relative; display:flex; align-items:center; justify-content:center; padding:2rem 1.5rem; background:radial-gradient(ellipse at center,rgba(100,0,200,.25),transparent 70%); }
+.plasma-burst-btn { position:relative; padding:.85rem 2.6rem; border:none; border-radius:10px; cursor:pointer; background:linear-gradient(145deg,#1a0040,#0d001e); box-shadow:0 0 18px rgba(140,0,255,.45),0 0 55px rgba(140,0,255,.15),inset 0 1px 0 rgba(255,255,255,.07); transition:box-shadow .25s; overflow:hidden; }
+.plasma-burst-btn::before { content:''; position:absolute; inset:1px; border-radius:9px; border:1px solid rgba(160,50,255,.55); pointer-events:none; }
+.plasma-burst-btn:hover { box-shadow:0 0 28px rgba(160,0,255,.75),0 0 80px rgba(160,0,255,.28),inset 0 1px 0 rgba(255,255,255,.07); }
+.plasma-burst-btn.is-burst { box-shadow:0 0 55px rgba(200,0,255,1),0 0 120px rgba(200,0,255,.5); }
+.plasma-btn-shimmer { position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(160,50,255,.18) 50%,transparent); transform:translateX(-100%); transition:transform .4s; pointer-events:none; }
+.plasma-burst-btn:hover .plasma-btn-shimmer { transform:translateX(100%); }
+.plasma-btn-text { position:relative; z-index:2; font-size:.85rem; font-weight:800; letter-spacing:.16em; color:#dda0ff; text-shadow:0 0 14px rgba(200,100,255,.85); }
+.plasma-spark { position:absolute; width:4px; height:4px; background:#cc60ff; border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); animation:plasma-spark-fly .7s forwards ease-out; }
+@keyframes plasma-spark-fly { 0%{transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateX(0) scale(1);opacity:1} 100%{transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateX(56px) scale(0);opacity:0} }`,
+      ts: `const btn = document.getElementById('plasma-btn')!
+const stage = btn.closest('.plasma-stage') as HTMLElement
+
+btn.addEventListener('click', (e) => {
+  btn.classList.add('is-burst')
+  const rect = btn.getBoundingClientRect()
+  const stageRect = stage.getBoundingClientRect()
+  const x = e.clientX - stageRect.left
+  const y = e.clientY - stageRect.top
+
+  for (let i = 0; i < 10; i++) {
+    const spark = document.createElement('span')
+    spark.className = 'plasma-spark'
+    spark.style.setProperty('--spark-angle', \`\${(i / 10) * 360}deg\`)
+    spark.style.left = x + 'px'
+    spark.style.top = y + 'px'
+    stage.appendChild(spark)
+    spark.addEventListener('animationend', () => spark.remove())
+  }
+  setTimeout(() => btn.classList.remove('is-burst'), 700)
+})`,
+    },
+    'hologram-search-bar': {
+      html: `<div class="holo-search-stage">
+  <div class="holo-search-bar" id="holo-bar">
+    <span class="holo-scan-line"></span>
+    <div class="holo-search-inner">
+      <!-- Search icon (Lucide) -->
+      <input class="holo-search-inp" id="holo-inp" placeholder="Search neural network...">
+      <button class="holo-search-clear" id="holo-clear" style="display:none">×</button>
+    </div>
+    <div class="holo-glow-line"></div>
+    <span class="holo-corner holo-corner-tl"></span>
+    <span class="holo-corner holo-corner-tr"></span>
+    <span class="holo-corner holo-corner-bl"></span>
+    <span class="holo-corner holo-corner-br"></span>
+  </div>
+  <p class="holo-search-hint" id="holo-hint">Click to activate</p>
+</div>`,
+      css: `.holo-search-stage { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:1.5rem; background:radial-gradient(ellipse at center,rgba(0,30,60,.7),transparent 70%); }
+.holo-search-bar { position:relative; width:300px; background:rgba(0,18,38,.8); backdrop-filter:blur(12px); border:1px solid rgba(0,200,255,.2); border-radius:.55rem; overflow:hidden; transition:border-color .3s,box-shadow .3s; }
+.holo-search-bar.is-focused { border-color:rgba(0,200,255,.65); box-shadow:0 0 18px rgba(0,200,255,.18),0 0 40px rgba(0,200,255,.07); }
+.holo-scan-line { position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(0,200,255,.9),transparent); top:0; opacity:0; pointer-events:none; }
+.holo-search-bar.is-scanning .holo-scan-line { animation:holo-scan-anim 1.4s ease-in-out forwards; }
+@keyframes holo-scan-anim { 0%{top:0;opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{top:100%;opacity:0} }
+.holo-search-inner { display:flex; align-items:center; gap:8px; padding:.7rem 1rem; }
+.holo-search-inp { flex:1; background:transparent; border:none; outline:none; color:rgba(180,230,255,.9); font-size:.83rem; caret-color:#00c8ff; }
+.holo-search-inp::placeholder { color:rgba(0,200,255,.28); }
+.holo-search-clear { background:none; border:none; color:rgba(0,200,255,.45); font-size:1.1rem; cursor:pointer; }
+.holo-glow-line { height:1px; background:linear-gradient(90deg,transparent,rgba(0,200,255,.45) 30%,rgba(60,80,255,.6) 70%,transparent); filter:blur(.5px); margin:0 .8rem; }
+.holo-corner { position:absolute; width:8px; height:8px; border-color:rgba(0,200,255,.85); border-style:solid; border-width:0; }
+.holo-corner-tl { top:4px; left:4px; border-top-width:1.5px; border-left-width:1.5px; }
+.holo-corner-tr { top:4px; right:4px; border-top-width:1.5px; border-right-width:1.5px; }
+.holo-corner-bl { bottom:4px; left:4px; border-bottom-width:1.5px; border-left-width:1.5px; }
+.holo-corner-br { bottom:4px; right:4px; border-bottom-width:1.5px; border-right-width:1.5px; }
+.holo-search-hint { font-size:.68rem; font-weight:600; letter-spacing:.07em; color:rgba(0,200,255,.42); margin:0; }`,
+      ts: `const bar = document.getElementById('holo-bar')!
+const inp = document.getElementById('holo-inp') as HTMLInputElement
+const clear = document.getElementById('holo-clear') as HTMLButtonElement
+const hint = document.getElementById('holo-hint')!
+
+inp.addEventListener('focus', () => { bar.classList.add('is-focused'); hint.textContent = 'Type & press Enter' })
+inp.addEventListener('blur', () => { bar.classList.remove('is-focused'); hint.textContent = 'Click to activate' })
+inp.addEventListener('input', () => { clear.style.display = inp.value ? '' : 'none' })
+inp.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || !inp.value.trim()) return
+  bar.classList.add('is-scanning')
+  hint.textContent = 'Scanning...'
+  bar.addEventListener('animationend', () => {
+    bar.classList.remove('is-scanning')
+    hint.textContent = 'Type & press Enter'
+  }, { once: true })
+})
+clear.addEventListener('click', () => { inp.value = ''; clear.style.display = 'none'; inp.focus() })`,
+    },
+    'hex-grid-pattern': {
+      html: `<div class="hex-grid-stage">
+  <span class="hex-grid-scan"></span>
+  <div class="hex-grid-matrix" id="hex-matrix"></div>
+  <p class="hex-grid-label">NEURAL GRID — clique em um nó</p>
+</div>`,
+      css: `.hex-grid-stage { position:relative; width:100%; min-height:180px; background:#050d0a; border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; padding:1.25rem; }
+.hex-grid-stage::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(0,200,100,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,100,.07) 1px,transparent 1px); background-size:38px 38px; pointer-events:none; }
+.hex-grid-stage::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 35%,rgba(5,13,10,.96) 88%); pointer-events:none; }
+.hex-grid-scan { position:absolute; left:0; right:0; height:70px; background:linear-gradient(to bottom,transparent,rgba(0,200,100,.06),transparent); animation:hex-scan-anim 3.5s ease-in-out infinite; pointer-events:none; z-index:1; top:-70px; }
+@keyframes hex-scan-anim { 0%,100%{top:-70px} 50%{top:100%} }
+.hex-grid-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:16px; position:relative; z-index:2; }
+.hex-node { width:28px; height:28px; border:none; background:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }
+.hex-node::before { content:''; width:6px; height:6px; border-radius:50%; background:rgba(0,200,100,.45); box-shadow:0 0 7px rgba(0,200,100,.35); transition:background .15s,box-shadow .15s,transform .15s; }
+.hex-node:hover::before { background:rgba(0,220,120,.95); box-shadow:0 0 16px rgba(0,220,120,.7); transform:scale(1.6); }
+.hex-node.is-pulsing::before { animation:hex-node-pulse 1s ease-out forwards; }
+@keyframes hex-node-pulse { 0%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,255,120,.9);background:#00ff80} 45%{transform:scale(2.2);box-shadow:0 0 0 10px rgba(0,255,120,0);background:#00ff80} 100%{transform:scale(1);box-shadow:0 0 7px rgba(0,200,100,.35);background:rgba(0,200,100,.45)} }
+.hex-grid-label { font-size:.62rem; font-weight:700; letter-spacing:.13em; color:rgba(0,200,100,.42); margin:0; position:relative; z-index:2; }`,
+      ts: `const matrix = document.getElementById('hex-matrix')!
+for (let i = 0; i < 30; i++) {
+  const node = document.createElement('button')
+  node.className = 'hex-node'
+  node.setAttribute('aria-label', 'Node ' + i)
+  node.addEventListener('click', () => {
+    node.classList.add('is-pulsing')
+    node.addEventListener('animationend', () => node.classList.remove('is-pulsing'), { once: true })
+  })
+  matrix.appendChild(node)
+}`,
+    },
+    'neon-volume-ring': {
+      html: `<div class="neon-vol-stage">
+  <svg id="vol-svg" width="130" height="130" viewBox="0 0 130 130" style="overflow:visible">
+    <path id="vol-track" stroke="rgba(255,255,255,.07)" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path id="vol-progress" stroke="#00e8ff" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <circle id="vol-thumb" r="5" fill="#00e8ff"/>
+    <circle cx="65" cy="65" r="28" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+    <text id="vol-value" x="65" y="63" text-anchor="middle" dominant-baseline="middle" fill="#00e8ff" font-size="17" font-weight="700" font-family="Space Grotesk,sans-serif">65</text>
+    <text x="65" y="77" text-anchor="middle" dominant-baseline="middle" fill="rgba(255,255,255,.3)" font-size="8" font-weight="600" letter-spacing="2" font-family="Space Grotesk,sans-serif">VOL</text>
+  </svg>
+  <input id="vol-slider" type="range" min="0" max="100" value="65" class="neon-vol-slider">
+  <button id="vol-mute" class="neon-vol-mute-btn">MUTE</button>
+</div>`,
+      css: `.neon-vol-stage { display:flex; flex-direction:column; align-items:center; gap:.85rem; padding:1.25rem; background:radial-gradient(ellipse at center,rgba(0,20,50,.6),transparent 70%); }
+.neon-vol-slider { width:130px; appearance:none; height:4px; border-radius:2px; background:rgba(255,255,255,.08); outline:none; cursor:pointer; }
+.neon-vol-slider::-webkit-slider-thumb { appearance:none; width:14px; height:14px; border-radius:50%; background:#00e8ff; box-shadow:0 0 8px rgba(0,232,255,.7); cursor:pointer; }
+.neon-vol-slider:disabled { opacity:.3; cursor:not-allowed; }
+.neon-vol-mute-btn { padding:.35rem 1rem; border-radius:999px; border:1px solid rgba(0,200,255,.25); background:transparent; color:rgba(0,200,255,.55); font-size:.68rem; font-weight:700; letter-spacing:.1em; cursor:pointer; transition:all .2s; }
+.neon-vol-mute-btn.is-muted { border-color:rgba(255,64,96,.4); color:rgba(255,64,96,.8); }`,
+      ts: `const cx = 65, cy = 65, r = 48
+const arcStart = 140, arcSweep = 260
+const toRad = (d: number) => ((d - 90) * Math.PI) / 180
+const arc = (from: number, to: number) => {
+  const x1 = cx + r * Math.cos(toRad(from)), y1 = cy + r * Math.sin(toRad(from))
+  const x2 = cx + r * Math.cos(toRad(to)), y2 = cy + r * Math.sin(toRad(to))
+  return \`M\${x1.toFixed(1)},\${y1.toFixed(1)} A\${r},\${r} 0 \${to-from>180?1:0},1 \${x2.toFixed(1)},\${y2.toFixed(1)}\`
+}
+const track = document.getElementById('vol-track')!
+const progress = document.getElementById('vol-progress')!
+const thumb = document.getElementById('vol-thumb')!
+const valText = document.getElementById('vol-value')!
+const slider = document.getElementById('vol-slider') as HTMLInputElement
+const muteBtn = document.getElementById('vol-mute')!
+let muted = false, vol = 65
+
+track.setAttribute('d', arc(arcStart, arcStart + arcSweep))
+const update = () => {
+  const deg = arcStart + (vol / 100) * arcSweep
+  const c = muted || vol === 0 ? '#444' : vol < 35 ? '#ff4060' : vol < 70 ? '#ffb500' : '#00e8ff'
+  if (!muted && vol > 0) { progress.setAttribute('d', arc(arcStart, deg)); progress.setAttribute('stroke', c) }
+  else { progress.setAttribute('d', '') }
+  thumb.setAttribute('cx', (cx + r * Math.cos(toRad(muted ? arcStart : deg))).toFixed(1))
+  thumb.setAttribute('cy', (cy + r * Math.sin(toRad(muted ? arcStart : deg))).toFixed(1))
+  thumb.setAttribute('fill', c)
+  valText.textContent = muted ? '—' : String(vol)
+  valText.setAttribute('fill', c)
+}
+slider.addEventListener('input', () => { vol = +slider.value; update() })
+muteBtn.addEventListener('click', () => {
+  muted = !muted; slider.disabled = muted
+  muteBtn.textContent = muted ? 'UNMUTE' : 'MUTE'
+  muteBtn.classList.toggle('is-muted', muted)
+  update()
+})
+update()`,
+    },
+    'quantum-spin-loader': {
+      html: `<div class="quantum-stage">
+  <div class="quantum-loader" id="q-loader">
+    <span class="q-ring q-ring-1"></span>
+    <span class="q-ring q-ring-2"></span>
+    <span class="q-ring q-ring-3"></span>
+    <span class="q-core"></span>
+    <span class="q-core-pulse"></span>
+  </div>
+  <button class="quantum-toggle-btn" id="q-btn">Loading...</button>
+</div>`,
+      css: `.quantum-stage { display:flex; flex-direction:column; align-items:center; gap:1.4rem; padding:1.75rem; background:radial-gradient(ellipse at center,rgba(30,0,70,.6),transparent 70%); }
+.quantum-loader { position:relative; width:90px; height:90px; display:flex; align-items:center; justify-content:center; }
+.q-ring { position:absolute; border-radius:50%; border:2.5px solid transparent; box-sizing:border-box; }
+.q-ring-1 { width:90px; height:90px; border-top-color:#00e5ff; border-right-color:rgba(0,229,255,.18); box-shadow:0 0 14px rgba(0,229,255,.5); animation:q-spin 1.5s linear infinite; }
+.q-ring-2 { width:66px; height:66px; border-top-color:#b060ff; border-left-color:rgba(176,96,255,.22); box-shadow:0 0 12px rgba(176,96,255,.48); animation:q-spin 1s linear infinite reverse; }
+.q-ring-3 { width:44px; height:44px; border-top-color:#ff4fa0; border-bottom-color:rgba(255,79,160,.22); box-shadow:0 0 10px rgba(255,79,160,.5); animation:q-spin .65s linear infinite; }
+@keyframes q-spin { to { transform:rotate(360deg); } }
+.q-core { width:16px; height:16px; border-radius:50%; background:radial-gradient(circle at 38% 32%,#fff,#a0c0ff); box-shadow:0 0 14px rgba(160,192,255,.9),0 0 28px rgba(160,192,255,.4); z-index:2; position:relative; }
+.q-core-pulse { position:absolute; width:16px; height:16px; border-radius:50%; background:rgba(160,192,255,.38); animation:q-pulse 1.5s ease-out infinite; }
+@keyframes q-pulse { 0%{transform:scale(1);opacity:.65} 100%{transform:scale(3.2);opacity:0} }
+.quantum-loader.is-done .q-ring { animation-play-state:paused; opacity:.25; }
+.quantum-loader.is-done .q-core { background:radial-gradient(circle at 38% 32%,#fff,#60ff90); box-shadow:0 0 14px rgba(96,255,144,.9),0 0 28px rgba(96,255,144,.4); }
+.quantum-toggle-btn { padding:.38rem 1.2rem; border-radius:999px; border:1px solid rgba(160,192,255,.2); background:rgba(160,192,255,.05); color:rgba(160,192,255,.7); font-size:.7rem; font-weight:700; letter-spacing:.08em; cursor:pointer; transition:all .2s; }`,
+      ts: `const loader = document.getElementById('q-loader')!
+const btn = document.getElementById('q-btn')!
+
+btn.addEventListener('click', () => {
+  if (loader.classList.contains('is-done')) return
+  loader.classList.add('is-done')
+  btn.textContent = 'Done ✓'
+  setTimeout(() => {
+    loader.classList.remove('is-done')
+    btn.textContent = 'Loading...'
+  }, 1200)
+})`,
     },
     'sidebar-accordion': {
       html: `<nav class="sidebar-acc-nav">
