@@ -1,5 +1,7 @@
-import { Mail } from 'lucide-react'
+import { useState } from 'react'
+import { Mail, Download, X, Eye, EyeOff } from 'lucide-react'
 import profileImage from '../assets/perfil.webp'
+const curriculoUrl = 'https://drive.google.com/uc?export=download&id=1yo4igzHzYFN5av8gMPu9rgM2o-DDRAWz'
 
 function LinkedInLogo() {
   return (
@@ -16,6 +18,8 @@ function LinkedInLogo() {
 
 const linkedinProfile = 'https://www.linkedin.com/in/francamargodev'
 const email = 'francamargoads@gmail.com'
+const whatsappLink = 'https://wa.me/5547988283491'
+const resumeMailtoLink = `mailto:${email}?subject=${encodeURIComponent('Solicitação de currículo')}&body=${encodeURIComponent('Olá, Franciely!\n\nEntrei pelo seu site e gostaria de receber seu currículo atualizado.\n\nObrigado(a)!')}`
 
 const resumeSummary =
   'Desenvolvedora Front-End com foco em Angular e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
@@ -28,37 +32,6 @@ const technicalSkills = [
   'Boas práticas: Acessibilidade (ARIA/WAI), testes de usabilidade, performance web, Design Thinking, Lean UX, Scrum/Kanban.',
 ]
 
-const experiences = [
-  {
-    role: 'Front-End Developer (Digital Solutions Analyst)',
-    company: 'Capgemini Brasil',
-    period: '2024 - Atual',
-    highlights: [
-      'Desenvolvimento front-end em Angular/React para soluções com IA Generativa, criando componentes reutilizáveis, formulários reativos e rotas protegidas.',
-      'Implementação de design system leve com Tailwind/Angular Material, garantindo consistência visual e acessibilidade (ARIA, contraste, navegação por teclado).',
-      'Integração com APIs e back-ends em Node.js e Python (Flask/FastAPI); foco em performance (lazy loading, code splitting) e DX.',
-      'Colaboração com Product/UX para testes de usabilidade e métricas, priorizando hipóteses que aumentam conversão e reduzem tempo de tarefa.',
-    ],
-  },
-  {
-    role: 'HRSS Team Leader',
-    company: 'Capgemini',
-    period: '2022 - 2023',
-    highlights: [
-      'Liderança de times internacionais (EUA, Índia, Polônia, Guatemala) com comunicação em inglês e espanhol.',
-      'Gestão de HCM/CRM (SAP, Workday, ADP, Salesforce), análise de KPIs e atuação como SME em transições.',
-    ],
-  },
-  {
-    role: 'Líder de Vendas',
-    company: 'Epex Indústria',
-    period: '2015 - 2021',
-    highlights: [
-      'Gestão comercial B2B e exportações; implantação de BI e força de vendas Web/Mobile integrados ao ERP.',
-    ],
-  },
-]
-
 const education = [
   'Pós-graduação em Gestão em Tecnologia - UNIASSELVI, 2024',
   'MBA em Gestão de Projetos - UNIASSELVI, 2022',
@@ -66,18 +39,35 @@ const education = [
   'Tecnólogo em Análise e Desenvolvimento de Sistemas - UNIASSELVI, 2019',
 ]
 
-const certifications = [
-  'Microsoft Azure AI-900 - 2025',
-  'Tailwind CSS v4 - Udemy, 2025',
-  'Master Digital Product Design (UX Research & UI Design) - Udemy, 2025',
-  'Agile Project Management - Google/Coursera',
-  'Lean Six Sigma Foundations - Coursera',
-  'Python p/ Análise de Dados e Data Science - Data Science Academy',
-]
+const languages = ['Português - Nativo', 'Inglês - Avançado (C1)', 'Espanhol - Profissional']
 
-const languages = ['Português - Nativo', 'Inglês - Avançado (B2/C1)', 'Espanhol - Profissional']
+const RESUME_PASSWORD = 'UIDEV2026'
 
 export function AboutMePage() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState(false)
+
+  function handleDownload() {
+    if (password === RESUME_PASSWORD) {
+      window.open(curriculoUrl, '_blank')
+      setModalOpen(false)
+      setPassword('')
+      setError(false)
+      setShowPassword(false)
+    } else {
+      setError(true)
+    }
+  }
+
+  function handleClose() {
+    setModalOpen(false)
+    setPassword('')
+    setError(false)
+    setShowPassword(false)
+  }
+
   return (
     <main className="app-shell about-shell">
       <section className="about-card" aria-label="Sobre Franciely Camargo">
@@ -106,6 +96,15 @@ export function AboutMePage() {
               <Mail size={18} />
               <span>{email}</span>
             </a>
+            <button
+              className="resume-request-btn"
+              onClick={() => setModalOpen(true)}
+              aria-label="Solicitar currículo completo"
+              type="button"
+            >
+              <Download size={16} />
+              Solicitar currículo completo
+            </button>
           </div>
 
           <section className="about-sidebar-languages" aria-label="Idiomas">
@@ -139,24 +138,6 @@ export function AboutMePage() {
             </ul>
           </section>
 
-          <section aria-label="Experiencia profissional">
-            <h2>Experiência profissional</h2>
-            <div className="about-experience-list">
-              {experiences.map((experience) => (
-                <article key={`${experience.company}-${experience.role}`} className="about-experience-item">
-                  <p className="about-experience-heading">
-                    <strong>{experience.company}</strong> - {experience.role} | {experience.period}
-                  </p>
-                  <ul className="about-list">
-                    {experience.highlights.map((highlight) => (
-                      <li key={highlight}>{highlight}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </section>
-
           <section aria-label="Formacao academica">
             <h2>Formação acadêmica</h2>
             <ul className="about-list">
@@ -165,18 +146,67 @@ export function AboutMePage() {
               ))}
             </ul>
           </section>
-
-          <section aria-label="Certificacoes e cursos">
-            <h2>Certificações e cursos</h2>
-            <ul className="about-list">
-              {certifications.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-
         </div>
       </section>
+
+      {modalOpen && (
+        <div
+          className="resume-modal-overlay"
+          onClick={handleClose}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Solicitar currículo completo"
+        >
+          <div className="resume-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="resume-modal-close" onClick={handleClose} aria-label="Fechar" type="button">
+              <X size={18} />
+            </button>
+
+            <h3 className="resume-modal-title">Currículo completo</h3>
+
+            <p className="resume-modal-info">
+              Para receber a senha de acesso, solicite diretamente via:
+            </p>
+
+            <div className="resume-modal-contacts">
+              <a href={linkedinProfile} target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href={resumeMailtoLink}>E-mail</a>
+              <a href={whatsappLink} target="_blank" rel="noreferrer">WhatsApp</a>
+            </div>
+
+            <div className="resume-modal-input-wrap">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); setError(false) }}
+                placeholder="Digite a senha"
+                className={`resume-modal-input${error ? ' resume-modal-input--error' : ''}`}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleDownload() }}
+                autoFocus
+              />
+              <button
+                className="resume-modal-eye"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                type="button"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+
+            {error && (
+              <p className="resume-modal-error" role="alert">
+                Senha incorreta. Solicite a senha via contatos acima.
+              </p>
+            )}
+
+            <button className="resume-modal-download-btn" onClick={handleDownload} type="button">
+              <Download size={16} />
+              Baixar currículo
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

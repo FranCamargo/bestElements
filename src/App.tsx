@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import './App.css'
 import { ThemeToggle } from './components/ThemeToggle.tsx'
 import { galleryItems } from './data/galleryItems.ts'
 import { mobileScreens } from './data/mobileItems.ts'
