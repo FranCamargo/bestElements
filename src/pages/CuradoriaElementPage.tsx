@@ -152,16 +152,13 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <DoodleChecklistBoardInteractive />
     case 'aurora-weather-card':
       return <AuroraWeatherCardInteractive />
-    case 'pixel-forecast-card':
-      return <PixelForecastCardInteractive />
+
     case 'lilac-weather-glass-card':
       return <LilacWeatherGlassCardInteractive />
     case 'glass-alert-modal':
       return <GlassAlertModalInteractive />
-    case 'comic-quick-modal':
-      return <ComicQuickModalInteractive />
-    case 'sticky-notes-kanban':
-      return <StickyNotesKanbanInteractive />
+
+
     case 'prism-pulse-loader':
       return <PrismPulseLoaderInteractive />
     case 'cloud-drizzle-loader':
@@ -214,8 +211,7 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <AuroraChipSelectorInteractive />
     case 'timeline-stepper':
       return <TimelineStepperInteractive />
-    case 'flip-counter-display':
-      return <FlipCounterDisplayInteractive />
+
     case 'holographic-card':
       return <HolographicCardInteractive />
     case 'neo-toggle-switch':
@@ -224,12 +220,10 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <NeoMusicPlayerInteractive />
     case 'neo-numpad':
       return <NeoNumpadInteractive />
-    case 'neo-stat-display':
-      return <NeoStatDisplayInteractive />
+
     case 'neo-color-swatches':
       return <NeoColorSwatchesInteractive />
-    case 'neo-analog-clock':
-      return <NeoAnalogClockInteractive />
+
     case 'neo-equalizer':
       return <NeoEqualizerInteractive />
     case 'neo-pin-lock':
@@ -256,8 +250,7 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <RetroCrtTerminalInteractive />
     case 'sidebar-accordion':
       return <SidebarAccordionInteractive />
-    case 'dark-search-field':
-      return <DarkSearchFieldInteractive />
+
     case 'dark-select':
       return <DarkSelectInteractive />
     case 'dark-checkbox':
@@ -268,8 +261,7 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <DarkTabsInteractive />
     case 'dark-primary-button':
       return <DarkPrimaryButtonInteractive />
-    case 'dark-secondary-button':
-      return <DarkSecondaryButtonInteractive />
+
     case 'dark-icon-button':
       return <DarkIconButtonInteractive />
     case 'gn-segmented-control':
@@ -286,8 +278,7 @@ export function InteractivePreview({ slug }: { slug: string }) {
       return <GnTextNavInteractive />
     case 'gn-reminders-card':
       return <GnRemindersCardInteractive />
-    case 'plasma-burst-button':
-      return <PlasmaBurstButtonInteractive />
+
     case 'hologram-search-bar':
       return <HologramSearchBarInteractive />
     case 'hex-grid-pattern':
@@ -299,47 +290,6 @@ export function InteractivePreview({ slug }: { slug: string }) {
     default:
       return <div className="component-mock"><p>Preview indisponivel para este item.</p></div>
   }
-}
-
-function PlasmaBurstButtonInteractive() {
-  const [burst, setBurst] = useState(false)
-  const [sparks, setSparks] = useState<{ id: number; x: number; y: number; angle: number }[]>([])
-
-  const handleClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const newSparks = Array.from({ length: 10 }, (_, i) => ({
-      id: Date.now() + i,
-      x,
-      y,
-      angle: (i / 10) * 360,
-    }))
-    setSparks(newSparks)
-    setBurst(true)
-    window.setTimeout(() => { setSparks([]); setBurst(false) }, 700)
-  }
-
-  return (
-    <div className="plasma-stage">
-      <button
-        type="button"
-        className={`plasma-burst-btn${burst ? ' is-burst' : ''}`}
-        onClick={handleClick}
-      >
-        <span className="plasma-btn-shimmer" aria-hidden="true" />
-        <span className="plasma-btn-text">ACTIVATE</span>
-      </button>
-      {sparks.map((s) => (
-        <span
-          key={s.id}
-          className="plasma-spark"
-          style={{ '--spark-angle': `${s.angle}deg`, left: `${s.x}px`, top: `${s.y}px` } as CSSProperties}
-          aria-hidden="true"
-        />
-      ))}
-    </div>
-  )
 }
 
 function HologramSearchBarInteractive() {
@@ -1707,27 +1657,6 @@ function AuroraWeatherCardInteractive() {
   )
 }
 
-function PixelForecastCardInteractive() {
-  const periods = ['08h', '12h', '18h']
-
-  return (
-    <div className="component-mock mock-centered-demo mock-pixel-forecast">
-      <strong>PIXEL WEATHER</strong>
-      <div className="pixel-row">
-        {periods.map((period) => (
-          <span key={period}>{period}</span>
-        ))}
-      </div>
-      <div className="pixel-row is-values">
-        <span>22°</span>
-        <span>27°</span>
-        <span>20°</span>
-      </div>
-      <p className="interactive-note">Cenario: ceu limpo com nuvens leves</p>
-    </div>
-  )
-}
-
 function LilacWeatherGlassCardInteractive() {
   const [activeTab, setActiveTab] = useState<'hourly' | 'daily' | 'details' | 'precipitation'>('hourly')
   const [selectedHour, setSelectedHour] = useState(4)
@@ -1811,44 +1740,6 @@ function GlassAlertModalInteractive() {
       ) : (
         <button type="button" className="chip-button" onClick={() => setIsOpen(true)}>Abrir modal</button>
       )}
-    </div>
-  )
-}
-
-function ComicQuickModalInteractive() {
-  const [isOpen, setIsOpen] = useState(true)
-
-  return (
-    <div className="component-mock mock-centered-demo mock-comic-modal-wrap">
-      {isOpen ? (
-        <article className="comic-modal">
-          <span className="comic-burst">POW!</span>
-          <h4>Missao concluida!</h4>
-          <p>Voce desbloqueou 3 novos itens de galeria.</p>
-          <button type="button" onClick={() => setIsOpen(false)}>Show!</button>
-        </article>
-      ) : (
-        <button type="button" className="chip-button" onClick={() => setIsOpen(true)}>Reabrir aviso</button>
-      )}
-    </div>
-  )
-}
-
-function StickyNotesKanbanInteractive() {
-  return (
-    <div className="component-mock mock-centered-demo mock-sticky-kanban">
-      <div>
-        <h5>Ideias</h5>
-        <p>Card comparativo</p>
-      </div>
-      <div>
-        <h5>Em progresso</h5>
-        <p>Modal aprovacao</p>
-      </div>
-      <div>
-        <h5>Concluido</h5>
-        <p>Loader orbital</p>
-      </div>
     </div>
   )
 }
@@ -2921,42 +2812,6 @@ function TimelineStepperInteractive() {
   )
 }
 
-function FlipCounterDisplayInteractive() {
-  const [value, setValue] = useState(42)
-  const [flipping, setFlipping] = useState(false)
-  const [dir, setDir] = useState<'up' | 'down'>('up')
-
-  const change = (delta: number) => {
-    setDir(delta > 0 ? 'up' : 'down')
-    setFlipping(true)
-    window.setTimeout(() => {
-      setValue((v) => Math.max(0, Math.min(99, v + delta)))
-      setFlipping(false)
-    }, 220)
-  }
-
-  const digits = String(value).padStart(2, '0').split('')
-
-  return (
-    <div className="component-mock mock-flip-counter">
-      <div className="flip-display" aria-live="polite" aria-label={`Valor: ${value}`}>
-        {digits.map((digit, idx) => (
-          <div key={idx} className={`flip-card ${flipping ? `flip-${dir}` : ''}`}>
-            <div className="flip-top">{digit}</div>
-            <div className="flip-divider" aria-hidden="true" />
-            <div className="flip-bottom">{digit}</div>
-          </div>
-        ))}
-      </div>
-      <div className="flip-controls">
-        <button type="button" className="flip-btn flip-btn-down" onClick={() => change(-1)} disabled={value <= 0} aria-label="Decrementar">−</button>
-        <button type="button" className="flip-btn flip-btn-up" onClick={() => change(1)} disabled={value >= 99} aria-label="Incrementar">+</button>
-      </div>
-      <p className="interactive-note">Display flip retro — valor: {value}</p>
-    </div>
-  )
-}
-
 function HolographicCardInteractive() {
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [shine, setShine] = useState({ x: 50, y: 50 })
@@ -3090,33 +2945,6 @@ function NeoNumpadInteractive() {
   )
 }
 
-function NeoStatDisplayInteractive() {
-  const [metric, setMetric] = useState(0)
-  const stats = [
-    { label: 'Receita Mensal', value: 'R$ 148k', sub: '+12.4%', color: '#22c55e', pct: 74 },
-    { label: 'Usuários Ativos', value: '9.2k', sub: '+8.1%', color: '#3b82f6', pct: 61 },
-    { label: 'Taxa de Conversão', value: '4.8%', sub: '+2.3 p.p.', color: '#a855f7', pct: 48 },
-  ]
-  const s = stats[metric]
-  return (
-    <div className="component-mock mock-neo-stat">
-      <div className="neo-stat-card">
-        <span className="neo-stat-label">{s.label}</span>
-        <span className="neo-stat-value">{s.value}</span>
-        <span className="neo-stat-sub" style={{ color: s.color }}>{s.sub}</span>
-        <div className="neo-stat-bar-track">
-          <div className="neo-stat-bar-fill" style={{ width: `${s.pct}%`, background: s.color }} />
-        </div>
-      </div>
-      <div className="neo-stat-switcher">
-        {stats.map((_, i) => (
-          <button key={i} className={`neo-dot ${metric === i ? 'is-active' : ''}`} onClick={() => setMetric(i)} aria-label={`Métrica ${i + 1}`} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function NeoColorSwatchesInteractive() {
   const [selected, setSelected] = useState(0)
   const swatches = [
@@ -3141,40 +2969,6 @@ function NeoColorSwatchesInteractive() {
         ))}
       </div>
       <p className="interactive-note">{swatches[selected].label}</p>
-    </div>
-  )
-}
-
-function NeoAnalogClockInteractive() {
-  const [time, setTime] = useState(new Date())
-  useEffect(() => {
-    const id = window.setInterval(() => setTime(new Date()), 1000)
-    return () => window.clearInterval(id)
-  }, [])
-  const sec = time.getSeconds()
-  const min = time.getMinutes() + sec / 60
-  const hour = (time.getHours() % 12) + min / 60
-  const deg = (v: number) => (v - 90) * (Math.PI / 180)
-  const pt = (d: number, r: number) => ({ x: 80 + r * Math.cos(d), y: 80 + r * Math.sin(d) })
-  const hPt = pt(deg(hour * 30), 44)
-  const mPt = pt(deg(min * 6), 58)
-  const sPt = pt(deg(sec * 6), 65)
-  return (
-    <div className="component-mock mock-neo-clock">
-      <div className="neo-clock-face">
-        <svg viewBox="0 0 160 160" width="150" height="150">
-          {Array.from({ length: 12 }, (_, i) => {
-            const a = deg(i * 30)
-            const r1 = 70, r2 = i % 3 === 0 ? 60 : 65
-            return <line key={i} x1={80 + r1 * Math.cos(a)} y1={80 + r1 * Math.sin(a)} x2={80 + r2 * Math.cos(a)} y2={80 + r2 * Math.sin(a)} stroke={i % 3 === 0 ? '#6c8ebf' : 'rgba(163,177,198,0.7)'} strokeWidth={i % 3 === 0 ? 2.5 : 1.5} strokeLinecap="round" />
-          })}
-          <line x1={80} y1={80} x2={hPt.x} y2={hPt.y} stroke="#3d4a5c" strokeWidth={4} strokeLinecap="round" />
-          <line x1={80} y1={80} x2={mPt.x} y2={mPt.y} stroke="#3d4a5c" strokeWidth={2.5} strokeLinecap="round" />
-          <line x1={80} y1={80} x2={sPt.x} y2={sPt.y} stroke="#ef4444" strokeWidth={1.5} strokeLinecap="round" />
-          <circle cx={80} cy={80} r={5} fill="#3d4a5c" />
-          <circle cx={80} cy={80} r={2.5} fill="#ef4444" />
-        </svg>
-      </div>
     </div>
   )
 }
@@ -3507,33 +3301,6 @@ function RetroCrtTerminalInteractive() {
   )
 }
 
-function DarkSearchFieldInteractive() {
-  const [value, setValue] = useState('')
-  const [focused, setFocused] = useState(false)
-  return (
-    <div className="component-mock mock-dark-ui">
-      <div className={`dark-search-field ${focused ? 'is-focused' : ''}`}>
-        <div className="dark-search-row">
-          <Search size={15} className="dark-search-ico" />
-          <input
-            className="dark-search-inp"
-            placeholder="Search..."
-            value={value}
-            onChange={e => setValue(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-          />
-        </div>
-        <div className="dark-search-suggestions">
-          <span className="dark-search-bar" style={{ width: '72%' }} />
-          <span className="dark-search-bar" style={{ width: '48%' }} />
-        </div>
-        <div className="dark-search-glow" />
-      </div>
-    </div>
-  )
-}
-
 function DarkSelectInteractive() {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState('Option 1')
@@ -3613,14 +3380,6 @@ function DarkPrimaryButtonInteractive() {
       <button className={`dark-primary-btn ${pulse ? 'is-pulse' : ''}`} onClick={handleClick}>
         Create workspace
       </button>
-    </div>
-  )
-}
-
-function DarkSecondaryButtonInteractive() {
-  return (
-    <div className="component-mock mock-dark-ui">
-      <button className="dark-secondary-btn">Invite member</button>
     </div>
   )
 }
@@ -6263,17 +6022,6 @@ function applyScenario(name: string) {
 buttons.forEach((btn) => btn.addEventListener('click', () => applyScenario(btn.dataset.scenario || 'rain')))
 applyScenario('rain')`,
     },
-    'pixel-forecast-card': {
-      html: `<article class="pixel-forecast">PIXEL WEATHER</article>`,
-      css: `.pixel-forecast {
-  border: 3px solid #0f1029;
-  background: #8de4ff;
-  color: #101a36;
-  font-family: 'Courier New', monospace;
-}`,
-      ts: `const forecast = ['22', '27', '20']
-console.log('Forecast pixel:', forecast.join(' / '))`,
-    },
     'lilac-weather-glass-card': {
       html: `<section class="lilac-weather-preview">
   <article class="lilac-weather-card">
@@ -6436,102 +6184,6 @@ render()`,
       ts: `const openModal = () => {
   // Exiba modal de alerta critico
 }`,
-    },
-    'comic-quick-modal': {
-      html: `<article class="comic-modal"><span>POW!</span><h4>Missao concluida!</h4></article>`,
-      css: `.comic-modal {
-  border: 3px solid #23153d;
-  border-radius: 12px;
-  background: #ffe66d;
-  box-shadow: 6px 6px 0 #23153d;
-}`,
-      ts: `const closeButton = document.getElementById('comic-close')
-closeButton?.addEventListener('click', () => {
-  // Feche modal estilo comic
-})`,
-    },
-    'sticky-notes-kanban': {
-      html: `<section class="sticky-kanban"><div class="note">Card comparativo</div><div class="note note-green">Em progresso</div><div class="note note-blue">Concluido</div></section>`,
-      css: `.sticky-kanban {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: start;
-  gap: 0.58rem;
-  padding: 0.2rem;
-}
-
-.note {
-  position: relative;
-  border-radius: 6px;
-  padding: 0.62rem 0.56rem 0.5rem;
-  min-height: 112px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
-    repeating-linear-gradient(
-      -8deg,
-      rgba(0,0,0,0.04) 0,
-      rgba(0,0,0,0.04) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-    #fff4b3;
-  border: 1px solid rgba(77,54,18,0.3);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.45) inset,
-    0 12px 20px -13px rgba(70,54,13,0.6),
-    3px 3px 0 rgba(43,31,16,0.26);
-  color: #2f2514;
-  transform: rotate(-1.6deg);
-  font-size: 0.8rem;
-  font-family: Arial, sans-serif;
-}
-
-.note-green {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
-    repeating-linear-gradient(
-      -8deg,
-      rgba(0,0,0,0.04) 0,
-      rgba(0,0,0,0.04) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-    #b8f5c0;
-  border-color: rgba(18,77,30,0.3);
-  color: #12311a;
-  transform: rotate(1.2deg);
-}
-
-.note-blue {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)),
-    repeating-linear-gradient(
-      -8deg,
-      rgba(0,0,0,0.04) 0,
-      rgba(0,0,0,0.04) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-    #b8dcf5;
-  border-color: rgba(18,54,77,0.3);
-  color: #122a3a;
-  transform: rotate(-0.8deg);
-}
-
-.note::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-3deg);
-  width: 34px;
-  height: 12px;
-  border-radius: 2px;
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(80,60,30,0.2);
-}`,
-      ts: `const notes = document.querySelectorAll('.note')
-notes.forEach((note) => note.addEventListener('click', () => note.classList.toggle('is-highlighted')))`,
     },
     'prism-pulse-loader': {
       html: `<div class="prism-loader"><span></span></div>`,
@@ -7542,75 +7194,6 @@ nodes.forEach((node, idx) => {
   })
 })`,
     },
-    'flip-counter-display': {
-      html: `<div class="flip-counter-wrap">
-  <div class="flip-display">
-    <div class="flip-card" id="flip-d1">
-      <div class="flip-top">4</div>
-      <div class="flip-divider"></div>
-      <div class="flip-bottom">4</div>
-    </div>
-    <div class="flip-card" id="flip-d2">
-      <div class="flip-top">2</div>
-      <div class="flip-divider"></div>
-      <div class="flip-bottom">2</div>
-    </div>
-  </div>
-  <div class="flip-controls">
-    <button id="flip-down" class="flip-btn flip-btn-down">−</button>
-    <button id="flip-up" class="flip-btn flip-btn-up">+</button>
-  </div>
-</div>`,
-      css: `.flip-display { display: flex; gap: 6px; }
-.flip-card {
-  width: 58px; height: 80px;
-  background: #1a1a2e; border-radius: 8px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700; color: #e5f5ff;
-}
-.flip-divider {
-  position: absolute; top: 50%; left: 0; right: 0;
-  height: 1px; background: rgba(0,0,0,0.5);
-}
-.flip-btn {
-  width: 42px; height: 42px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
-  color: #e5f5ff; font-size: 1.3rem; cursor: pointer;
-  transition: background 0.2s;
-}
-.flip-btn:hover:not(:disabled) { background: rgba(90,208,222,0.15); border-color: #5ad0de; }
-.flip-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.flip-controls { display: flex; gap: 10px; margin-top: 12px; justify-content: center; }
-.flip-card.flip-up { animation: flip-up 0.22s ease; }
-.flip-card.flip-down { animation: flip-down 0.22s ease; }
-@keyframes flip-up { 0%{transform:rotateX(0)} 50%{transform:rotateX(-90deg)} 100%{transform:rotateX(0)} }
-@keyframes flip-down { 0%{transform:rotateX(0)} 50%{transform:rotateX(90deg)} 100%{transform:rotateX(0)} }`,
-      ts: `let value = 42
-const d1 = document.getElementById('flip-d1')!
-const d2 = document.getElementById('flip-d2')!
-const btnUp = document.getElementById('flip-up') as HTMLButtonElement
-const btnDown = document.getElementById('flip-down') as HTMLButtonElement
-
-const updateDisplay = () => {
-  const s = String(value).padStart(2, '0')
-  const cards = [d1, d2]
-  cards.forEach((card, i) => {
-    card.classList.add('flip-up')
-    setTimeout(() => {
-      card.querySelectorAll('.flip-top, .flip-bottom').forEach(el => el.textContent = s[i])
-      card.classList.remove('flip-up')
-    }, 110)
-  })
-  btnDown.disabled = value <= 0
-  btnUp.disabled = value >= 99
-}
-
-btnUp.addEventListener('click', () => { if (value < 99) { value++; updateDisplay() } })
-btnDown.addEventListener('click', () => { if (value > 0) { value--; updateDisplay() } })`,
-    },
     'holographic-card': {
       html: `<div id="holo-card" class="holo-card" role="img" aria-label="Card holográfico">
   <div class="holo-shine"></div>
@@ -7737,37 +7320,6 @@ document.querySelectorAll<HTMLButtonElement>('.neo-num-key').forEach(btn => {
   })
 })`,
     },
-    'neo-stat-display': {
-      html: `<div class="neo-stat-card">
-  <span class="neo-stat-label">Receita Mensal</span>
-  <span class="neo-stat-value">R$ 148k</span>
-  <span class="neo-stat-sub" style="color:#22c55e">+12.4%</span>
-  <div class="neo-stat-bar-track"><div class="neo-stat-bar-fill" style="width:74%;background:#22c55e"></div></div>
-</div>`,
-      css: `.neo-stat-card { background:#e4e9f2; border-radius:1.5rem; padding:1.75rem; box-shadow:8px 8px 16px rgba(163,177,198,.6),-8px -8px 16px rgba(255,255,255,.9); display:flex; flex-direction:column; gap:.5rem; min-width:200px; }
-.neo-stat-label { font-size:.75rem; color:#8899aa; text-transform:uppercase; letter-spacing:.07em; font-weight:600; }
-.neo-stat-value { font-size:2rem; font-weight:800; color:#3d4a5c; line-height:1; }
-.neo-stat-sub { font-size:.85rem; font-weight:700; }
-.neo-stat-bar-track { margin-top:.5rem; height:8px; border-radius:999px; background:#e4e9f2; box-shadow:inset 4px 4px 8px rgba(163,177,198,.6),inset -4px -4px 8px rgba(255,255,255,.9); overflow:hidden; }
-.neo-stat-bar-fill { height:100%; border-radius:999px; transition:width .4s ease; }`,
-      ts: `// Swap data dynamically
-const card = document.querySelector('.neo-stat-card')!
-const data = [
-  { label:'Receita Mensal', value:'R$ 148k', sub:'+12.4%', color:'#22c55e', pct:74 },
-  { label:'Usuários Ativos', value:'9.2k', sub:'+8.1%', color:'#3b82f6', pct:61 },
-]
-let i = 0
-setInterval(() => {
-  i = (i+1) % data.length
-  const d = data[i]
-  card.querySelector('.neo-stat-label')!.textContent = d.label
-  card.querySelector('.neo-stat-value')!.textContent = d.value
-  const sub = card.querySelector<HTMLElement>('.neo-stat-sub')!
-  sub.textContent = d.sub; sub.style.color = d.color
-  const fill = card.querySelector<HTMLElement>('.neo-stat-bar-fill')!
-  fill.style.width = d.pct + '%'; fill.style.background = d.color
-}, 2000)`,
-    },
     'neo-color-swatches': {
       html: `<div class="neo-swatch-wrap">
   <div class="neo-swatch-grid">
@@ -7790,32 +7342,6 @@ setInterval(() => {
     btn.classList.add('is-selected')
   })
 })`,
-    },
-    'neo-analog-clock': {
-      html: `<div class="neo-clock-face">
-  <svg id="clock-svg" viewBox="0 0 160 160" width="150" height="150"></svg>
-</div>`,
-      css: `.neo-clock-face { background:#e4e9f2; border-radius:50%; width:180px; height:180px; display:grid; place-items:center; box-shadow:10px 10px 20px rgba(163,177,198,.6),-10px -10px 20px rgba(255,255,255,.9); }`,
-      ts: `const svg = document.getElementById('clock-svg') as unknown as SVGSVGElement
-const ns = 'http://www.w3.org/2000/svg'
-const line = (x2:number,y2:number,stroke:string,w:number) => {
-  const el = document.createElementNS(ns,'line')
-  Object.entries({x1:'80',y1:'80',x2:String(x2),y2:String(y2),stroke,strokeWidth:String(w),strokeLinecap:'round'}).forEach(([k,v])=>el.setAttribute(k,v))
-  return el
-}
-function draw() {
-  svg.innerHTML = ''
-  const now = new Date()
-  const s = now.getSeconds(), m = now.getMinutes()+s/60, h = (now.getHours()%12)+m/60
-  const pt = (deg:number,r:number) => ({ x:80+r*Math.cos((deg-90)*Math.PI/180), y:80+r*Math.sin((deg-90)*Math.PI/180) })
-  const hp=pt(h*30,44),mp=pt(m*6,58),sp=pt(s*6,65)
-  for(let i=0;i<12;i++){const a=(i*30-90)*Math.PI/180;const r1=70,r2=i%3===0?60:65;const l=document.createElementNS(ns,'line');Object.entries({x1:String(80+r1*Math.cos(a)),y1:String(80+r1*Math.sin(a)),x2:String(80+r2*Math.cos(a)),y2:String(80+r2*Math.sin(a)),stroke:i%3===0?'#6c8ebf':'rgba(163,177,198,.7)',strokeWidth:i%3===0?'2.5':'1.5',strokeLinecap:'round'}).forEach(([k,v])=>l.setAttribute(k,v));svg.appendChild(l)}
-  svg.appendChild(line(hp.x,hp.y,'#3d4a5c',4))
-  svg.appendChild(line(mp.x,mp.y,'#3d4a5c',2.5))
-  svg.appendChild(line(sp.x,sp.y,'#ef4444',1.5))
-  const c=document.createElementNS(ns,'circle');c.setAttribute('cx','80');c.setAttribute('cy','80');c.setAttribute('r','5');c.setAttribute('fill','#3d4a5c');svg.appendChild(c)
-}
-draw(); setInterval(draw,1000)`,
     },
     'neo-equalizer': {
       html: `<div class="neo-eq-wrap">
@@ -8164,32 +7690,6 @@ input.addEventListener('keydown', e => {
   input.value = ''
 })`,
     },
-    'dark-search-field': {
-      html: `<div class="dark-search-field">
-  <div class="dark-search-row">
-    <!-- Search icon (Lucide) -->
-    <input class="dark-search-inp" placeholder="Search..." />
-  </div>
-  <div class="dark-search-suggestions">
-    <span class="dark-search-bar" style="width:72%"></span>
-    <span class="dark-search-bar" style="width:48%"></span>
-  </div>
-  <div class="dark-search-glow"></div>
-</div>`,
-      css: `.dark-search-field { width:260px; background:rgba(20,25,55,.85); backdrop-filter:blur(16px); border-radius:.75rem; border:1px solid rgba(64,144,255,.28); box-shadow:0 0 20px rgba(40,100,255,.12),inset 0 1px 0 rgba(255,255,255,.06); padding:.85rem 1rem; display:flex; flex-direction:column; gap:.55rem; position:relative; overflow:hidden; transition:border-color .2s; }
-.dark-search-field.is-focused { border-color:rgba(64,144,255,.55); box-shadow:0 0 28px rgba(40,100,255,.22); }
-.dark-search-row { display:flex; align-items:center; gap:8px; }
-.dark-search-ico { color:rgba(255,255,255,.4); flex-shrink:0; }
-.dark-search-inp { flex:1; background:transparent; border:none; outline:none; color:rgba(255,255,255,.85); font-size:.85rem; caret-color:#4090ff; }
-.dark-search-inp::placeholder { color:rgba(255,255,255,.25); }
-.dark-search-suggestions { display:flex; flex-direction:column; gap:5px; padding-left:23px; }
-.dark-search-bar { height:3px; background:rgba(255,255,255,.06); border-radius:999px; display:block; }
-.dark-search-glow { height:2px; background:linear-gradient(90deg,transparent,#4090ff 30%,#8b6eff 70%,transparent); filter:blur(1.5px); opacity:.65; margin:0 -1rem; }`,
-      ts: `const [value, setValue] = useState('')
-const [focused, setFocused] = useState(false)
-// <div className={\`dark-search-field \${focused?'is-focused':''}\`}>
-//   <input onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)} />`,
-    },
     'dark-select': {
       html: `<div class="dark-select-field">
   <span class="dark-select-val">Option 1</span>
@@ -8277,12 +7777,6 @@ const tabs = ['Overview', 'Activity', 'Settings']
 .dark-primary-btn:hover { box-shadow:0 0 38px rgba(40,110,255,.6),0 0 70px rgba(40,110,255,.25),inset 0 1px 0 rgba(255,255,255,.2); }
 .dark-primary-btn.is-pulse { box-shadow:0 0 50px rgba(40,110,255,.8),0 0 90px rgba(40,110,255,.35),inset 0 1px 0 rgba(255,255,255,.22); }`,
       ts: `<button className="dark-primary-btn">Create workspace</button>`,
-    },
-    'dark-secondary-button': {
-      html: `<button class="dark-secondary-btn">Invite member</button>`,
-      css: `.dark-secondary-btn { padding:.9rem 2rem; border-radius:999px; border:1px solid rgba(139,110,255,.45); background:rgba(139,110,255,.07); color:rgba(160,140,255,.85); font-size:.9rem; font-weight:500; cursor:pointer; box-shadow:0 0 16px rgba(139,110,255,.18),inset 0 1px 0 rgba(255,255,255,.06); transition:all .2s; }
-.dark-secondary-btn:hover { border-color:rgba(139,110,255,.65); box-shadow:0 0 26px rgba(139,110,255,.3); background:rgba(139,110,255,.12); }`,
-      ts: `<button className="dark-secondary-btn">Invite member</button>`,
     },
     'dark-icon-button': {
       html: `<button class="dark-icon-btn" aria-label="Add">
@@ -8400,45 +7894,6 @@ const links = ['Home', 'Search', 'Settings']
 .gn-reminder-item.is-done .gn-reminder-dot { background:#c4bab0; }`,
       ts: `const [items, setItems] = useState([{ text:'Design review', done:false },{ text:'Call John', done:false }])
 const toggle = (i:number) => setItems(prev => prev.map((item,idx) => idx===i ? {...item,done:!item.done} : item))`,
-    },
-    'plasma-burst-button': {
-      html: `<div class="plasma-stage">
-  <button class="plasma-burst-btn" id="plasma-btn">
-    <span class="plasma-btn-shimmer"></span>
-    <span class="plasma-btn-text">ACTIVATE</span>
-  </button>
-</div>`,
-      css: `.plasma-stage { position:relative; display:flex; align-items:center; justify-content:center; padding:2rem 1.5rem; background:radial-gradient(ellipse at center,rgba(100,0,200,.25),transparent 70%); }
-.plasma-burst-btn { position:relative; padding:.85rem 2.6rem; border:none; border-radius:10px; cursor:pointer; background:linear-gradient(145deg,#1a0040,#0d001e); box-shadow:0 0 18px rgba(140,0,255,.45),0 0 55px rgba(140,0,255,.15),inset 0 1px 0 rgba(255,255,255,.07); transition:box-shadow .25s; overflow:hidden; }
-.plasma-burst-btn::before { content:''; position:absolute; inset:1px; border-radius:9px; border:1px solid rgba(160,50,255,.55); pointer-events:none; }
-.plasma-burst-btn:hover { box-shadow:0 0 28px rgba(160,0,255,.75),0 0 80px rgba(160,0,255,.28),inset 0 1px 0 rgba(255,255,255,.07); }
-.plasma-burst-btn.is-burst { box-shadow:0 0 55px rgba(200,0,255,1),0 0 120px rgba(200,0,255,.5); }
-.plasma-btn-shimmer { position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(160,50,255,.18) 50%,transparent); transform:translateX(-100%); transition:transform .4s; pointer-events:none; }
-.plasma-burst-btn:hover .plasma-btn-shimmer { transform:translateX(100%); }
-.plasma-btn-text { position:relative; z-index:2; font-size:.85rem; font-weight:800; letter-spacing:.16em; color:#dda0ff; text-shadow:0 0 14px rgba(200,100,255,.85); }
-.plasma-spark { position:absolute; width:4px; height:4px; background:#cc60ff; border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); animation:plasma-spark-fly .7s forwards ease-out; }
-@keyframes plasma-spark-fly { 0%{transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateX(0) scale(1);opacity:1} 100%{transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateX(56px) scale(0);opacity:0} }`,
-      ts: `const btn = document.getElementById('plasma-btn')!
-const stage = btn.closest('.plasma-stage') as HTMLElement
-
-btn.addEventListener('click', (e) => {
-  btn.classList.add('is-burst')
-  const rect = btn.getBoundingClientRect()
-  const stageRect = stage.getBoundingClientRect()
-  const x = e.clientX - stageRect.left
-  const y = e.clientY - stageRect.top
-
-  for (let i = 0; i < 10; i++) {
-    const spark = document.createElement('span')
-    spark.className = 'plasma-spark'
-    spark.style.setProperty('--spark-angle', \`\${(i / 10) * 360}deg\`)
-    spark.style.left = x + 'px'
-    spark.style.top = y + 'px'
-    stage.appendChild(spark)
-    spark.addEventListener('animationend', () => spark.remove())
-  }
-  setTimeout(() => btn.classList.remove('is-burst'), 700)
-})`,
     },
     'hologram-search-bar': {
       html: `<div class="holo-search-stage">

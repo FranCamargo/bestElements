@@ -21,10 +21,10 @@ const resumeSummary =
   'Desenvolvedora Front-End com foco em Angular e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
 
 const skillTags = [
-  'Angular', 'React', 'UI/UX', 'TypeScript', 'JavaScript', 'Python', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS',
+  'Angular', 'React','GenAI','UI/UX', 'TypeScript', 'JavaScript', 'Python', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS',
   'Angular Material', 'Node.js', 'Flask', 'FastAPI',
-  'Figma', 'Prototipagem', 'Design System',
-  'Git', 'GitHub', 'GitLab', 'Jira', 'CI/CD', 'SonarQube',
+  'Figma', 'Prototipagem', 'Design System', 'Bitbucket', 'Bamboo', 'Confluence', 'React-Native', 'Android Studio',
+'Git', 'GitHub', 'GitLab', 'Jira', 'CI/CD', 'SonarQube', 'Java', 'SQL', 'NoSQL',
   'Acessibilidade', 'ARIA/WAI', 'Performance Web', 'Design Thinking', 'Lean UX', 'Scrum',
 ]
 
