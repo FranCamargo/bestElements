@@ -3,6 +3,8 @@ import { Heart } from 'lucide-react'
 import { GalleryCard } from '../components/GalleryCard.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
 
+type SortOrder = 'a-z' | 'z-a' | 'recentes' | 'antigos' | 'tipo'
+
 type HomePageProps = {
   items: GalleryItem[]
   likes: Record<string, boolean>
@@ -13,6 +15,7 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(false)
   const [showOnlyLiked, setShowOnlyLiked] = useState(false)
+  const [sortOrder, setSortOrder] = useState<SortOrder | ''>('')
 
   const normalizeValue = (value: string) =>
     value
@@ -21,31 +24,43 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
       .toLowerCase()
       .trim()
 
+  const itemIndexMap = useMemo(
+    () => new Map(items.map((item, index) => [item.slug, index])),
+    [items]
+  )
+
   const filteredItems = useMemo(() => {
     const normalizedSearch = normalizeValue(searchTerm)
 
-    const sortByTitle = (left: GalleryItem, right: GalleryItem) =>
-      left.title.localeCompare(right.title, 'pt-BR', { sensitivity: 'base' })
+    const result = items.filter((item) => {
+      if (showOnlyLiked && !likes[item.slug]) return false
+      if (!normalizedSearch) return true
+      return (
+        normalizeValue(item.title).includes(normalizedSearch) ||
+        normalizeValue(item.category).includes(normalizedSearch)
+      )
+    })
 
-    return items
-      .filter((item) => {
-        if (showOnlyLiked && !likes[item.slug]) {
-          return false
-        }
+    result.sort((a, b) => {
+      switch (sortOrder) {
+        case 'z-a':
+          return b.title.localeCompare(a.title, 'pt-BR', { sensitivity: 'base' })
+        case 'recentes':
+          return (itemIndexMap.get(b.slug) ?? 0) - (itemIndexMap.get(a.slug) ?? 0)
+        case 'antigos':
+          return (itemIndexMap.get(a.slug) ?? 0) - (itemIndexMap.get(b.slug) ?? 0)
+        case 'tipo':
+          return (
+            a.category.localeCompare(b.category, 'pt-BR', { sensitivity: 'base' }) ||
+            a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
+          )
+        default:
+          return a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
+      }
+    })
 
-        if (!normalizedSearch) {
-          return true
-        }
-
-        const normalizedTitle = normalizeValue(item.title)
-        const normalizedCategory = normalizeValue(item.category)
-        return (
-          normalizedTitle.includes(normalizedSearch) ||
-          normalizedCategory.includes(normalizedSearch)
-        )
-      })
-      .sort(sortByTitle)
-  }, [items, likes, searchTerm, showOnlyLiked])
+    return result
+  }, [items, likes, searchTerm, showOnlyLiked, sortOrder, itemIndexMap])
 
   return (
     <main className="app-shell">
@@ -59,6 +74,22 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
       </header>
 
       <div className="gallery-toolbar" aria-label="Ferramentas da galeria">
+        <label className="sr-only" htmlFor="gallery-sort">Ordenar por</label>
+        <select
+          id="gallery-sort"
+          className="sort-select"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as SortOrder | '')}
+          aria-label="Ordenar itens da galeria"
+        >
+          <option value="" disabled>Ordenar</option>
+          <option value="a-z">A → Z</option>
+          <option value="z-a">Z → A</option>
+          <option value="recentes">Mais Recentes</option>
+          <option value="antigos">Mais Antigos</option>
+          <option value="tipo">Tipo</option>
+        </select>
+
         <div className={`hover-search ${isSearchCollapsed ? 'is-collapsed' : ''}`}>
           <button
             type="button"
