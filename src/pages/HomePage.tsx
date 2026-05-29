@@ -3,7 +3,26 @@ import { Heart } from 'lucide-react'
 import { GalleryCard } from '../components/GalleryCard.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
 
-type SortOrder = 'a-z' | 'z-a' | 'recentes' | 'antigos' | 'tipo'
+type SortOrder = 'a-z' | 'z-a' | 'recentes' | 'antigos' | 'tipo' | 'colecao'
+
+const NEO_SLUGS = new Set(['curadoria-neomorphic-button', 'curadoria-realistic-toggle'])
+const GN_SOFT_SLUGS = new Set([
+  'gn-segmented-control',
+  'gn-toggle-switch',
+  'gn-input-field',
+  'gn-numpad',
+  'gn-bottom-nav',
+  'gn-text-nav',
+])
+const GLASS_SLUGS = new Set(['glass-profile-card', 'gn-reminders-card'])
+
+function getCollection(slug: string): string {
+  if (slug.startsWith('neo-') || NEO_SLUGS.has(slug)) return 'Neo'
+  if (GLASS_SLUGS.has(slug)) return 'Glass'
+  if (GN_SOFT_SLUGS.has(slug)) return 'GN Soft'
+  if (slug.startsWith('gn-')) return 'GN'
+  return ''
+}
 
 type HomePageProps = {
   items: GalleryItem[]
@@ -54,6 +73,16 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
             a.category.localeCompare(b.category, 'pt-BR', { sensitivity: 'base' }) ||
             a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
           )
+        case 'colecao': {
+          const ca = getCollection(a.slug)
+          const cb = getCollection(b.slug)
+          if (!ca && cb) return 1
+          if (ca && !cb) return -1
+          return (
+            ca.localeCompare(cb, 'pt-BR', { sensitivity: 'base' }) ||
+            a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
+          )
+        }
         default:
           return a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
       }
@@ -88,6 +117,7 @@ export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
           <option value="recentes">Mais Recentes</option>
           <option value="antigos">Mais Antigos</option>
           <option value="tipo">Tipo</option>
+          <option value="colecao">Coleção</option>
         </select>
 
         <div className={`hover-search ${isSearchCollapsed ? 'is-collapsed' : ''}`}>
