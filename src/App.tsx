@@ -5,7 +5,6 @@ import { ThemeToggle } from './components/ThemeToggle.tsx'
 import { galleryItems } from './data/galleryItems.ts'
 import { mobileScreens } from './data/mobileItems.ts'
 import { AboutMePage } from './pages/AboutMePage.tsx'
-import { CuradoriaElementPage } from './pages/CuradoriaElementPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { MobileGalleryPage } from './pages/MobileGalleryPage.tsx'
 
@@ -107,13 +106,6 @@ function App() {
             />
           }
         />
-        {galleryItems.map((item) => (
-          <Route
-            key={item.slug}
-            path={item.route}
-            element={<CuradoriaElementPage item={item} isLiked={Boolean(likes[item.slug])} />}
-          />
-        ))}
         <Route
           path="/mobile"
           element={

@@ -18,7 +18,7 @@ const whatsappLink = 'https://wa.me/5547988283491'
 const resumeMailtoLink = `mailto:${email}?subject=${encodeURIComponent('Solicitação de currículo')}&body=${encodeURIComponent('Olá, Franciely!\n\nEntrei pelo seu site e gostaria de receber seu currículo atualizado.\n\nObrigado(a)!')}`
 
 const resumeSummary =
-  'Desenvolvedora Front-End com foco em Angular e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
+  'Desenvolvedora Front-End com foco em Angular e React e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
 
 const skillTags = [
   'Angular', 'React','GenAI','UI/UX', 'TypeScript', 'JavaScript', 'Python', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS',
@@ -52,13 +52,13 @@ const projectsData = [
     name: 'BestElements',
     url: 'https://francamargo.github.io/bestElements/',
     description:
-      'Galeria autoral de componentes visuais, loaders, padrões e micro-experiências front-end. Une portfólio técnico e laboratório de UI: cada item possui preview interativo e snippets de código (HTML, CSS e TypeScript) para estudo, referência e reutilização com crédito.',
+      'Galeria autoral de componentes visuais, loaders, padrões e micro-experiências front-end. Une portfólio técnico e laboratório de UI: cada item possui preview interativo para estudo, inspiração e referência. Atualmente com 20+ elementos e em expansão contínua.',
   },
   {
     name: 'OneRing Chat',
     url: 'https://chat2-ig7k.onrender.com/',
     description:
-      'Chat anônimo em Angular com backend Node.js e WebSocket. Sem cadastro — nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
+      'Chat anônimo em Angular com backend Node.js e conexão entre sessões viaWebSocket. Sem cadastro. Nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
   },
 ]
 

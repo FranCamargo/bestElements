@@ -154,7 +154,7 @@ Ao reutilizar qualquer elemento desta galeria:
 
 ## Sobre mim
 
-Sou Franciely Camargo, Front-End Developer com foco em Angular/React e base forte em UI/UX.
+Sou Franciely Camargo, Front-End Developer com foco em Angular e React/React e base forte em UI/UX.
 
 Atuo na construcao de interfaces funcionais e escalaveis, com enfase em:
 

@@ -1,21 +1,6 @@
 ﻿import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
 import { Copy, Check, Maximize2, Minimize2, X, Bot, UserRound, Share2, Heart, Upload, Save, Trash2, ChevronDown, BarChart2, FolderOpen, Settings, Users, Home, ClipboardList, Layers, Search, Rocket, MessageCircle, Plus, Wifi, Bluetooth, Bell, Moon } from 'lucide-react'
-import { ItemPageShell } from './ItemPageShell.tsx'
-import type { GalleryItem } from '../data/galleryItems.ts'
 import haimCover from '../assets/haim.webp'
-
-type CuradoriaElementPageProps = {
-  item: GalleryItem
-  isLiked: boolean
-}
-
-type SnippetBundle = {
-  html: string
-  css: string
-  ts: string
-}
-
-type SnippetKey = 'html' | 'css' | 'ts'
 
 type PeriodOption = '7' | '15' | '30'
 
@@ -1516,7 +1501,7 @@ function AuroraWeatherCardInteractive() {
     {
       id: 'cold',
       label: 'Frio',
-      city: 'Campos do Jordao',
+      city: 'Chile',
       temp: '6°',
       feeling: 'Sensacao 3°',
       wind: 'Vento 7 km/h',
@@ -5990,7 +5975,7 @@ tasks.forEach((task) => task.addEventListener('click', () => task.classList.togg
 }
 
 const scenarios: Record<string, Scenario> = {
-  cold: { tone: 'is-cold', rainy: false, city: 'Campos do Jordao', sky: 'Nevoa suave', temp: '6°', feeling: 'Sensacao 3°', wind: 'Vento 7 km/h', humidity: 'Umidade 82%' },
+  cold: { tone: 'is-cold', rainy: false, city: 'Chile', sky: 'Nevoa suave', temp: '6°', feeling: 'Sensacao 3°', wind: 'Vento 7 km/h', humidity: 'Umidade 82%' },
   mild: { tone: 'is-mild', rainy: false, city: 'Sao Paulo', sky: 'Ceu aberto', temp: '22°', feeling: 'Sensacao 23°', wind: 'Vento 11 km/h', humidity: 'Umidade 64%' },
   rain: { tone: 'is-rain', rainy: true, city: 'Curitiba', sky: 'Chuva moderada', temp: '18°', feeling: 'Sensacao 16°', wind: 'Vento 18 km/h', humidity: 'Umidade 91%' },
   hot: { tone: 'is-hot', rainy: false, city: 'Cuiaba', sky: 'Sol intenso', temp: '34°', feeling: 'Sensacao 38°', wind: 'Vento 9 km/h', humidity: 'Umidade 41%' },
@@ -8158,98 +8143,3 @@ const GLASS_WATER_SLUGS = new Set([
   'glass-profile-card',
   'gn-reminders-card',
 ])
-
-export function CuradoriaElementPage({ item, isLiked }: CuradoriaElementPageProps) {
-  const [copiedKey, setCopiedKey] = useState<SnippetKey | null>(null)
-  const [activeTab, setActiveTab] = useState<SnippetKey>('html')
-  const snippets = getSnippetsBySlug(item.slug)
-
-  const handleCopy = async (key: SnippetKey) => {
-    const content = snippets[key]
-    try {
-      await navigator.clipboard.writeText(content)
-      setCopiedKey(key)
-      window.setTimeout(() => setCopiedKey(null), 1300)
-    } catch {
-      setCopiedKey(null)
-    }
-  }
-
-  const previewBgClass = GN_SOFT_SLUGS.has(item.slug)
-    ? ' is-glass-soft'
-    : GLASS_WATER_SLUGS.has(item.slug)
-      ? ' is-glass-water'
-      : ''
-
-  return (
-    <ItemPageShell
-      title={item.title}
-      description={item.description}
-      isLiked={isLiked}
-    >
-      <div className="component-detail-layout">
-        <div className="component-preview-col">
-          <div className={`component-live-preview${previewBgClass}`}>
-            <h3>Visual do componente</h3>
-            <div className="preview-pattern-stage">
-              <div className="preview-center-frame">
-                <InteractivePreview slug={item.slug} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="component-code-col">
-          <TabbedCodeBox
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            code={snippets[activeTab]}
-            copied={copiedKey === activeTab}
-            onCopy={() => handleCopy(activeTab)}
-          />
-        </div>
-      </div>
-    </ItemPageShell>
-  )
-}
-
-type TabbedCodeBoxProps = {
-  activeTab: SnippetKey
-  onTabChange: (tab: SnippetKey) => void
-  code: string
-  copied: boolean
-  onCopy: () => void
-}
-
-function TabbedCodeBox({ activeTab, onTabChange, code, copied, onCopy }: TabbedCodeBoxProps) {
-  const tabs: SnippetKey[] = ['html', 'css', 'ts']
-
-  return (
-    <section className="code-box">
-      <header className="code-box-head">
-        <div className="code-tabs" role="tablist" aria-label="Tipos de codigo">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              className={`code-tab ${activeTab === tab ? 'is-active' : ''}`}
-              role="tab"
-              aria-selected={activeTab === tab}
-              onClick={() => onTabChange(tab)}
-            >
-              {tab.toUpperCase()}
-            </button>
-          ))}
-        </div>
-        <button type="button" className="copy-btn" onClick={onCopy}>
-          {copied ? <Check size={15} /> : <Copy size={15} />}
-          {copied ? 'Copiado' : 'Copiar'}
-        </button>
-      </header>
-      <pre>
-        <code>{code}</code>
-      </pre>
-    </section>
-  )
-}
-
