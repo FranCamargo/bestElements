@@ -22,10 +22,10 @@ const resumeSummary =
 
 const skillTags = [
   'Angular', 'React','GenAI','UI/UX', 'TypeScript', 'JavaScript', 'Python', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS',
-  'Angular Material', 'Node.js', 'Flask', 'FastAPI',
+'Node.js', 'Flask', 'FastAPI',
   'Figma', 'Prototipagem', 'Design System', 'Bitbucket', 'Bamboo', 'Confluence', 'React-Native', 'Android Studio',
 'Git', 'GitHub', 'GitLab', 'Jira', 'CI/CD', 'SonarQube', 'Java', 'SQL', 'NoSQL',
-  'Acessibilidade', 'ARIA/WAI', 'Performance Web', 'Design Thinking', 'Lean UX', 'Scrum',
+,
 ]
 
 const languageData = [
@@ -141,6 +141,15 @@ export function AboutMePage() {
             </button>
           </div>
         </div>
+
+        <div className="about2-hero-skills" aria-label="Competências técnicas">
+          <span className="about2-label">Competências técnicas</span>
+          <div className="about2-tag-cloud">
+            {skillTags.map((tag) => (
+              <span key={tag} className="about2-tag">{tag}</span>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── Sections ─────────────────────────────────────── */}
@@ -178,18 +187,6 @@ export function AboutMePage() {
 
         </div>{/* end about2-info-row */}
 
-        {/* Skills */}
-        <section className="about2-section" aria-label="Competências técnicas">
-          <span className="about2-label">Competências técnicas</span>
-          <div className="about2-card">
-            <div className="about2-tag-cloud">
-              {skillTags.map((tag) => (
-                <span key={tag} className="about2-tag">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Education */}
         <section className="about2-section" aria-label="Formação acadêmica">
           <span className="about2-label">Formação acadêmica</span>
@@ -206,7 +203,7 @@ export function AboutMePage() {
 
         {/* Projects */}
         <section className="about2-section" aria-label="Projetos">
-          <span className="about2-label">Projetos</span>
+          <span className="about2-label">Projetos Pessoais em Destaque</span>
           <div className="about2-proj-grid">
             {projectsData.map((proj) => (
               <div key={proj.name} className="about2-card about2-proj-card">

@@ -505,6 +505,23 @@
   }
 }
 
+/* Hero skills panel */
+.about2-hero-skills {
+  flex: 0 0 auto;
+  width: clamp(200px, 27vw, 320px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-left: 1px solid var(--border);
+  padding-left: clamp(1rem, 2vw, 1.75rem);
+  align-self: stretch;
+  justify-content: center;
+}
+
+.about2-hero-skills .about2-tag-cloud {
+  gap: 0.35rem;
+}
+
 /* Sections layout */
 .about2-sections {
   display: flex;
@@ -527,16 +544,16 @@
   background:
     linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg,
-      rgba(94, 118, 156, 0.2),
-      rgba(42, 127, 118, 0.2)) border-box;
+      rgba(72, 95, 136, 0.2),
+      rgba(56, 76, 101, 0.2)) border-box;
 }
 
 .about2-label {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.82rem;
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -734,6 +751,20 @@
   }
 
   .about2-hero-links {
+    justify-content: center;
+  }
+
+  .about2-hero-skills {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-left: 0;
+    padding-top: 1rem;
+    width: 100%;
+    align-self: auto;
+    justify-content: flex-start;
+  }
+
+  .about2-hero-skills .about2-tag-cloud {
     justify-content: center;
   }
 
