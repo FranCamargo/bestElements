@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Mail, Download, X, Eye, EyeOff } from 'lucide-react'
+import { Mail, Download, X, Eye, EyeOff, ExternalLink } from 'lucide-react'
 import profileImage from '../assets/perfil.webp'
 
 const curriculoUrl = 'https://drive.google.com/uc?export=download&id=1yo4igzHzYFN5av8gMPu9rgM2o-DDRAWz'
@@ -37,8 +37,29 @@ const languageData = [
 const educationData = [
   { degree: 'Pós-graduação em Gestão em Tecnologia', school: 'UNIASSELVI', year: '2024' },
   { degree: 'MBA em Gestão de Projetos', school: 'UNIASSELVI', year: '2022' },
-  { degree: 'Bacharelado em Comércio Exterior', school: 'UNISOCIESC', year: '2021' },
-  { degree: 'Tecnólogo em Análise e Desenvolvimento de Sistemas', school: 'UNIASSELVI', year: '2019' },
+  { degree: 'Tecnólogo em Comércio Exterior', school: 'UNISOCIESC', year: '2021' },
+  { degree: 'Bacharelado em Análise e Desenvolvimento de Sistemas', school: 'UNIASSELVI', year: '2019' },
+]
+
+const projectsData = [
+  {
+    name: 'Chat.AI',
+    url: 'https://fc-chatai.netlify.app/',
+    description:
+      'SPA que simula uma plataforma de assistente de IA com autenticação, histórico de conversas persistido e análise de uso. Estudo prático de React com Redux. Acesse com qualquer senha; usuário "Admin" desbloqueia um dashboard de análise (inicie conversas para ver os dados, pois é mockado com persistência local).',
+  },
+  {
+    name: 'BestElements',
+    url: 'https://francamargo.github.io/bestElements/',
+    description:
+      'Galeria autoral de componentes visuais, loaders, padrões e micro-experiências front-end. Une portfólio técnico e laboratório de UI: cada item possui preview interativo e snippets de código (HTML, CSS e TypeScript) para estudo, referência e reutilização com crédito.',
+  },
+  {
+    name: 'OneRing Chat',
+    url: 'https://chat2-ig7k.onrender.com/',
+    description:
+      'Chat anônimo em Angular com backend Node.js e WebSocket. Sem cadastro — nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
+  },
 ]
 
 const RESUME_PASSWORD = 'UIDEV2026'
@@ -122,64 +143,89 @@ export function AboutMePage() {
         </div>
       </section>
 
-      {/* ── Bento Grid ───────────────────────────────────── */}
-      <div className="about2-bento">
+      {/* ── Sections ─────────────────────────────────────── */}
+      <div className="about2-sections">
 
-        {/* Summary */}
-        <div className="about2-card about2-summary-card">
+        {/* Summary + Languages row */}
+        <div className="about2-info-row">
+
+        <section className="about2-section" aria-label="Resumo profissional">
           <span className="about2-label">Resumo profissional</span>
-          <p className="about2-summary-text">{resumeSummary}</p>
-        </div>
+          <div className="about2-card">
+            <p className="about2-summary-text">{resumeSummary}</p>
+          </div>
+        </section>
 
         {/* Languages */}
-        <div className="about2-card about2-langs-card">
+        <section className="about2-section" aria-label="Idiomas">
           <span className="about2-label">Idiomas</span>
-          <div className="about2-lang-list">
-            {languageData.map((lang) => (
-              <div key={lang.name} className="about2-lang-item">
-                <div className="about2-lang-meta">
+          <div className="about2-card">
+            <div className="about2-lang-list">
+              {languageData.map((lang) => (
+                <div key={lang.name} className="about2-lang-row">
                   <span className="about2-lang-name">{lang.name}</span>
                   <span className="about2-lang-level">{lang.level}</span>
+                  <div className="about2-dots" aria-label={`${lang.score} de 5`}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span key={i} className={`about2-dot${i < lang.score ? ' about2-dot--on' : ''}`} />
+                    ))}
+                  </div>
                 </div>
-                <div className="about2-dots" aria-label={`${lang.score} de 5`}>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span key={i} className={`about2-dot${i < lang.score ? ' about2-dot--on' : ''}`} />
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
+
+        </div>{/* end about2-info-row */}
 
         {/* Skills */}
-        <div className="about2-card about2-skills-card">
+        <section className="about2-section" aria-label="Competências técnicas">
           <span className="about2-label">Competências técnicas</span>
-          <div className="about2-tag-cloud">
-            {skillTags.map((tag) => (
-              <span key={tag} className="about2-tag">{tag}</span>
-            ))}
+          <div className="about2-card">
+            <div className="about2-tag-cloud">
+              {skillTags.map((tag) => (
+                <span key={tag} className="about2-tag">{tag}</span>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Education */}
-        <div className="about2-card about2-edu-card">
+        <section className="about2-section" aria-label="Formação acadêmica">
           <span className="about2-label">Formação acadêmica</span>
-          <div className="about2-timeline">
+          <div className="about2-edu-grid">
             {educationData.map((item, i) => (
-              <div key={i} className="about2-tl-item">
-                <div className="about2-tl-year">{item.year}</div>
-                <div className="about2-tl-track">
-                  <div className="about2-tl-dot" />
-                  {i < educationData.length - 1 && <div className="about2-tl-line" />}
-                </div>
-                <div className="about2-tl-body">
-                  <p className="about2-edu-degree">{item.degree}</p>
-                  <p className="about2-edu-school">{item.school}</p>
-                </div>
+              <div key={i} className="about2-card about2-edu-item">
+                <span className="about2-edu-year-chip">{item.year}</span>
+                <p className="about2-edu-degree">{item.degree}</p>
+                <p className="about2-edu-school">{item.school}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
+
+        {/* Projects */}
+        <section className="about2-section" aria-label="Projetos">
+          <span className="about2-label">Projetos</span>
+          <div className="about2-proj-grid">
+            {projectsData.map((proj) => (
+              <div key={proj.name} className="about2-card about2-proj-card">
+                <h3 className="about2-proj-title">{proj.name}</h3>
+                <p className="about2-proj-desc">{proj.description}</p>
+                <a
+                  href={proj.url}
+                  className="about2-proj-visit"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Visitar ${proj.name}`}
+                >
+                  <ExternalLink size={13} aria-hidden="true" />
+                  Visitar projeto
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
 
       </div>
 
