@@ -780,3 +780,42 @@
     max-width: 14ch;
   }
 }
+
+/* ===== PRIVACY POLICY PAGE ===== */
+
+.privacy-intro {
+  padding-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacy-list {
+  margin: 0 0 0.9rem;
+  padding-left: 1.2rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-size: 0.93rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.privacy-list:last-child {
+  margin-bottom: 0;
+}
+
+.about2-card > .about2-summary-text + .about2-summary-text,
+.about2-card > .privacy-list + .about2-summary-text,
+.about2-card > .about2-summary-text + .privacy-list {
+  margin-top: 0.9rem;
+}
+
+.privacy-inline-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--accent-strong);
+  }
+}

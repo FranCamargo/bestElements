@@ -7,6 +7,7 @@ import { mobileScreens } from './data/mobileItems.ts'
 import { AboutMePage } from './pages/AboutMePage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { MobileGalleryPage } from './pages/MobileGalleryPage.tsx'
+import { UneBrPrivacyPolicyPage } from './pages/UneBrPrivacyPolicyPage.tsx'
 
 type ThemeMode = 'light' | 'dark'
 
@@ -117,6 +118,7 @@ function App() {
           }
         />
         <Route path="/sobre-mim" element={<AboutMePage />} />
+        <Route path="/unebr/privacidade" element={<UneBrPrivacyPolicyPage />} />
       </Routes>
     </>
   )
