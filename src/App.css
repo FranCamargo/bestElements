@@ -809,6 +809,18 @@
   margin-top: 0.9rem;
 }
 
+.privacy-card-block {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+}
+
+.privacy-card-block + .privacy-card-block {
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+  border-top: 1px solid var(--border);
+}
+
 .privacy-inline-link {
   color: var(--accent);
   font-weight: 600;

@@ -68,34 +68,38 @@ function App() {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'))
   }
 
+  const isNavHidden = location.pathname === '/unebr/privacidade'
+
   return (
     <>
-      <header
-        className={`top-navigation ${hasScrolled ? 'is-scrolled' : ''}`}
-        aria-label="Navegacao principal"
-      >
-        <div className="top-navigation-inner">
-          <nav className="top-navigation-links" aria-label="Atalhos principais">
-            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'is-active' : ''}`}>
-              Home
-            </Link>
-            {/* <Link
-              to="/mobile"
-              className={`nav-link ${location.pathname === '/mobile' ? 'is-active' : ''}`}
-            >
-              Mobile
-            </Link> */}
-            <Link
-              to="/sobre-mim"
-              className={`nav-link ${location.pathname === '/sobre-mim' ? 'is-active' : ''}`}
-            >
-              Sobre mim
-            </Link>
-          </nav>
+      {!isNavHidden && (
+        <header
+          className={`top-navigation ${hasScrolled ? 'is-scrolled' : ''}`}
+          aria-label="Navegacao principal"
+        >
+          <div className="top-navigation-inner">
+            <nav className="top-navigation-links" aria-label="Atalhos principais">
+              <Link to="/" className={`nav-link ${location.pathname === '/' ? 'is-active' : ''}`}>
+                Home
+              </Link>
+              {/* <Link
+                to="/mobile"
+                className={`nav-link ${location.pathname === '/mobile' ? 'is-active' : ''}`}
+              >
+                Mobile
+              </Link> */}
+              <Link
+                to="/sobre-mim"
+                className={`nav-link ${location.pathname === '/sobre-mim' ? 'is-active' : ''}`}
+              >
+                Sobre mim
+              </Link>
+            </nav>
 
-          <ThemeToggle theme={theme} onToggle={toggleTheme} />
-        </div>
-      </header>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          </div>
+        </header>
+      )}
       <Routes>
         <Route
           path="/"

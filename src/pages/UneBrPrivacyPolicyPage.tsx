@@ -1,3 +1,4 @@
+
 import { Mail } from 'lucide-react'
 
 const email = 'francamargoads@gmail.com'
@@ -7,63 +8,52 @@ const sections = [
   {
     title: '1. Sobre o UneBR',
     body: (
-      <>
-        <p className="about2-summary-text">
-          O UneBR é um aplicativo independente e não oficial, criado para reunir, em um só lugar,
-          links oficiais e dicas de acesso a serviços públicos brasileiros (como INSS, Receita
-          Federal, Detran, Caixa Econômica Federal, entre outros).
-        </p>
-        <p className="about2-summary-text">
-          O UneBR <strong>não é afiliado, patrocinado ou mantido por nenhum órgão do governo</strong>{' '}
-          brasileiro. O aplicativo não hospeda, armazena nem afirma ser conteúdo oficial: ele apenas
-          organiza e direciona o usuário para os sites e canais oficiais correspondentes, que são de
-          responsabilidade exclusiva de cada órgão público.
-        </p>
-      </>
+      <p className="about2-summary-text">
+        O UneBR é um aplicativo independente e não oficial, criado para reunir, em um só lugar,
+        links oficiais e dicas de acesso a serviços públicos brasileiros (como INSS, Receita
+        Federal, Detran, Caixa Econômica Federal, entre outros). O UneBR{' '}
+        <strong>não é afiliado, patrocinado ou mantido por nenhum órgão do governo</strong>{' '}
+        brasileiro: ele apenas organiza e direciona o usuário para os sites e canais oficiais
+        correspondentes, que são de responsabilidade exclusiva de cada órgão público.
+      </p>
     ),
   },
   {
-    title: '2. Quais dados coletamos',
+    title: '2. Por que esta política existe',
+    body: (
+      <p className="about2-summary-text">
+        O UneBR <strong>não tem login, cadastro ou conta de usuário</strong>, e não armazena
+        nenhum dado em servidores próprios. Não pedimos nome, CPF, e-mail ou senha, e nada do que
+        você faz no app fica guardado por nós. Esta política existe por um único motivo: para
+        manter o app gratuito, exibimos anúncios através do <strong>Google AdMob</strong>, um
+        serviço de terceiros que pode coletar alguns dados técnicos do dispositivo para exibir
+        esses anúncios.
+      </p>
+    ),
+  },
+  {
+    title: '3. Dados coletados pelo AdMob',
     body: (
       <>
         <p className="about2-summary-text">
-          Para manter o aplicativo gratuito, exibimos anúncios através do Google AdMob. Para isso,
-          podem ser coletados:
+          Ao exibir anúncios, o AdMob pode coletar automaticamente:
         </p>
         <ul className="privacy-list">
           <li>Identificador de publicidade (Advertising ID / GAID);</li>
           <li>Dados do dispositivo (modelo, sistema operacional, idioma, identificadores técnicos não pessoais);</li>
-          <li>Dados de uso do aplicativo (telas acessadas, interações e cliques em links, para fins estatísticos e de melhoria do produto).</li>
+          <li>Dados básicos de uso do app relacionados à exibição de anúncios.</li>
         </ul>
         <p className="about2-summary-text">
-          O UneBR <strong>não solicita nem coleta</strong> nome, CPF, e-mail, senhas ou qualquer outro
-          dado sensível vinculado a serviços governamentais. Qualquer informação inserida pelo usuário
-          nos sites oficiais para os quais o app direciona é de responsabilidade exclusiva do respectivo
-          órgão público, e não passa pelo UneBR.
+          Essa coleta é feita pelo Google, não pelo UneBR — o app não tem acesso, não armazena e
+          não processa esses dados em nenhum servidor próprio.
         </p>
       </>
-    ),
-  },
-  {
-    title: '3. Como usamos os dados',
-    body: (
-      <ul className="privacy-list">
-        <li>Exibir anúncios personalizados ou não personalizados através do Google AdMob;</li>
-        <li>Entender o uso do aplicativo para corrigir problemas e melhorar a experiência;</li>
-        <li>Cumprir obrigações legais aplicáveis, quando necessário.</li>
-      </ul>
     ),
   },
   {
     title: '4. Publicidade — Google AdMob',
     body: (
       <>
-        <p className="about2-summary-text">
-          Utilizamos o <strong>Google AdMob</strong>, serviço de terceiros, para exibir anúncios
-          dentro do aplicativo. O AdMob pode coletar e processar o Advertising ID, dados do
-          dispositivo e dados de uso para exibir anúncios personalizados com base em interesses, ou
-          anúncios não personalizados quando o usuário optar por isso.
-        </p>
         <p className="about2-summary-text">
           Saiba mais sobre como o Google trata esses dados na política de privacidade e tecnologias
           de anúncios do Google:{' '}
@@ -90,8 +80,9 @@ const sections = [
     title: '5. Compartilhamento com terceiros',
     body: (
       <p className="about2-summary-text">
-        Apenas o Google AdMob recebe dados para fins de exibição de anúncios, conforme descrito
-        acima. Não vendemos dados pessoais dos usuários a terceiros.
+        Como o UneBR não armazena dados, não há nada para compartilhar ou vender. Apenas o Google
+        AdMob recebe dados técnicos do dispositivo, diretamente do sistema, para fins de exibição
+        de anúncios, conforme descrito acima.
       </p>
     ),
   },
@@ -99,10 +90,9 @@ const sections = [
     title: '6. Conformidade com a LGPD',
     body: (
       <p className="about2-summary-text">
-        Os dados são tratados em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº
-        13.709/2018). O usuário pode solicitar informações sobre os dados eventualmente coletados,
-        bem como sua correção ou exclusão, entrando em contato pelo e-mail informado ao final desta
-        política.
+        Ainda que o UneBR não armazene dados próprios, o tratamento realizado pelo AdMob segue a
+        Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018). Dúvidas sobre esse tratamento
+        podem ser enviadas pelo e-mail informado ao final desta política.
       </p>
     ),
   },
@@ -110,8 +100,8 @@ const sections = [
     title: '7. Segurança',
     body: (
       <p className="about2-summary-text">
-        Adotamos medidas razoáveis para proteger os dados processados pelo aplicativo, embora nenhum
-        sistema seja totalmente livre de riscos.
+        Por não coletar nem armazenar dados pessoais, o UneBR não mantém banco de dados de
+        usuários e, portanto, não há dados próprios em risco de vazamento por parte do app.
       </p>
     ),
   },
@@ -145,16 +135,16 @@ export function UneBrPrivacyPolicyPage() {
       </section>
 
       <div className="about2-sections">
-        {sections.map((section) => (
-          <section key={section.title} className="about2-section">
-            <span className="about2-label">{section.title}</span>
-            <div className="about2-card">{section.body}</div>
-          </section>
-        ))}
+        <div className="about2-card">
+          {sections.map((section) => (
+            <div key={section.title} className="privacy-card-block">
+              <span className="about2-label">{section.title}</span>
+              {section.body}
+            </div>
+          ))}
 
-        <section className="about2-section" aria-label="Contato">
-          <span className="about2-label">10. Contato</span>
-          <div className="about2-card">
+          <div className="privacy-card-block" aria-label="Contato">
+            <span className="about2-label">10. Contato</span>
             <p className="about2-summary-text">
               Dúvidas, solicitações relacionadas a dados pessoais ou sugestões sobre o UneBR podem
               ser enviadas para:
@@ -164,7 +154,7 @@ export function UneBrPrivacyPolicyPage() {
               <span>{email}</span>
             </a>
           </div>
-        </section>
+        </div>
       </div>
     </main>
   )
