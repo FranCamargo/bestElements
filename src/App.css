@@ -742,6 +742,13 @@
   }
 }
 
+.about2-proj-visit--disabled {
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--text-muted) 10%, transparent);
+  border-color: color-mix(in srgb, var(--text-muted) 25%, transparent);
+  cursor: default;
+}
+
 /* Responsive */
 @media (max-width: 860px) {
   .about2-hero {

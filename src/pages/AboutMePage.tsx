@@ -60,6 +60,25 @@ const projectsData = [
     description:
       'Chat anônimo em Angular com backend Node.js e conexão entre sessões via WebSocket. Sem cadastro. Nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
   },
+  {
+    name: 'Dicionário Angular',
+    url: 'https://francamargo.github.io/dicionarioangular/',
+    description:
+      'Glossário interativo com os principais termos, conceitos e depreciações do Angular, organizado por versão (v14 a v22). Traz uma lista geral pesquisável com filtros por categoria e paginação, além de uma aba dedicada às APIs descontinuadas, cada uma com a versão de depreciação e a alternativa recomendada. Projeto de estudo em Angular 21, com Signals e o novo control flow.',
+  },
+  {
+    name: 'UneBR',
+    url: undefined as string | undefined,
+    description:
+      'Aplicativo mobile independente e não oficial que reúne, em um só lugar, links oficiais e dicas de acesso a serviços públicos brasileiros (INSS, Receita Federal, Detran, Caixa Econômica Federal, entre outros). Sem login, cadastro ou armazenamento de dados em servidor próprio. Desenvolvido em React Native / Android Studio. Ainda não publicado na PlayStore.',
+  },
+  {
+    name: 'Cozyfy',
+    url: undefined as string | undefined,
+    statusLabel: 'Em desenvolvimento',
+    description:
+      'Aplicativo mobile em desenvolvimento com Expo (React Native) e TypeScript, pensado como um espaço acolhedor de bem-estar digital. Deve reunir chat online com login, mini games originais em estilo 8-bit, funcionalidades zen como meditação guiada e respiração guiada, além de calendário, horóscopo, combinações e muito mais.',
+  },
 ]
 
 const RESUME_PASSWORD = 'UIDEV2026'
@@ -209,16 +228,22 @@ export function AboutMePage() {
               <div key={proj.name} className="about2-card about2-proj-card">
                 <h3 className="about2-proj-title">{proj.name}</h3>
                 <p className="about2-proj-desc">{proj.description}</p>
-                <a
-                  href={proj.url}
-                  className="about2-proj-visit"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Visitar ${proj.name}`}
-                >
-                  <ExternalLink size={13} aria-hidden="true" />
-                  Visitar projeto
-                </a>
+                {proj.url ? (
+                  <a
+                    href={proj.url}
+                    className="about2-proj-visit"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Visitar ${proj.name}`}
+                  >
+                    <ExternalLink size={13} aria-hidden="true" />
+                    Visitar projeto
+                  </a>
+                ) : (
+                  <span className="about2-proj-visit about2-proj-visit--disabled">
+                    {proj.statusLabel ?? 'Em breve na PlayStore'}
+                  </span>
+                )}
               </div>
             ))}
           </div>
