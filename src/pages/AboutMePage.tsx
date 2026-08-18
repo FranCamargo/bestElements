@@ -58,7 +58,7 @@ const projectsData = [
     name: 'OneRing Chat',
     url: 'https://chat2-ig7k.onrender.com/',
     description:
-      'Chat anônimo em Angular com backend Node.js e conexão entre sessões via WebSocket. Sem cadastro. Nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
+      'Chat anônimo em Angular com backend Node.js e conexão entre sessões  Socket. Sem cadastro. Nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
   },
   {
     name: 'Dicionário Angular',
