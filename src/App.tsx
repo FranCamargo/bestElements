@@ -70,7 +70,7 @@ function App() {
   }
 
   const isNavHidden =
-    location.pathname === '/unebr/privacidade' || location.pathname === '/oliv/privacidade'
+    location.pathname === '/unebr/privacidade' || location.pathname === '/oliv/privacy'
 
   return (
     <>
@@ -125,7 +125,7 @@ function App() {
         />
         <Route path="/sobre-mim" element={<AboutMePage />} />
         <Route path="/unebr/privacidade" element={<UneBrPrivacyPolicyPage />} />
-        <Route path="/oliv/privacidade" element={<OlivPrivacyPolicyPage />} />
+        <Route path="/oliv/privacy" element={<OlivPrivacyPolicyPage />} />
       </Routes>
     </>
   )
