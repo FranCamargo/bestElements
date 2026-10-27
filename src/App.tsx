@@ -8,6 +8,7 @@ import { AboutMePage } from './pages/AboutMePage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { MobileGalleryPage } from './pages/MobileGalleryPage.tsx'
 import { OlivPrivacyPolicyPage } from './pages/OlivPrivacyPolicyPage.tsx'
+import { PinsBestSellerPrivacyPolicyPage } from './pages/PinsBestSellerPrivacyPolicyPage.tsx'
 import { UneBrPrivacyPolicyPage } from './pages/UneBrPrivacyPolicyPage.tsx'
 
 type ThemeMode = 'light' | 'dark'
@@ -70,7 +71,9 @@ function App() {
   }
 
   const isNavHidden =
-    location.pathname === '/unebr/privacidade' || location.pathname === '/oliv/privacy'
+    location.pathname === '/unebr/privacidade' ||
+    location.pathname === '/oliv/privacy' ||
+    location.pathname === '/pins-best-seller/privacy'
 
   return (
     <>
@@ -126,6 +129,7 @@ function App() {
         <Route path="/sobre-mim" element={<AboutMePage />} />
         <Route path="/unebr/privacidade" element={<UneBrPrivacyPolicyPage />} />
         <Route path="/oliv/privacy" element={<OlivPrivacyPolicyPage />} />
+        <Route path="/pins-best-seller/privacy" element={<PinsBestSellerPrivacyPolicyPage />} />
       </Routes>
     </>
   )
