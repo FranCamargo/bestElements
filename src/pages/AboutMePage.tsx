@@ -43,6 +43,20 @@ const educationData = [
 
 const projectsData = [
   {
+    name: 'Oliv Devocional',
+    url: 'https://play.google.com/store/apps/details?id=com.francamargo.oliv',
+    linkLabel: 'Ver na Google Play',
+    description:
+      'Aplicativo devocional para mulheres cristãs que integra Bíblia, diário de oração e versículo do dia em uma experiência focada e livre de distrações. Desenvolvido de ponta a ponta, da concepção do produto ao deploy em produção na Google Play, com React Native e TypeScript e pipeline de build via EAS. Interface moderna com identidade visual autoral, recursos de acessibilidade e sistema de conquistas para engajamento.',
+  },
+  {
+    name: 'Lírio App',
+    url: undefined as string | undefined,
+    statusLabel: 'Em breve na Google Play',
+    description:
+      'Aplicativo de leitura de livros de domínio público com estante realista e personalizável, loja de decorações, conteúdo compartilhável e recursos de acessibilidade. Desenvolvido em React Native e TypeScript, com autenticação e sincronização em nuvem via Firebase e pipeline de build via EAS. Atualmente em fase de testes fechados na Google Play.',
+  },
+  {
     name: 'Chat.AI',
     url: 'https://fc-chatai.netlify.app/',
     description:
@@ -237,7 +251,7 @@ export function AboutMePage() {
                     aria-label={`Visitar ${proj.name}`}
                   >
                     <ExternalLink size={13} aria-hidden="true" />
-                    Visitar projeto
+                    {proj.linkLabel ?? 'Visitar projeto'}
                   </a>
                 ) : (
                   <span className="about2-proj-visit about2-proj-visit--disabled">

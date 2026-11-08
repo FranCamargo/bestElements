@@ -6,6 +6,7 @@ import { galleryItems } from './data/galleryItems.ts'
 import { mobileScreens } from './data/mobileItems.ts'
 import { AboutMePage } from './pages/AboutMePage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
+import { LirioPrivacyPolicyPage } from './pages/LirioPrivacyPolicyPage.tsx'
 import { MobileGalleryPage } from './pages/MobileGalleryPage.tsx'
 import { OlivPrivacyPolicyPage } from './pages/OlivPrivacyPolicyPage.tsx'
 import { PinsBestSellerPrivacyPolicyPage } from './pages/PinsBestSellerPrivacyPolicyPage.tsx'
@@ -73,7 +74,8 @@ function App() {
   const isNavHidden =
     location.pathname === '/unebr/privacidade' ||
     location.pathname === '/oliv/privacy' ||
-    location.pathname === '/pins-best-seller/privacy'
+    location.pathname === '/pins-best-seller/privacy' ||
+    location.pathname === '/lirio/privacy'
 
   return (
     <>
@@ -130,6 +132,7 @@ function App() {
         <Route path="/unebr/privacidade" element={<UneBrPrivacyPolicyPage />} />
         <Route path="/oliv/privacy" element={<OlivPrivacyPolicyPage />} />
         <Route path="/pins-best-seller/privacy" element={<PinsBestSellerPrivacyPolicyPage />} />
+        <Route path="/lirio/privacy" element={<LirioPrivacyPolicyPage />} />
       </Routes>
     </>
   )
