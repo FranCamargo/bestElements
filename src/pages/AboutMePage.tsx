@@ -23,11 +23,15 @@ const skillGroups = [
   },
   {
     title: 'Back-End & IA',
-    items: ['GenAI', 'Python', 'Node.js', 'Flask', 'FastAPI', 'Java', 'SQL', 'NoSQL'],
+    items: ['GenAI', 'Python', 'Node.js', 'Flask', 'FastAPI', 'Java'],
+  },
+  {
+    title: 'Bancos de Dados & Cloud',
+    items: ['SQL', 'NoSQL', 'PostgreSQL', 'MongoDB', 'DB2', 'Firebase'],
   },
   {
     title: 'Ferramentas & Processos',
-    items: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'Bamboo', 'CI/CD', 'SonarQube', 'Jira', 'Confluence', 'Android Studio'],
+    items: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'Bamboo', 'Azure DevOps', 'CI/CD', 'SonarQube', 'Jira', 'Confluence', 'Android Studio', 'Godot'],
   },
 ]
 

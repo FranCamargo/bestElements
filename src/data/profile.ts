@@ -19,8 +19,11 @@ export const coreStack = [
   'Figma',
   'Node.js',
   'JavaScript',
-  'Firebase',
   'Python',
+  'Firebase',
+  'PostgreSQL',
+  'MongoDB',
+  'DB2',
   'Godot',
   'GenAI',
 ]
