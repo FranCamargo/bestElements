@@ -1,36 +1,39 @@
-import { useState } from 'react'
-import { Mail, Download, X, Eye, EyeOff, ExternalLink } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Mail, Download, X, Eye, EyeOff } from 'lucide-react'
 import profileImage from '../assets/perfil.webp'
+import { LinkedInLogo } from '../components/BrandIcons.tsx'
+import { ProjectCard } from '../components/ProjectCard.tsx'
+import { profile, projects } from '../data/profile.ts'
 
 const curriculoUrl = 'https://drive.google.com/uc?export=download&id=1yo4igzHzYFN5av8gMPu9rgM2o-DDRAWz'
 
-function LinkedInLogo() {
-  return (
-    <svg className="about2-li-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.06 3.76-2.06C20.13 8.64 21 11 21 14.06V21h-4v-5.95c0-1.42-.03-3.24-1.98-3.24-1.99 0-2.29 1.55-2.29 3.14V21H9z" />
-    </svg>
-  )
-}
-
-const linkedinProfile = 'https://www.linkedin.com/in/francamargodev'
-const email = 'francamargoads@gmail.com'
-const whatsappLink = 'https://wa.me/5547988283491'
-const resumeMailtoLink = `mailto:${email}?subject=${encodeURIComponent('Solicitação de currículo')}&body=${encodeURIComponent('Olá, Franciely!\n\nEntrei pelo seu site e gostaria de receber seu currículo atualizado.\n\nObrigado(a)!')}`
+const resumeMailtoLink = `mailto:${profile.email}?subject=${encodeURIComponent('Solicitação de currículo')}&body=${encodeURIComponent('Olá, Franciely!\n\nEntrei pelo seu site e gostaria de receber seu currículo atualizado.\n\nObrigado(a)!')}`
 
 const resumeSummary =
   'Desenvolvedora Front-End com foco em Angular e React e forte base em UI/UX. Experiência criando componentes reutilizáveis, design systems leves (Tailwind/Angular Material) e integrações com APIs para produtos com IA Generativa. Pós-graduação em Gestão de Tecnologia e MBA em Projetos. Histórico de colaboração com times internacionais, liderança e mentalidade orientada a desempenho, acessibilidade e métricas.'
 
-const skillTags = [
-  'Angular', 'React','GenAI','UI/UX', 'TypeScript', 'JavaScript', 'Python', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS',
-'Node.js', 'Flask', 'FastAPI',
-  'Figma', 'Prototipagem', 'Design System', 'Bitbucket', 'Bamboo', 'Confluence', 'React-Native', 'Android Studio',
-'Git', 'GitHub', 'GitLab', 'Jira', 'CI/CD', 'SonarQube', 'Java', 'SQL', 'NoSQL',
-,
+const skillGroups = [
+  {
+    title: 'Front-End',
+    items: ['Angular', 'React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Sass', 'Tailwind CSS', 'React Native'],
+  },
+  {
+    title: 'UI/UX & Design',
+    items: ['UI/UX', 'Figma', 'Prototipagem', 'Design System', 'Acessibilidade'],
+  },
+  {
+    title: 'Back-End & IA',
+    items: ['GenAI', 'Python', 'Node.js', 'Flask', 'FastAPI', 'Java', 'SQL', 'NoSQL'],
+  },
+  {
+    title: 'Ferramentas & Processos',
+    items: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'Bamboo', 'CI/CD', 'SonarQube', 'Jira', 'Confluence', 'Android Studio'],
+  },
 ]
 
 const languageData = [
   { name: 'Português', level: 'Nativo', score: 5 },
-  { name: 'Inglês', level: 'Avançado C1', score: 4 },
+  { name: 'Inglês', level: 'Avançado · C1', score: 4 },
   { name: 'Espanhol', level: 'Profissional', score: 3 },
 ]
 
@@ -39,60 +42,6 @@ const educationData = [
   { degree: 'MBA em Gestão de Projetos', school: 'UNIASSELVI', year: '2022' },
   { degree: 'Tecnólogo em Comércio Exterior', school: 'UNISOCIESC', year: '2021' },
   { degree: 'Bacharelado em Análise e Desenvolvimento de Sistemas', school: 'UNIASSELVI', year: '2019' },
-]
-
-const projectsData = [
-  {
-    name: 'Oliv Devocional',
-    url: 'https://play.google.com/store/apps/details?id=com.francamargo.oliv',
-    linkLabel: 'Ver na Google Play',
-    description:
-      'Aplicativo devocional para mulheres cristãs que integra Bíblia, diário de oração e versículo do dia em uma experiência focada e livre de distrações. Desenvolvido de ponta a ponta, da concepção do produto ao deploy em produção na Google Play, com React Native e TypeScript e pipeline de build via EAS. Interface moderna com identidade visual autoral, recursos de acessibilidade e sistema de conquistas para engajamento.',
-  },
-  {
-    name: 'Lírio App',
-    url: undefined as string | undefined,
-    statusLabel: 'Em breve na Google Play',
-    description:
-      'Aplicativo de leitura de livros de domínio público com estante realista e personalizável, loja de decorações, conteúdo compartilhável e recursos de acessibilidade. Desenvolvido em React Native e TypeScript, com autenticação e sincronização em nuvem via Firebase e pipeline de build via EAS. Atualmente em fase de testes fechados na Google Play.',
-  },
-  {
-    name: 'Chat.AI',
-    url: 'https://fc-chatai.netlify.app/',
-    description:
-      'SPA que simula uma plataforma de assistente de IA com autenticação, histórico de conversas persistido e análise de uso. Estudo prático de React com Redux. Acesse com qualquer senha; usuário "Admin" desbloqueia um dashboard de análise (inicie conversas para ver os dados, pois é mockado com persistência local).',
-  },
-  {
-    name: 'BestElements',
-    url: 'https://francamargo.github.io/bestElements/',
-    description:
-      'Galeria autoral de componentes visuais, loaders, padrões e micro-experiências front-end. Une portfólio técnico e laboratório de UI: cada item possui preview interativo para estudo, inspiração e referência. Atualmente com 20+ elementos e em expansão contínua.',
-  },
-  {
-    name: 'OneRing Chat',
-    url: 'https://chat2-ig7k.onrender.com/',
-    description:
-      'Chat anônimo em Angular com backend Node.js e conexão entre sessões  Socket. Sem cadastro. Nome e cor únicos são gerados automaticamente. Conta com suporte a emoticons, mini jogos (Snake e Jogo da Velha) e termos de uso. Voltado para maiores de 18 anos.',
-  },
-  {
-    name: 'Dicionário Angular',
-    url: 'https://francamargo.github.io/dicionarioangular/',
-    description:
-      'Glossário interativo com os principais termos, conceitos e depreciações do Angular, organizado por versão (v14 a v22). Traz uma lista geral pesquisável com filtros por categoria e paginação, além de uma aba dedicada às APIs descontinuadas, cada uma com a versão de depreciação e a alternativa recomendada. Projeto de estudo em Angular 21, com Signals e o novo control flow.',
-  },
-  {
-    name: 'UneBR',
-    url: undefined as string | undefined,
-    description:
-      'Aplicativo mobile independente e não oficial que reúne, em um só lugar, links oficiais e dicas de acesso a serviços públicos brasileiros (INSS, Receita Federal, Detran, Caixa Econômica Federal, entre outros). Sem login, cadastro ou armazenamento de dados em servidor próprio. Desenvolvido em React Native / Android Studio. Ainda não publicado na PlayStore.',
-  },
-  {
-    name: 'Cozyfy',
-    url: undefined as string | undefined,
-    statusLabel: 'Em desenvolvimento',
-    description:
-      'Aplicativo mobile em desenvolvimento com Expo (React Native) e TypeScript, pensado como um espaço acolhedor de bem-estar digital. Deve reunir chat online com login, mini games originais em estilo 8-bit, funcionalidades zen como meditação guiada e respiração guiada, além de calendário, horóscopo, combinações e muito mais.',
-  },
 ]
 
 const RESUME_PASSWORD = 'UIDEV2026'
@@ -106,10 +55,7 @@ export function AboutMePage() {
   function handleDownload() {
     if (password === RESUME_PASSWORD) {
       window.open(curriculoUrl, '_blank')
-      setModalOpen(false)
-      setPassword('')
-      setError(false)
-      setShowPassword(false)
+      handleClose()
     } else {
       setError(true)
     }
@@ -122,148 +68,146 @@ export function AboutMePage() {
     setShowPassword(false)
   }
 
+  useEffect(() => {
+    if (!modalOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [modalOpen])
+
   return (
-    <main className="app-shell about2-shell">
+    <main className="app-shell about-shell">
 
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="about2-hero" aria-label="Sobre Franciely Camargo">
-        <div className="about2-hero-glow" aria-hidden="true" />
-
-        <div className="about2-photo-ring">
+      {/* ── Intro ────────────────────────────────────────── */}
+      <section className="about-intro" aria-labelledby="about-title">
+        <div className="about-photo-frame">
           <img
-            className="about2-photo"
+            className="about-photo-img"
             src={profileImage}
-            alt="Foto de perfil de Franciely Camargo"
+            alt={`Foto de perfil de ${profile.name}`}
             loading="eager"
           />
+          <span className="about-photo-badge mono">AI-900 · Microsoft</span>
         </div>
 
-        <div className="about2-hero-body">
-          <p className="hero-kicker">Sobre mim</p>
-          <h1 className="about2-name">Franciely Camargo</h1>
-          <p className="about2-role-tag">
-            Front-End Developer&nbsp;&nbsp;•&nbsp;&nbsp;UI/UX Designer&nbsp;&nbsp;|&nbsp;&nbsp;AI-900
+        <div className="about-intro-body">
+          <p className="eyebrow">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            Sobre mim
           </p>
-          <div className="about2-hero-links">
-            <a
-              href={linkedinProfile}
-              className="about2-link-chip"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn Francamargodev"
-            >
-              <LinkedInLogo />
-              <span>@francamargodev</span>
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="about2-link-chip"
-              aria-label="Enviar email para Franciely"
-            >
-              <Mail size={15} aria-hidden="true" />
-              <span className="about2-chip-truncate">{email}</span>
-            </a>
-            <button
-              className="about2-cta-btn"
-              onClick={() => setModalOpen(true)}
-              aria-label="Solicitar currículo completo"
-              type="button"
-            >
-              <Download size={15} aria-hidden="true" />
+          <h1 id="about-title" className="display display--md">{profile.name}</h1>
+          <p className="about-role">
+            {profile.role} <span aria-hidden="true">·</span> {profile.specialty}
+          </p>
+          <p className="lead">{resumeSummary}</p>
+
+          <div className="about-actions">
+            <button className="btn btn-primary" onClick={() => setModalOpen(true)} type="button">
+              <Download size={16} aria-hidden="true" />
               Solicitar currículo
             </button>
-          </div>
-        </div>
-
-        <div className="about2-hero-skills" aria-label="Competências técnicas">
-          <span className="about2-label">Competências técnicas</span>
-          <div className="about2-tag-cloud">
-            {skillTags.map((tag) => (
-              <span key={tag} className="about2-tag">{tag}</span>
-            ))}
+            <a href={profile.linkedin} className="btn btn-ghost" target="_blank" rel="noreferrer">
+              <LinkedInLogo size={15} />
+              {profile.linkedinHandle}
+            </a>
+            <a href={`mailto:${profile.email}`} className="btn btn-ghost">
+              <Mail size={16} aria-hidden="true" />
+              E-mail
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ── Sections ─────────────────────────────────────── */}
-      <div className="about2-sections">
-
-        {/* Summary + Languages row */}
-        <div className="about2-info-row">
-
-        <section className="about2-section" aria-label="Resumo profissional">
-          <span className="about2-label">Resumo profissional</span>
-          <div className="about2-card">
-            <p className="about2-summary-text">{resumeSummary}</p>
+      {/* ── Skills ───────────────────────────────────────── */}
+      <section className="section" aria-labelledby="skills-title">
+        <header className="section-head">
+          <div>
+            <p className="section-index mono">01 / Competências</p>
+            <h2 id="skills-title" className="section-title">O que eu uso no dia a dia</h2>
           </div>
-        </section>
-
-        {/* Languages */}
-        <section className="about2-section" aria-label="Idiomas">
-          <span className="about2-label">Idiomas</span>
-          <div className="about2-card">
-            <div className="about2-lang-list">
-              {languageData.map((lang) => (
-                <div key={lang.name} className="about2-lang-row">
-                  <span className="about2-lang-name">{lang.name}</span>
-                  <span className="about2-lang-level">{lang.level}</span>
-                  <div className="about2-dots" aria-label={`${lang.score} de 5`}>
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <span key={i} className={`about2-dot${i < lang.score ? ' about2-dot--on' : ''}`} />
-                    ))}
-                  </div>
-                </div>
-              ))}
+        </header>
+        <div className="skill-grid">
+          {skillGroups.map((group) => (
+            <div key={group.title} className="pf-panel skill-group">
+              <h3 className="pf-panel-title">{group.title}</h3>
+              <ul className="tag-list">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        </div>{/* end about2-info-row */}
-
-        {/* Education */}
-        <section className="about2-section" aria-label="Formação acadêmica">
-          <span className="about2-label">Formação acadêmica</span>
-          <div className="about2-edu-grid">
-            {educationData.map((item, i) => (
-              <div key={i} className="about2-card about2-edu-item">
-                <span className="about2-edu-year-chip">{item.year}</span>
-                <p className="about2-edu-degree">{item.degree}</p>
-                <p className="about2-edu-school">{item.school}</p>
-              </div>
+      {/* ── Education + languages ────────────────────────── */}
+      <section className="section about-split" aria-label="Formação e idiomas">
+        <div>
+          <header className="section-head">
+            <div>
+              <p className="section-index mono">02 / Formação</p>
+              <h2 className="section-title">Formação acadêmica</h2>
+            </div>
+          </header>
+          <ol className="timeline">
+            {educationData.map((item) => (
+              <li key={item.degree} className="timeline-item">
+                <span className="timeline-year mono">{item.year}</span>
+                <div>
+                  <p className="timeline-title">{item.degree}</p>
+                  <p className="timeline-sub">{item.school}</p>
+                </div>
+              </li>
             ))}
-          </div>
-        </section>
+          </ol>
+        </div>
 
-        {/* Projects */}
-        <section className="about2-section" aria-label="Projetos">
-          <span className="about2-label">Projetos Pessoais em Destaque</span>
-          <div className="about2-proj-grid">
-            {projectsData.map((proj) => (
-              <div key={proj.name} className="about2-card about2-proj-card">
-                <h3 className="about2-proj-title">{proj.name}</h3>
-                <p className="about2-proj-desc">{proj.description}</p>
-                {proj.url ? (
-                  <a
-                    href={proj.url}
-                    className="about2-proj-visit"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Visitar ${proj.name}`}
-                  >
-                    <ExternalLink size={13} aria-hidden="true" />
-                    {proj.linkLabel ?? 'Visitar projeto'}
-                  </a>
-                ) : (
-                  <span className="about2-proj-visit about2-proj-visit--disabled">
-                    {proj.statusLabel ?? 'Em breve na PlayStore'}
+        <div>
+          <header className="section-head">
+            <div>
+              <p className="section-index mono">03 / Idiomas</p>
+              <h2 className="section-title">Idiomas</h2>
+            </div>
+          </header>
+          <div className="pf-panel">
+            <ul className="lang-list">
+              {languageData.map((lang) => (
+                <li key={lang.name} className="lang-row">
+                  <div>
+                    <p className="lang-name">{lang.name}</p>
+                    <p className="lang-level">{lang.level}</p>
+                  </div>
+                  <span className="lang-meter" role="img" aria-label={`Nível ${lang.score} de 5`}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span key={i} className={i < lang.score ? 'is-on' : ''} />
+                    ))}
                   </span>
-                )}
-              </div>
-            ))}
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
+        </div>
+      </section>
 
-      </div>
+      {/* ── Projects ─────────────────────────────────────── */}
+      <section id="projetos" className="section" aria-labelledby="all-projects-title">
+        <header className="section-head">
+          <div>
+            <p className="section-index mono">04 / Projetos</p>
+            <h2 id="all-projects-title" className="section-title">Projetos pessoais</h2>
+            <p className="section-desc">
+              Apps e produtos web que desenvolvi de ponta a ponta, do conceito à publicação.
+            </p>
+          </div>
+        </header>
+        <div className="project-grid">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.name} project={project} index={index} />
+          ))}
+        </div>
+      </section>
 
       {/* ── Modal ────────────────────────────────────────── */}
       {modalOpen && (
@@ -272,27 +216,29 @@ export function AboutMePage() {
           onClick={handleClose}
           role="dialog"
           aria-modal="true"
-          aria-label="Solicitar currículo completo"
+          aria-labelledby="resume-modal-title"
         >
           <div className="resume-modal" onClick={(e) => e.stopPropagation()}>
             <button className="resume-modal-close" onClick={handleClose} aria-label="Fechar" type="button">
               <X size={18} />
             </button>
 
-            <h3 className="resume-modal-title">Currículo completo</h3>
+            <h3 id="resume-modal-title" className="resume-modal-title">Currículo completo</h3>
 
             <p className="resume-modal-info">
               Para receber a senha de acesso, solicite diretamente via:
             </p>
 
             <div className="resume-modal-contacts">
-              <a href={linkedinProfile} target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
               <a href={resumeMailtoLink}>E-mail</a>
-              <a href={whatsappLink} target="_blank" rel="noreferrer">WhatsApp</a>
+              <a href={profile.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
             </div>
 
             <div className="resume-modal-input-wrap">
+              <label htmlFor="resume-password" className="sr-only">Senha</label>
               <input
+                id="resume-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(false) }}

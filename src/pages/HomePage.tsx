@@ -1,185 +1,125 @@
-import { useMemo, useState } from 'react'
-import { Heart } from 'lucide-react'
-import { GalleryCard } from '../components/GalleryCard.tsx'
-import type { GalleryItem } from '../data/galleryItems.ts'
+import { ArrowDown, ArrowRight, Mail } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { LinkedInLogo } from '../components/BrandIcons.tsx'
+import { ProjectCard } from '../components/ProjectCard.tsx'
+import { coreStack, profile, projects } from '../data/profile.ts'
 
-type SortOrder = 'a-z' | 'z-a' | 'recentes' | 'antigos' | 'tipo' | 'colecao'
-
-const NEO_SLUGS = new Set(['curadoria-neomorphic-button', 'curadoria-realistic-toggle'])
-const GN_SOFT_SLUGS = new Set([
-  'gn-segmented-control',
-  'gn-toggle-switch',
-  'gn-input-field',
-  'gn-numpad',
-  'gn-bottom-nav',
-  'gn-text-nav',
-])
-const GLASS_SLUGS = new Set(['glass-profile-card', 'gn-reminders-card'])
-
-function getCollection(slug: string): string {
-  if (slug.startsWith('neo-') || NEO_SLUGS.has(slug)) return 'Neo'
-  if (GLASS_SLUGS.has(slug)) return 'Glass'
-  if (GN_SOFT_SLUGS.has(slug)) return 'GN Soft'
-  if (slug.startsWith('gn-')) return 'GN'
-  return ''
-}
-
-type HomePageProps = {
-  items: GalleryItem[]
-  likes: Record<string, boolean>
-  onToggleLike: (slug: string) => void
-}
-
-export function HomePage({ items, likes, onToggleLike }: HomePageProps) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [isSearchCollapsed, setIsSearchCollapsed] = useState(false)
-  const [showOnlyLiked, setShowOnlyLiked] = useState(false)
-  const [sortOrder, setSortOrder] = useState<SortOrder | ''>('')
-
-  const normalizeValue = (value: string) =>
-    value
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .trim()
-
-  const itemIndexMap = useMemo(
-    () => new Map(items.map((item, index) => [item.slug, index])),
-    [items]
-  )
-
-  const filteredItems = useMemo(() => {
-    const normalizedSearch = normalizeValue(searchTerm)
-
-    const result = items.filter((item) => {
-      if (showOnlyLiked && !likes[item.slug]) return false
-      if (!normalizedSearch) return true
-      return (
-        normalizeValue(item.title).includes(normalizedSearch) ||
-        normalizeValue(item.category).includes(normalizedSearch)
-      )
-    })
-
-    result.sort((a, b) => {
-      switch (sortOrder) {
-        case 'z-a':
-          return b.title.localeCompare(a.title, 'pt-BR', { sensitivity: 'base' })
-        case 'recentes':
-          return (itemIndexMap.get(b.slug) ?? 0) - (itemIndexMap.get(a.slug) ?? 0)
-        case 'antigos':
-          return (itemIndexMap.get(a.slug) ?? 0) - (itemIndexMap.get(b.slug) ?? 0)
-        case 'tipo':
-          return (
-            a.category.localeCompare(b.category, 'pt-BR', { sensitivity: 'base' }) ||
-            a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
-          )
-        case 'colecao': {
-          const ca = getCollection(a.slug)
-          const cb = getCollection(b.slug)
-          if (!ca && cb) return 1
-          if (ca && !cb) return -1
-          return (
-            ca.localeCompare(cb, 'pt-BR', { sensitivity: 'base' }) ||
-            a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
-          )
-        }
-        default:
-          return a.title.localeCompare(b.title, 'pt-BR', { sensitivity: 'base' })
-      }
-    })
-
-    return result
-  }, [items, likes, searchTerm, showOnlyLiked, sortOrder, itemIndexMap])
-
+export function HomePage() {
   return (
-    <main className="app-shell">
-      <header className="hero-section">
-        <p className="hero-kicker">Fran Camargo</p>
-        <h1>UI & Dashboard Gallery</h1>
-        <p className="hero-signature">
-          Curadoria de interfaces e componentes front-end desenvolvidos por mim como forma de estudo e referência.
-          Clique no botão de expansão para ver o elemento por completo.
-        </p>
-      </header>
-
-      <div className="gallery-toolbar" aria-label="Ferramentas da galeria">
-        <label className="sr-only" htmlFor="gallery-sort">Ordenar por</label>
-        <select
-          id="gallery-sort"
-          className="sort-select"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value as SortOrder | '')}
-          aria-label="Ordenar itens da galeria"
-        >
-          <option value="" disabled>Ordenar</option>
-          <option value="a-z">A → Z</option>
-          <option value="z-a">Z → A</option>
-          <option value="recentes">Mais Recentes</option>
-          <option value="antigos">Mais Antigos</option>
-          <option value="tipo">Tipo</option>
-          <option value="colecao">Coleção</option>
-        </select>
-
-        <div className={`hover-search ${isSearchCollapsed ? 'is-collapsed' : ''}`}>
-          <button
-            type="button"
-            className="hover-search-toggle"
-            aria-label={isSearchCollapsed ? 'Abrir busca' : 'Fechar busca'}
-            onClick={() => setIsSearchCollapsed((currentState) => !currentState)}
-          >
-            <span className="hover-search-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-              <path d="M10.5 3.5a7 7 0 1 0 4.45 12.4l4.33 4.33a1 1 0 0 0 1.42-1.42l-4.33-4.33A7 7 0 0 0 10.5 3.5Zm0 2a5 5 0 1 1 0 10a5 5 0 0 1 0-10Z" />
-            </svg>
+    <main className="app-shell home-shell">
+      {/* ── Hero ─────────────────────────────────────────── */}
+      <section className="home-hero" aria-labelledby="home-hero-title">
+        <div className="home-hero-copy">
+          <p className="eyebrow">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            {profile.role} · {profile.specialty}
+          </p>
+          <h1 id="home-hero-title" className="display">
+            Interfaces que unem <em>design</em> e <em>engenharia</em>.
+          </h1>
+          <p className="lead">
+            Sou {profile.name}, desenvolvedora Front-End especializada em Angular e React, com
+            base sólida em UI/UX. Crio componentes reutilizáveis, design systems e produtos com IA
+            generativa, sempre com foco em acessibilidade, performance e detalhe.
+          </p>
+          <div className="home-hero-actions">
+            <a className="btn btn-primary" href="#projetos">
+              Ver projetos
+              <ArrowDown size={16} aria-hidden="true" />
+            </a>
+            <Link className="btn btn-ghost" to="/sobre-mim">
+              Sobre mim
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+            <span className="home-hero-social">
+              <a
+                className="icon-btn"
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+              >
+                <LinkedInLogo size={16} />
+              </a>
+              <a
+                className="icon-btn"
+                href={`mailto:${profile.email}`}
+                aria-label="Enviar e-mail"
+                title="E-mail"
+              >
+                <Mail size={16} aria-hidden="true" />
+              </a>
             </span>
-          </button>
-          <span className="sr-only">Pesquisar por nome ou tipo</span>
-          <input
-            id="gallery-search"
-            name="gallery-search"
-            type="search"
-            className="hover-search-input"
-            placeholder="Pesquisar por nome ou tipo"
-            aria-label="Pesquisar por nome ou tipo"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            disabled={isSearchCollapsed}
-          />
+          </div>
         </div>
 
-        <button
-          type="button"
-          className={`favorites-filter-button ${showOnlyLiked ? 'is-active' : ''}`}
-          aria-label={
-            showOnlyLiked
-              ? 'Mostrar todos os itens da galeria'
-              : 'Mostrar apenas itens favoritados'
-          }
-          aria-pressed={showOnlyLiked}
-          title={showOnlyLiked ? 'Mostrando favoritados' : 'Filtrar por favoritados'}
-          onClick={() => setShowOnlyLiked((currentState) => !currentState)}
-        >
-          <Heart size={18} fill={showOnlyLiked ? 'currentColor' : 'none'} />
-        </button>
-      </div>
+        <figure className="code-window" aria-label="Resumo do perfil em formato de código">
+          <div className="code-window-bar" aria-hidden="true">
+            <span /><span /><span />
+            <em>profile.ts</em>
+          </div>
+          <pre className="code-window-body">
+            <code>
+              <span className="tk-key">const</span> <span className="tk-var">fran</span> = {'{'}{'\n'}
+              {'  '}role: <span className="tk-str">'Front-End Developer'</span>,{'\n'}
+              {'  '}focus: [<span className="tk-str">'UI/UX'</span>, <span className="tk-str">'Design Systems'</span>, <span className="tk-str">'GenAI'</span>],{'\n'}
+              {'  '}stack: [<span className="tk-str">'Angular'</span>, <span className="tk-str">'React'</span>, <span className="tk-str">'TypeScript'</span>],{'\n'}
+              {'  '}certified: <span className="tk-str">'Microsoft AI-900'</span>,{'\n'}
+              {'  '}languages: <span className="tk-num">3</span>,{'\n'}
+              {'  '}openToTalk: <span className="tk-key">true</span>,{'\n'}
+              {'}'} <span className="tk-key">satisfies</span> <span className="tk-type">Developer</span>
+            </code>
+          </pre>
+        </figure>
+      </section>
 
-      <section className="gallery-grid" aria-label="Galeria de elementos">
-        {filteredItems.map((item) => (
-          <GalleryCard
-            key={item.slug}
-            item={item}
-            isLiked={Boolean(likes[item.slug])}
-            onToggleLike={onToggleLike}
-          />
-        ))}
+      {/* ── Stack ──────────────────────────────── */}
+      <section className="home-metrics" aria-label="Stack principal">
+        <div className="stack-row">
+          <span className="stack-row-label mono">Stack principal</span>
+          <ul>
+            {coreStack.map((tech) => (
+              <li key={tech}>{tech}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-        {filteredItems.length === 0 ? (
-          <p className="gallery-empty-inline" aria-live="polite">
-            {showOnlyLiked
-              ? `Nenhum item favoritado encontrado${searchTerm ? ` para "${searchTerm}"` : ''}.`
-              : `Nenhum item encontrado para "${searchTerm}".`}
-          </p>
-        ) : null}
+      {/* ── Projects ─────────────────────────────────────── */}
+      <section id="projetos" className="section" aria-labelledby="projetos-title">
+        <header className="section-head">
+          <div>
+            <p className="section-index mono">01 / Projetos</p>
+            <h2 id="projetos-title" className="section-title">Projetos pessoais</h2>
+            <p className="section-desc">
+              Apps e produtos web que desenvolvi de ponta a ponta, da concepção ao deploy.
+            </p>
+          </div>
+        </header>
+        <div className="project-grid">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.name} project={project} index={index} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────── */}
+      <section className="cta-band" aria-labelledby="cta-title">
+        <div>
+          <h2 id="cta-title">Vamos construir algo juntos?</h2>
+          <p>Aberta a conversas sobre oportunidades, projetos e colaborações em front-end e UI/UX.</p>
+        </div>
+        <div className="cta-band-actions">
+          <a className="btn btn-primary" href={`mailto:${profile.email}`}>
+            <Mail size={16} aria-hidden="true" />
+            Enviar e-mail
+          </a>
+          <a className="btn btn-ghost" href={profile.linkedin} target="_blank" rel="noreferrer">
+            <LinkedInLogo size={15} />
+            LinkedIn
+          </a>
+        </div>
       </section>
     </main>
   )

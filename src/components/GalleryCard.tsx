@@ -83,30 +83,29 @@ export function GalleryCard({ item, isLiked, onToggleLike }: GalleryCardProps) {
         <div className="card-content">
           <div className="card-pill-row">
             <span className="pill">{item.category}</span>
-            <button
-              type="button"
-              className="card-expand-btn"
-              onClick={() => setIsExpanded(true)}
-              aria-label="Expandir visualização"
-              title="Expandir visualização"
-            >
-              <Maximize2 size={14} strokeWidth={2.8} />
-            </button>
+            <div className="card-actions">
+              <button
+                type="button"
+                className={`like-button ${isLiked ? 'is-liked' : ''}`}
+                onClick={() => onToggleLike(item.slug)}
+                aria-label={isLiked ? 'Remover dos favoritos' : 'Marcar como favorito'}
+                aria-pressed={isLiked}
+              >
+                <Heart size={16} fill={isLiked ? 'currentColor' : 'none'} />
+              </button>
+              <button
+                type="button"
+                className="card-expand-btn"
+                onClick={() => setIsExpanded(true)}
+                aria-label={`Expandir visualização de ${item.title}`}
+                title="Expandir"
+              >
+                <Maximize2 size={15} />
+              </button>
+            </div>
           </div>
-          <h2>{item.title}</h2>
+          <h3>{item.title}</h3>
           <p>{item.subtitle}</p>
-
-          <div className="card-actions">
-            <button
-              type="button"
-              className={`like-button ${isLiked ? 'is-liked' : ''}`}
-              onClick={() => onToggleLike(item.slug)}
-              aria-label={isLiked ? 'Remover dos favoritos' : 'Marcar como favorito'}
-              title={isLiked ? 'favoritado' : 'favorito'}
-            >
-              <Heart size={17} fill={isLiked ? 'currentColor' : 'none'} />
-            </button>
-          </div>
         </div>
       </article>
 
