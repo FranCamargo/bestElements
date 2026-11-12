@@ -1,5 +1,5 @@
-import { useMemo, useState, type ReactNode } from 'react'
-import { Heart } from 'lucide-react'
+import { useMemo, useRef, useState, type ReactNode } from 'react'
+import { ChevronLeft, ChevronRight, Heart } from 'lucide-react'
 import { GalleryCard } from '../components/GalleryCard.tsx'
 import { SelectMenu } from '../components/SelectMenu.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
@@ -26,6 +26,30 @@ const GN_SOFT_SLUGS = new Set([
 ])
 const GLASS_SLUGS = new Set(['glass-profile-card', 'gn-reminders-card'])
 
+type PageSize = '12' | '24' | '48' | 'todos'
+
+const pageSizeOptions: { value: PageSize; label: string }[] = [
+  { value: '12', label: '12 / página' },
+  { value: '24', label: '24 / página' },
+  { value: '48', label: '48 / página' },
+  { value: 'todos', label: 'Todos' },
+]
+
+/** Números de página com reticências: 1 … 4 5 6 … 12 */
+function getPageList(current: number, total: number): (number | 'gap')[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+  const pages = new Set([1, total, current - 1, current, current + 1])
+  if (current <= 3) [2, 3, 4].forEach((p) => pages.add(p))
+  if (current >= total - 2) [total - 3, total - 2, total - 1].forEach((p) => pages.add(p))
+  const sorted = [...pages].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b)
+  const result: (number | 'gap')[] = []
+  sorted.forEach((p, i) => {
+    if (i > 0 && p - sorted[i - 1] > 1) result.push('gap')
+    result.push(p)
+  })
+  return result
+}
+
 function getCollection(slug: string): string {
   if (slug.startsWith('neo-') || NEO_SLUGS.has(slug)) return 'Neo'
   if (GLASS_SLUGS.has(slug)) return 'Glass'
@@ -47,6 +71,9 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(false)
   const [showOnlyLiked, setShowOnlyLiked] = useState(false)
   const [sortOrder, setSortOrder] = useState<SortOrder | ''>('')
+  const [pageSize, setPageSize] = useState<PageSize>('12')
+  const [page, setPage] = useState(1)
+  const sectionRef = useRef<HTMLElement>(null)
 
   const normalizeValue = (value: string) =>
     value
@@ -103,6 +130,17 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
     return result
   }, [items, likes, searchTerm, showOnlyLiked, sortOrder, itemIndexMap])
 
+  const perPage = pageSize === 'todos' ? Math.max(filteredItems.length, 1) : Number(pageSize)
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / perPage))
+  const currentPage = Math.min(page, totalPages)
+  const firstIndex = (currentPage - 1) * perPage
+  const pageItems = filteredItems.slice(firstIndex, firstIndex + perPage)
+
+  const goToPage = (next: number) => {
+    setPage(Math.min(Math.max(next, 1), totalPages))
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <main className="app-shell components-shell">
       <header className="page-head" aria-labelledby="componentes-title">
@@ -123,14 +161,28 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
         </p>
       </header>
 
-      <section className="components-section" aria-label="Galeria de elementos">
+      <section ref={sectionRef} className="components-section" aria-label="Galeria de elementos">
         <div className="components-bar">
           <div className="gallery-toolbar" aria-label="Ferramentas da galeria">
             <SelectMenu
               label="Ordenar itens da galeria"
               value={sortOrder || 'a-z'}
               options={sortOptions}
-              onChange={setSortOrder}
+              onChange={(value) => {
+                setSortOrder(value)
+                setPage(1)
+              }}
+            />
+
+            <SelectMenu
+              className="page-size-menu"
+              label="Itens por página"
+              value={pageSize}
+              options={pageSizeOptions}
+              onChange={(value) => {
+                setPageSize(value)
+                setPage(1)
+              }}
             />
 
             <div className={`hover-search ${isSearchCollapsed ? 'is-collapsed' : ''}`}>
@@ -155,7 +207,10 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
                 placeholder="Buscar componente"
                 aria-label="Pesquisar por nome ou tipo"
                 value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
+                onChange={(event) => {
+                  setSearchTerm(event.target.value)
+                  setPage(1)
+                }}
                 disabled={isSearchCollapsed}
               />
             </div>
@@ -170,7 +225,10 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
               }
               aria-pressed={showOnlyLiked}
               title={showOnlyLiked ? 'Mostrando favoritados' : 'Filtrar por favoritados'}
-              onClick={() => setShowOnlyLiked((currentState) => !currentState)}
+              onClick={() => {
+                setShowOnlyLiked((currentState) => !currentState)
+                setPage(1)
+              }}
             >
               <Heart size={18} fill={showOnlyLiked ? 'currentColor' : 'none'} />
             </button>
@@ -178,7 +236,7 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
         </div>
 
         <div className="gallery-grid">
-          {filteredItems.map((item) => (
+          {pageItems.map((item) => (
             <GalleryCard
               key={item.slug}
               item={item}
@@ -195,6 +253,54 @@ export function ComponentsPage({ items, likes, onToggleLike, headerAction }: Com
             </p>
           ) : null}
         </div>
+
+        {filteredItems.length > 0 ? (
+          <nav className="gallery-pagination" aria-label="Paginação da galeria">
+            <p className="gallery-pagination-info mono" aria-live="polite">
+              {firstIndex + 1}–{firstIndex + pageItems.length} de {filteredItems.length}
+            </p>
+
+            {totalPages > 1 ? (
+              <div className="gallery-pagination-pages">
+                <button
+                  type="button"
+                  className="page-btn"
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  aria-label="Página anterior"
+                >
+                  <ChevronLeft size={17} />
+                </button>
+                {getPageList(currentPage, totalPages).map((entry, i) =>
+                  entry === 'gap' ? (
+                    <span key={`gap-${i}`} className="page-gap" aria-hidden="true">…</span>
+                  ) : (
+                    <button
+                      key={entry}
+                      type="button"
+                      className={`page-btn${entry === currentPage ? ' is-active' : ''}`}
+                      onClick={() => goToPage(entry)}
+                      aria-label={`Página ${entry}`}
+                      aria-current={entry === currentPage ? 'page' : undefined}
+                    >
+                      {entry}
+                    </button>
+                  ),
+                )}
+                <button
+                  type="button"
+                  className="page-btn"
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  aria-label="Próxima página"
+                >
+                  <ChevronRight size={17} />
+                </button>
+              </div>
+            ) : null}
+
+          </nav>
+        ) : null}
       </section>
     </main>
   )

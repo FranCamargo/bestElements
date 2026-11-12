@@ -8,10 +8,13 @@ type SelectMenuProps<T extends string> = {
   options: Option<T>[]
   onChange: (value: T) => void
   label: string
+  /** Abre a lista para cima (útil no fim da página) */
+  placement?: 'bottom' | 'top'
+  className?: string
 }
 
 /** Dropdown no estilo do site (substitui o <select> nativo, cuja lista não segue o tema). */
-export function SelectMenu<T extends string>({ value, options, onChange, label }: SelectMenuProps<T>) {
+export function SelectMenu<T extends string>({ value, options, onChange, label, placement = 'bottom', className }: SelectMenuProps<T>) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -77,7 +80,7 @@ export function SelectMenu<T extends string>({ value, options, onChange, label }
   }
 
   return (
-    <div className={`select-menu${open ? ' is-open' : ''}`} ref={rootRef}>
+    <div className={`select-menu${open ? ' is-open' : ''}${placement === 'top' ? ' is-top' : ''}${className ? ` ${className}` : ''}`} ref={rootRef}>
       <button
         ref={buttonRef}
         type="button"
