@@ -18,6 +18,10 @@ export const coreStack = [
   'Tailwind CSS',
   'Figma',
   'Node.js',
+  'JavaScript',
+  'Firebase',
+  'Python',
+  'Godot',
   'GenAI',
 ]
 
@@ -84,6 +88,15 @@ export const projects: Project[] = [
     featured: true,
     description:
       'Glossário interativo com os principais termos, conceitos e depreciações do Angular, organizado por versão (v14 a v22). Traz uma lista geral pesquisável com filtros por categoria e paginação, além de uma aba dedicada às APIs descontinuadas, cada uma com a versão de depreciação e a alternativa recomendada. Projeto de estudo em Angular 21, com Signals e o novo control flow.',
+  },
+  {
+    name: 'FWex Games',
+    kind: 'Web',
+    url: 'https://fwex-games-hub.web.app/',
+    stack: ['JavaScript', 'Firebase', 'Godot'],
+    featured: true,
+    description:
+      'Hub web de jogos com visual ultramoderno inspirado em animes. Reúne jogos feitos no Godot Engine, cada um hospedado no próprio site e carregado por um manifesto JSON, sem integrar o código ao hub. Tem login obrigatório (Google e e-mail), progresso sincronizado na nuvem, favoritos, estatísticas e player embutido. Inclui o Sakura Catch, um quebra-blocos autoral com áudio gerado por código. Desenvolvido com HTML, CSS, JavaScript, Canvas, Web Audio API e Firebase (Auth, Firestore e Hosting).',
   },
   {
     name: 'UneBR',
