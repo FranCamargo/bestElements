@@ -1,9 +1,19 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { Heart } from 'lucide-react'
 import { GalleryCard } from '../components/GalleryCard.tsx'
+import { SelectMenu } from '../components/SelectMenu.tsx'
 import type { GalleryItem } from '../data/galleryItems.ts'
 
 type SortOrder = 'a-z' | 'z-a' | 'recentes' | 'antigos' | 'tipo' | 'colecao'
+
+const sortOptions: { value: SortOrder; label: string }[] = [
+  { value: 'a-z', label: 'A → Z' },
+  { value: 'z-a', label: 'Z → A' },
+  { value: 'recentes', label: 'Mais recentes' },
+  { value: 'antigos', label: 'Mais antigos' },
+  { value: 'tipo', label: 'Tipo' },
+  { value: 'colecao', label: 'Coleção' },
+]
 
 const NEO_SLUGS = new Set(['curadoria-neomorphic-button', 'curadoria-realistic-toggle'])
 const GN_SOFT_SLUGS = new Set([
@@ -28,9 +38,11 @@ type ComponentsPageProps = {
   items: GalleryItem[]
   likes: Record<string, boolean>
   onToggleLike: (slug: string) => void
+  /** Ação no topo da página, à direita (ex.: botão de tema) */
+  headerAction?: ReactNode
 }
 
-export function ComponentsPage({ items, likes, onToggleLike }: ComponentsPageProps) {
+export function ComponentsPage({ items, likes, onToggleLike, headerAction }: ComponentsPageProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(false)
   const [showOnlyLiked, setShowOnlyLiked] = useState(false)
@@ -94,13 +106,19 @@ export function ComponentsPage({ items, likes, onToggleLike }: ComponentsPagePro
   return (
     <main className="app-shell components-shell">
       <header className="page-head" aria-labelledby="componentes-title">
-        <p className="eyebrow">
-          <span className="eyebrow-dot" aria-hidden="true" />
-          Laboratório de UI
-        </p>
-        <h1 id="componentes-title" className="display display--md">Galeria de componentes</h1>
+        <div className="page-head-top">
+          <p className="eyebrow">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            Laboratório de UI
+          </p>
+          {headerAction}
+        </div>
+        <h1 id="componentes-title" className="display display--md">
+          Best Elements
+          <span className="page-subtitle">Galeria de componentes</span>
+        </h1>
         <p className="lead">
-          Curadoria de interfaces e componentes front-end desenvolvidos por mim como estudo e
+          Curadoria de interfaces, componentes e micro-interações front-end para estudo e
           referência. Todos são interativos: use o botão de expandir para ver em detalhe.
         </p>
       </header>
@@ -108,22 +126,12 @@ export function ComponentsPage({ items, likes, onToggleLike }: ComponentsPagePro
       <section className="components-section" aria-label="Galeria de elementos">
         <div className="components-bar">
           <div className="gallery-toolbar" aria-label="Ferramentas da galeria">
-            <label className="sr-only" htmlFor="gallery-sort">Ordenar por</label>
-            <select
-              id="gallery-sort"
-              className="sort-select"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as SortOrder | '')}
-              aria-label="Ordenar itens da galeria"
-            >
-              <option value="" disabled>Ordenar</option>
-              <option value="a-z">A → Z</option>
-              <option value="z-a">Z → A</option>
-              <option value="recentes">Mais Recentes</option>
-              <option value="antigos">Mais Antigos</option>
-              <option value="tipo">Tipo</option>
-              <option value="colecao">Coleção</option>
-            </select>
+            <SelectMenu
+              label="Ordenar itens da galeria"
+              value={sortOrder || 'a-z'}
+              options={sortOptions}
+              onChange={setSortOrder}
+            />
 
             <div className={`hover-search ${isSearchCollapsed ? 'is-collapsed' : ''}`}>
               <button
